@@ -1,26 +1,208 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  /* Editorial Civic Palette */
+  --color-primary: #1A73E8;
+  --color-primary-hover: #1557B0;
+  --color-bg-app: #FDFDFD;
+  --color-surface: #FFFFFF;
+  --color-border-subtle: #F0F0F0;
+  --color-text-title: #1A1A1B;
+  --color-text-body: #4A4A4A;
+  --color-text-light: #70757A;
+  --color-navy: #0D1F3C;
+  --color-saffron: #FF6B2B;
+
+  /* Refined Elevation - Very soft, barely visible */
+  --shadow-minimal: 0 1px 2px 0 rgba(0, 0, 0, 0.03);
+  --shadow-hover: 0 12px 24px -10px rgba(0, 0, 0, 0.08);
+
+  /* Radius - More geometric for civic feel */
+  --radius-xl: 32px;
+  --radius-lg: 20px;
+  --radius-md: 12px;
+  --radius-sm: 6px;
+
+  /* Fonts */
+  --font-inter: 'Inter', sans-serif;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+@layer base {
+  body {
+    @apply bg-bg-app text-text-body antialiased;
+    font-family: var(--font-inter);
+    line-height: 1.6;
+    letter-spacing: -0.015em;
+  }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  h1, h2, h3, h4 {
+    @apply font-bold text-text-title tracking-tighter;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer components {
+  .container-app {
+    @apply max-w-[760px] mx-auto px-8;
+  }
+
+  /* --- Navigation (Editorial Style) --- */
+  .site-header {
+    @apply sticky top-0 z-50 bg-bg-app/90 backdrop-blur-xl h-20 flex items-center;
+  }
+
+  .site-header__logo {
+    @apply flex items-center gap-3 font-bold text-text-title text-[15px] tracking-tight;
+  }
+
+  .site-header__logo-dot {
+    @apply w-2 h-2 rounded-full bg-saffron;
+  }
+
+  .site-nav-link {
+    @apply text-[13px] font-bold text-text-light hover:text-text-title transition-colors px-3 py-1;
+  }
+
+  .site-nav-link--active {
+    @apply text-text-title;
+  }
+
+  /* --- Hero (Expansive whitespace) --- */
+  .hero {
+    @apply pt-28 pb-20;
+  }
+
+  .hero__title {
+    @apply text-4xl md:text-6xl mb-8 leading-[1.05] font-extrabold text-text-title;
+  }
+
+  .hero__subtitle {
+    @apply text-lg md:text-xl text-text-light max-w-xl mb-12 font-medium leading-relaxed;
+  }
+
+  /* --- Search (The "Intelligent" Input) --- */
+  .search-container {
+    @apply relative max-w-2xl bg-white border border-border-subtle rounded-2xl transition-all focus-within:border-primary/30 focus-within:shadow-hover;
+    box-shadow: var(--shadow-minimal);
+  }
+
+  .search-input {
+    @apply w-full h-16 pl-8 pr-32 bg-transparent outline-none text-lg text-text-title placeholder:text-text-light/50;
+  }
+
+  .search-btn {
+    @apply absolute right-3 top-3 h-10 px-6 bg-primary text-white text-sm font-bold rounded-xl hover:bg-primary-hover transition-all active:scale-95;
+  }
+
+  /* --- Task Layout (Minimalist List/Grid) --- */
+  .task-section {
+    @apply py-24;
+  }
+
+  .task-grid {
+    @apply grid grid-cols-1 gap-4;
+  }
+
+  .task-card {
+    @apply flex items-center gap-6 p-8 bg-white border border-border-subtle rounded-3xl transition-all hover:bg-gray-50/50 hover:border-primary/10;
+    box-shadow: var(--shadow-minimal);
+  }
+
+  .task-card:hover {
+    box-shadow: var(--shadow-hover);
+  }
+
+  .task-card__icon {
+    @apply text-2xl w-14 h-14 flex items-center justify-center bg-gray-50 rounded-2xl transition-colors;
+  }
+
+  .task-card:hover .task-card__icon {
+    @apply bg-white;
+  }
+
+  .task-card__body {
+    @apply flex-grow;
+  }
+
+  .task-card__title {
+    @apply text-xl font-bold mb-1 transition-colors;
+  }
+
+  .task-card:hover .task-card__title {
+    @apply text-primary;
+  }
+
+  .task-card__desc {
+    @apply text-[14px] text-text-light font-medium max-w-sm;
+  }
+
+  /* --- Flow UI (Clarity over Decoration) --- */
+  .flow-header {
+    @apply py-16;
+  }
+
+  .flow-title {
+    @apply text-4xl md:text-5xl mb-6 font-extrabold tracking-tight;
+  }
+
+  .step-list {
+    @apply space-y-12;
+  }
+
+  .step-item {
+    @apply relative flex gap-10;
+  }
+
+  .step-line {
+    @apply absolute left-[21px] top-10 bottom-[-48px] w-[2px] bg-gray-100;
+  }
+
+  .step-item:last-child .step-line {
+    @apply hidden;
+  }
+
+  .step-number {
+    @apply w-11 h-11 rounded-full border-2 border-gray-100 bg-white text-text-title flex items-center justify-center font-bold text-sm shrink-0 z-10;
+  }
+
+  .step-content {
+    @apply flex-grow pt-1;
+  }
+
+  .step-title {
+    @apply text-2xl font-bold mb-4;
+  }
+
+  .step-body {
+    @apply text-[17px] text-text-body leading-relaxed mb-6;
+  }
+
+  /* --- Trust Elements --- */
+  .source-tag {
+    @apply inline-flex items-center gap-2 px-3 py-1 bg-gray-50 text-[11px] font-bold text-text-light uppercase tracking-widest rounded-md border border-gray-100;
+  }
+
+  .source-dot {
+    @apply w-1.5 h-1.5 rounded-full bg-green-500;
+  }
+
+  .note-box {
+    @apply p-8 bg-gray-50 border border-gray-100 rounded-3xl text-[15px] font-medium leading-relaxed text-text-body;
+  }
+
+  .note-label {
+    @apply block text-[10px] font-bold text-text-light uppercase tracking-[0.2em] mb-3;
+  }
+
+  /* --- Mobile Navigation --- */
+  .mobile-cta {
+    @apply md:hidden fixed bottom-8 left-8 right-8 z-50;
+  }
+
+  .mobile-cta-btn {
+    @apply w-full h-16 bg-primary text-white font-bold rounded-2xl flex items-center justify-center gap-3 shadow-2xl shadow-primary/30 active:scale-95 transition-transform;
+  }
+
+  .site-footer {
+    @apply py-32 bg-white border-t border-border-subtle text-[14px] text-text-light;
+  }
 }

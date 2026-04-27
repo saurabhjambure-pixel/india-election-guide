@@ -1,0 +1,19 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Civic data (flows, links, timelines) are read-only for all users
+    match /civic_data/{document=**} {
+      allow read: if true;
+      allow write: if false; // Admin-only updates via SDK
+    }
+    
+    // User feedback allows strictly structured anonymous writes
+    match /feedback/{feedbackId} {
+      allow read: if false; // Only admins can read
+      allow create: if request.resource.data.keys().hasOnly(['flowId', 'helpful', 'timestamp', 'comment']) 
+                    && request.resource.data.helpful is bool
+                    && request.resource.data.timestamp is timestamp;
+      allow update, delete: if false;
+    }
+  }
+}
