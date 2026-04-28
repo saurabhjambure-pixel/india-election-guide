@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import type { ExplainResponse } from '@/lib/ai/schemas'
+import { ExplainResponseSchema, type ExplainResponse } from '@/lib/ai/schemas'
 
 interface AiExplainProps {
   flowId: string
@@ -22,7 +22,8 @@ export default function AiExplainButton({ flowId }: AiExplainProps) {
         body: JSON.stringify({ flowId, preferSimpleLanguage: true }),
       })
       if (!res.ok) throw new Error('Explain failed')
-      const json: ExplainResponse = await res.json()
+      const rawData = await res.json()
+      const json = ExplainResponseSchema.parse(rawData)
       setData(json)
     } catch {
       setError('Could not generate explanation. Please try again.')

@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import { useState } from 'react'
 
 export default function SiteHeader() {
   const pathname = usePathname()
@@ -11,6 +12,16 @@ export default function SiteHeader() {
     { name: 'Timelines', href: '/timeline' },
     { name: 'Learn', href: '/learn' },
   ]
+
+  const [lang, setLang] = useState('EN')
+
+  const toggleLang = () => {
+    const nextLang = lang === 'EN' ? 'HI' : 'EN'
+    setLang(nextLang)
+    if (typeof document !== 'undefined') {
+      document.documentElement.lang = nextLang.toLowerCase()
+    }
+  }
 
   return (
     <header className="site-header" role="banner">
@@ -38,10 +49,11 @@ export default function SiteHeader() {
 
         <div className="flex items-center gap-4">
           <button
+            onClick={toggleLang}
             className="text-[10px] font-bold uppercase tracking-widest text-text-secondary hover:text-primary flex items-center gap-2 px-3 py-2 border border-border rounded-lg bg-white/50 transition-all active:scale-95"
-            aria-label="Switch language (currently English)"
+            aria-label={`Switch language (currently ${lang === 'EN' ? 'English' : 'Hindi'})`}
           >
-            <span>🌐</span> EN
+            <span aria-hidden="true">🌐</span> {lang}
           </button>
           <span className="hidden sm:inline-block site-header__badge" aria-label="Official sources only">
             Official ECI Sources

@@ -11,8 +11,12 @@ service cloud.firestore {
     match /feedback/{feedbackId} {
       allow read: if false; // Only admins can read
       allow create: if request.resource.data.keys().hasOnly(['flowId', 'helpful', 'timestamp', 'comment']) 
+                    && request.resource.data.keys().hasAll(['flowId', 'helpful', 'timestamp'])
+                    && request.resource.data.flowId is string
+                    && request.resource.data.flowId.size() <= 100
                     && request.resource.data.helpful is bool
-                    && request.resource.data.timestamp is timestamp;
+                    && request.resource.data.timestamp is timestamp
+                    && (!('comment' in request.resource.data) || (request.resource.data.comment is string && request.resource.data.comment.size() <= 1000));
       allow update, delete: if false;
     }
   }

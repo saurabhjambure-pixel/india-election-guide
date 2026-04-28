@@ -2,13 +2,16 @@
 
 import { useState, useRef, type FormEvent } from 'react'
 import { useRouter } from 'next/navigation'
-import type { ClassifyResponse } from '@/lib/ai/schemas'
+import { ClassifyResponseSchema, type ClassifyResponse } from '@/lib/ai/schemas'
 import { OutOfScopeState } from './fallbacks'
+import { logCustomEvent } from '@/lib/firebase/config'
 
 const EXAMPLE_PROMPTS = [
-  'How do I register to vote?',
-  'Where is my polling station?',
-  'I moved home. What do I update?',
+  "I just turned 18, how do I register?",
+  "My name is wrong on my voter card",
+  "I moved to a new city",
+  "Is my name on the voter list?",
+  "When is the next election in my state?",
 ]
 
 export default function ChatInput() {
@@ -19,9 +22,7 @@ export default function ChatInput() {
   const inputRef = useRef<HTMLInputElement>(null)
   const router = useRouter()
 
-  async function handleSubmit(e: FormEvent) {
-    e.preventDefault()
-    const msg = value.trim()
+  async function submitQuery(msg: string) {
     if (!msg) return
 
     setLoading(true)
@@ -35,23 +36,37 @@ export default function ChatInput() {
         body: JSON.stringify({ message: msg }),
       })
       if (!res.ok) throw new Error('Classification failed')
-      const data: ClassifyResponse = await res.json()
+      const rawData = await res.json()
+      const data = ClassifyResponseSchema.parse(rawData)
       setResult(data)
 
       if (data.recommended_flow_id && !data.needs_clarification && data.intent !== 'out_of_scope') {
         router.push(`/flow/${data.recommended_flow_id}`)
+      } else if (data.intent === 'out_of_scope') {
+        logCustomEvent('out_of_scope_triggered', { query: msg })
       }
     } catch {
       setError('Service is temporarily busy. Please try a task below.')
+      logCustomEvent('fallback_shown', { type: 'classification_error' })
     } finally {
       setLoading(false)
     }
   }
 
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null)
+
+  async function handleSubmit(e: FormEvent) {
+    e.preventDefault()
+    if (timeoutRef.current) clearTimeout(timeoutRef.current)
+    timeoutRef.current = setTimeout(() => {
+      submitQuery(value.trim())
+    }, 300)
+  }
+
   return (
     <div className="w-full">
       <form className="search-container" onSubmit={handleSubmit} role="search" aria-label="Ask about voter services">
-        <label htmlFor="chat-input" className="visually-hidden">Ask a voter question</label>
+        <label htmlFor="chat-input" className="sr-only">Ask a voter question</label>
         <input
           ref={inputRef}
           id="chat-input"
@@ -71,14 +86,15 @@ export default function ChatInput() {
 
       <div className="flex flex-wrap gap-3 mt-8" role="list" aria-label="Suggested questions">
         {EXAMPLE_PROMPTS.map((p) => (
-          <button
-            key={p}
-            type="button"
-            onClick={() => { setValue(p); inputRef.current?.focus(); }}
-            className="text-[12px] font-bold text-text-light hover:text-primary transition-colors active:scale-95"
-          >
-            {p} <span className="opacity-20 ml-1">·</span>
-          </button>
+            <div key={p} role="listitem">
+              <button
+                type="button"
+                onClick={() => { setValue(p); submitQuery(p); }}
+                className="text-[12px] font-bold text-text-light hover:text-primary transition-colors active:scale-95"
+              >
+                {p} <span className="opacity-20 ml-1">·</span>
+              </button>
+            </div>
         ))}
       </div>
 

@@ -1,4 +1,4 @@
-import { GoogleGenerativeAI } from '@google/generative-ai';
+import { GoogleGenerativeAI, HarmCategory, HarmBlockThreshold } from '@google/generative-ai';
 
 // Singleton Gemini client — server-side only.
 // Never import this in a client component or expose the API key.
@@ -20,5 +20,17 @@ export function getGeminiClient(): GoogleGenerativeAI {
 }
 
 export function getGeminiModel(modelName = 'gemini-1.5-flash') {
-  return getGeminiClient().getGenerativeModel({ model: modelName });
+  return getGeminiClient().getGenerativeModel({ 
+    model: modelName,
+    safetySettings: [
+      {
+        category: HarmCategory.HARM_CATEGORY_HARASSMENT,
+        threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
+      },
+      {
+        category: HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT,
+        threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
+      },
+    ]
+  });
 }

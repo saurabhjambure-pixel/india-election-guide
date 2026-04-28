@@ -2,14 +2,14 @@
 
 @theme {
   /* Editorial Civic Palette */
-  --color-primary: #1A73E8;
-  --color-primary-hover: #1557B0;
+  --color-primary: #1565C0;
+  --color-primary-hover: #0D47A1;
   --color-bg-app: #FDFDFD;
   --color-surface: #FFFFFF;
   --color-border-subtle: #F0F0F0;
   --color-text-title: #1A1A1B;
   --color-text-body: #4A4A4A;
-  --color-text-light: #70757A;
+  --color-text-light: #5F6368;
   --color-navy: #0D1F3C;
   --color-saffron: #FF6B2B;
 

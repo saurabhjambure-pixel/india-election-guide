@@ -1,4 +1,21 @@
 import Image from 'next/image'
+import type { Metadata } from 'next'
+
+export const revalidate = false;
+
+export const metadata: Metadata = {
+  title: 'India Election Guide',
+  description: 'Step-by-step procedural guides for Indian voters. Grounded in official Election Commission sources.',
+  openGraph: {
+    title: 'India Election Guide',
+    description: 'Step-by-step procedural guides for Indian voters. Grounded in official Election Commission sources.',
+    url: 'https://india-election-guide.vercel.app',
+    siteName: 'India Election Guide',
+    images: [{ url: '/images/og.png', width: 1200, height: 630 }],
+    locale: 'en_IN',
+    type: 'website',
+  },
+}
 import ChatInput from '@/components/chat-input'
 import TaskCard from '@/components/task-card'
 import { CIVIC_FLOWS } from '@/data/civic-data'
@@ -29,13 +46,14 @@ export default function HomePage() {
                 <ChatInput />
               </div>
             </div>
-            <div className="md:col-span-5 flex justify-center opacity-90 relative z-0 md:-ml-8 pointer-events-none">
+            <div className="md:col-span-5 flex justify-center opacity-90 relative z-0 md:-ml-4 pointer-events-none">
               <Image 
                 src="/images/hero.png" 
                 alt="Abstract illustration of democracy and voting" 
-                width={500} 
-                height={500}
-                className="w-full max-w-[400px] h-auto object-contain mix-blend-multiply"
+                width={360} 
+                height={360}
+                sizes="(max-width: 768px) 100vw, 360px"
+                className="w-full max-w-[320px] h-auto object-contain mix-blend-multiply"
                 priority
               />
             </div>
@@ -87,6 +105,7 @@ export default function HomePage() {
                     alt="Trust and Security Emblem" 
                     width={80} 
                     height={80}
+                    sizes="80px"
                     className="w-20 h-20 object-contain drop-shadow-sm"
                  />
               </div>

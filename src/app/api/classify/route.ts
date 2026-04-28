@@ -6,6 +6,11 @@ import { classifyIntent } from '@/lib/ai/civic-ai';
 // Returns: ClassifyResponse JSON validated against schema
 export async function POST(req: NextRequest) {
   try {
+    const contentLength = parseInt(req.headers.get('content-length') || '0', 10);
+    if (contentLength > 2048) {
+      return NextResponse.json({ error: 'Payload too large' }, { status: 413 });
+    }
+
     const body = await req.json();
 
     if (!body?.message || typeof body.message !== 'string') {

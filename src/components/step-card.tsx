@@ -14,13 +14,13 @@ export default function StepCard({ step, stepNumber, sources }: StepCardProps) {
     .filter(Boolean)
 
   return (
-    <div className="step-item" aria-label={`Step ${stepNumber}: ${step.title}`}>
+    <div className="step-item" role="listitem" aria-label={`Step ${stepNumber}: ${step.title}`}>
       <div className="step-line" aria-hidden="true" />
       <div className="step-number" aria-hidden="true">
         {stepNumber}
       </div>
       <div className="step-content">
-        <h3 className="step-title">{step.title}</h3>
+        <h2 className="step-title">{step.title}</h2>
         <p className="step-body">{step.body}</p>
         
         {resolvedSources.length > 0 && (

@@ -34,25 +34,31 @@ export async function classifyIntent(message: string): Promise<ClassifyResponse>
   const model = getGeminiModel();
 
   const prompt = `${CLASSIFY_SYSTEM_PROMPT}\n\nUser message: "${message}"`;
-  const result = await model.generateContent(prompt);
-  const rawText = result.response.text().trim();
-
-  // Strip markdown code fences if present
-  const cleaned = rawText.replace(/^```json\s*/i, '').replace(/\s*```$/i, '').trim();
-
-  let parsed: unknown;
   try {
-    parsed = JSON.parse(cleaned);
-  } catch {
-    throw new Error(`Gemini returned non-JSON response: ${rawText.slice(0, 200)}`);
+    const result = await model.generateContent({
+      contents: [{ role: 'user', parts: [{ text: prompt }] }],
+      generationConfig: {
+        responseMimeType: 'application/json',
+      }
+    });
+    const rawText = result.response.text().trim();
+    const parsed = JSON.parse(rawText);
+    const validated = ClassifyResponseSchema.parse(parsed);
+    const safeFlowId = INTENT_TO_FLOW_ID[validated.intent as CivicIntent] ?? null;
+    return { ...validated, recommended_flow_id: safeFlowId };
+  } catch (err: any) {
+    if (err.message?.includes('SAFETY') || err.message?.includes('blocked')) {
+      return {
+        intent: 'out_of_scope',
+        confidence: 1.0,
+        needs_clarification: false,
+        follow_up_question: null,
+        user_friendly_summary: 'Your request was flagged by our safety system and cannot be processed.',
+        recommended_flow_id: null
+      };
+    }
+    throw err;
   }
-
-  // Validate against schema — halts if AI hallucinated extra fields or wrong types
-  const validated = ClassifyResponseSchema.parse(parsed);
-
-  // Enforce the recommended_flow_id from our own map, never trust the model's value
-  const safeFlowId = INTENT_TO_FLOW_ID[validated.intent as CivicIntent] ?? null;
-  return { ...validated, recommended_flow_id: safeFlowId };
 }
 
 // =============================================================================
@@ -84,16 +90,23 @@ export async function explainFlow(
 ): Promise<ExplainResponse> {
   const model = getGeminiModel();
   const prompt = buildExplainPrompt(flow, preferSimple);
-  const result = await model.generateContent(prompt);
-  const rawText = result.response.text().trim();
-  const cleaned = rawText.replace(/^```json\s*/i, '').replace(/\s*```$/i, '').trim();
-
-  let parsed: unknown;
   try {
-    parsed = JSON.parse(cleaned);
-  } catch {
-    throw new Error(`Gemini returned non-JSON response: ${rawText.slice(0, 200)}`);
+    const result = await model.generateContent({
+      contents: [{ role: 'user', parts: [{ text: prompt }] }],
+      generationConfig: {
+        responseMimeType: 'application/json',
+      }
+    });
+    const rawText = result.response.text().trim();
+    const parsed = JSON.parse(rawText);
+    return ExplainResponseSchema.parse(parsed);
+  } catch (err: any) {
+    if (err.message?.includes('SAFETY') || err.message?.includes('blocked')) {
+      return {
+        summary: 'This explanation could not be generated due to safety filters.',
+        steps: ['Please refer to the official documentation directly.']
+      };
+    }
+    throw err;
   }
-
-  return ExplainResponseSchema.parse(parsed);
 }

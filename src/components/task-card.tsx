@@ -1,5 +1,8 @@
+'use client'
+
 import Link from 'next/link'
 import type { CivicFlow } from '@/lib/types/civic'
+import { logCustomEvent } from '@/lib/firebase/config'
 
 interface TaskCardProps {
   flow: CivicFlow
@@ -11,6 +14,7 @@ export default function TaskCard({ flow, icon, description }: TaskCardProps) {
   return (
     <Link
       href={`/flow/${flow.id}`}
+      onClick={() => logCustomEvent('task_selected', { flow_id: flow.id })}
       className="task-card group"
       aria-label={`${flow.title} — ${description}`}
     >

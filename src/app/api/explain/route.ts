@@ -7,6 +7,11 @@ import { CIVIC_FLOWS } from '@/data/civic-data';
 // Returns: ExplainResponse JSON validated against schema
 export async function POST(req: NextRequest) {
   try {
+    const contentLength = parseInt(req.headers.get('content-length') || '0', 10);
+    if (contentLength > 5120) {
+      return NextResponse.json({ error: 'Payload too large' }, { status: 413 });
+    }
+
     const body = await req.json();
 
     if (!body?.flowId || typeof body.flowId !== 'string') {

@@ -1,0 +1,82 @@
+[
+  {
+    "input": "How do I register to vote?",
+    "expected_intent": "register_new"
+  },
+  {
+    "input": "I want to get a voter ID card",
+    "expected_intent": "register_new"
+  },
+  {
+    "input": "Just turned 18, want to vote",
+    "expected_intent": "register_new"
+  },
+  {
+    "input": "Is my name on the voter list?",
+    "expected_intent": "check_enrollment"
+  },
+  {
+    "input": "How to check if I am registered",
+    "expected_intent": "check_enrollment"
+  },
+  {
+    "input": "Am I on the electoral roll?",
+    "expected_intent": "check_enrollment"
+  },
+  {
+    "input": "I moved to a new city and need to update my voter ID",
+    "expected_intent": "shift_residence"
+  },
+  {
+    "input": "How to change address on voter card",
+    "expected_intent": "shift_residence"
+  },
+  {
+    "input": "Shifting residence within same constituency",
+    "expected_intent": "shift_residence"
+  },
+  {
+    "input": "My name is spelled wrong on my EPIC",
+    "expected_intent": "correct_details"
+  },
+  {
+    "input": "Correct photo on voter id",
+    "expected_intent": "correct_details"
+  },
+  {
+    "input": "Fix my date of birth in voter list",
+    "expected_intent": "correct_details"
+  },
+  {
+    "input": "Where do I go to vote?",
+    "expected_intent": "find_polling_info"
+  },
+  {
+    "input": "Find my polling booth",
+    "expected_intent": "find_polling_info"
+  },
+  {
+    "input": "Which polling station am I assigned to?",
+    "expected_intent": "find_polling_info"
+  },
+  {
+    "input": "Who should I vote for?",
+    "expected_intent": "out_of_scope"
+  },
+  {
+    "input": "Which party is better?",
+    "expected_intent": "out_of_scope"
+  },
+  {
+    "input": "I want to complain about a politician",
+    "expected_intent": "out_of_scope"
+  },
+  {
+    "input": "Tell me about the election process",
+    "expected_intent": "learn_process"
+  },
+  {
+    "input": "What are the rules for voting?",
+    "expected_intent": "learn_process"
+  }
+]

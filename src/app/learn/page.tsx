@@ -1,4 +1,23 @@
 import Image from 'next/image'
+import type { Metadata } from 'next'
+
+export const revalidate = false;
+
+export const metadata: Metadata = {
+  title: 'Learn the Process · India Election Guide',
+  description: 'Essential information about your rights and the procedural steps to voting in India.',
+  openGraph: {
+    title: 'Learn the Process · India Election Guide',
+    description: 'Essential information about your rights and the procedural steps to voting in India.',
+    url: 'https://india-election-guide.vercel.app/learn',
+    siteName: 'India Election Guide',
+    images: [{ url: '/images/og.png', width: 1200, height: 630 }],
+    locale: 'en_IN',
+    type: 'website',
+  },
+}
+import FormDecisionTree from '@/components/form-decision-tree'
+import VoterGlossary from '@/components/voter-glossary'
 
 export default function LearnPage() {
   const faqs = [
@@ -31,9 +50,10 @@ export default function LearnPage() {
               <Image 
                 src="/images/forms.png" 
                 alt="Illustration of official civic forms" 
-                width={300} 
-                height={300}
-                className="w-full max-w-[280px] h-auto object-contain mix-blend-multiply"
+                width={260} 
+                height={260}
+                sizes="(max-width: 768px) 100vw, 260px"
+                className="w-full max-w-[240px] h-auto object-contain mix-blend-multiply"
                 priority
               />
             </div>
@@ -73,6 +93,15 @@ export default function LearnPage() {
                 ))}
               </ul>
             </div>
+          </div>
+        </section>
+
+        <section className="grid grid-cols-1 md:grid-cols-2 gap-10 mb-20" aria-label="Interactive guides">
+          <div>
+            <FormDecisionTree />
+          </div>
+          <div>
+            <VoterGlossary />
           </div>
         </section>
 

@@ -1,9 +1,10 @@
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import type { Metadata } from 'next'
-import { CIVIC_FLOWS, SOURCES } from '@/data/civic-data'
+import { CIVIC_FLOWS, SOURCES, isAllowedUrl } from '@/data/civic-data'
 import StepCard from '@/components/step-card'
 import AiExplainButton from '@/components/ai-explain-button'
+import FlowCta from '@/components/flow-cta'
 
 interface Props {
   params: Promise<{ id: string }>
@@ -13,6 +14,9 @@ export async function generateStaticParams() {
   return CIVIC_FLOWS.map((f) => ({ id: f.id }))
 }
 
+export const dynamicParams = false;
+export const revalidate = false;
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id } = await params
   const flow = CIVIC_FLOWS.find((f) => f.id === id)
@@ -20,6 +24,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: `${flow.title} · India Election Guide`,
     description: flow.description,
+    openGraph: {
+      title: `${flow.title} · India Election Guide`,
+      description: flow.description,
+      url: `https://india-election-guide.vercel.app/flow/${id}`,
+      siteName: 'India Election Guide',
+      images: [{ url: '/images/og.png', width: 1200, height: 630 }],
+      locale: 'en_IN',
+      type: 'website',
+    },
   }
 }
 
@@ -49,7 +62,7 @@ export default async function FlowPage({ params }: Props) {
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-20">
           <div className="lg:col-span-8">
-            <div className="step-list">
+            <div className="step-list" role="list">
               {flow.steps.map((step, index) => (
                 <StepCard
                   key={step.id}
@@ -103,42 +116,17 @@ export default async function FlowPage({ params }: Props) {
           </aside>
         </div>
 
-        {/* Dynamic CTA Strip */}
         <div className="mt-32 p-12 bg-white border border-gray-100 rounded-[40px] flex flex-col md:flex-row items-center justify-between gap-8 shadow-sm">
           <div>
             <h3 className="text-2xl font-bold mb-1 tracking-tight">Ready to begin?</h3>
             <p className="text-text-light font-medium">Continue to the official Voters&apos; Service Portal.</p>
           </div>
-          <div className="flex gap-4">
-            {flow.nextActions.map((action) => (
-              <a
-                key={action.label}
-                href={action.href}
-                target={action.type === 'external' ? '_blank' : undefined}
-                rel={action.type === 'external' ? 'noopener noreferrer' : undefined}
-                className="h-14 px-10 bg-primary text-white font-bold rounded-2xl hover:bg-primary-hover shadow-xl shadow-primary/20 transition-all flex items-center gap-2 active:scale-95"
-              >
-                {action.label}
-                <span aria-hidden="true">→</span>
-              </a>
-            ))}
-          </div>
+          <FlowCta flowId={flow.id} actions={flow.nextActions} className="flex gap-4" />
         </div>
       </div>
 
       <div className="mobile-cta">
-        {flow.nextActions.slice(0, 1).map((action) => (
-          <a
-            key={action.label}
-            href={action.href}
-            target={action.type === 'external' ? '_blank' : undefined}
-            rel={action.type === 'external' ? 'noopener noreferrer' : undefined}
-            className="mobile-cta-btn"
-          >
-            {action.label}
-            <span aria-hidden="true">→</span>
-          </a>
-        ))}
+        <FlowCta flowId={flow.id} actions={flow.nextActions.slice(0, 1)} className="mobile-cta-btn" />
       </div>
     </div>
   )

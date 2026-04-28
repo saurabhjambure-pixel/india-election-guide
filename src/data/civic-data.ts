@@ -1,5 +1,22 @@
 import { CivicFlow, SourceRef } from '@/lib/types/civic';
 
+export const ALLOWED_SOURCE_DOMAINS = [
+  'voters.eci.gov.in',
+  'ecisveep.nic.in',
+  'electoralsearch.eci.gov.in',
+  'eci.gov.in'
+];
+
+export function isAllowedUrl(url: string) {
+  try {
+    const domain = new URL(url).hostname;
+    return ALLOWED_SOURCE_DOMAINS.includes(domain);
+  } catch {
+    return false;
+  }
+}
+
+
 export const SOURCES: Record<string, SourceRef> = {
   'eci-voter-portal': {
     id: 'eci-voter-portal',

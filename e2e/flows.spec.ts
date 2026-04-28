@@ -1,0 +1,42 @@
+import { test, expect } from '@playwright/test';
+
+const FLOWS = [
+  'register-new',
+  'check-enrollment',
+  'correct-details',
+  'shift-residence',
+  'polling-info',
+];
+
+test.describe('Civic Flows', () => {
+  for (const flow of FLOWS) {
+    test(`should load flow page: ${flow}`, async ({ page }) => {
+      await page.goto(`/flow/${flow}`);
+      
+      const heading = page.locator('h1');
+      await expect(heading).toBeVisible();
+      
+      await expect(page.getByText('Official Guidance')).toBeVisible();
+      await expect(page.getByLabel('Breadcrumb').getByRole('link', { name: 'Guide' })).toBeVisible();
+    });
+  }
+
+  test('should load timeline page', async ({ page }) => {
+    await page.goto('/timeline');
+    await expect(page.locator('h1', { hasText: 'Election Timelines' })).toBeVisible();
+  });
+
+  test('should load learn page', async ({ page }) => {
+    await page.goto('/learn');
+    await expect(page.locator('h1', { hasText: 'Learn the Process' })).toBeVisible();
+  });
+  
+  test('homepage should load and contain all task links', async ({ page }) => {
+    await page.goto('/');
+    await expect(page.locator('h1', { hasText: 'Voter guidance' })).toBeVisible();
+    
+    for (const flow of FLOWS) {
+      await expect(page.locator(`a[href="/flow/${flow}"]`)).toBeVisible();
+    }
+  });
+});
