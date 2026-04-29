@@ -14,15 +14,15 @@
 ```
 Error: expect(locator).toBeVisible() failed
 
-Locator:  locator('h1').filter({ hasText: 'Voter guidance' })
+Locator:  locator('a[href="/flow/register-new"]').first()
 Expected: visible
 Received: hidden
 Timeout:  5000ms
 
 Call log:
   - Expect "toBeVisible" with timeout 5000ms
-  - waiting for locator('h1').filter({ hasText: 'Voter guidance' })
-    9 × locator resolved to <h1 id="hero-title" class="hero__title">…</h1>
+  - waiting for locator('a[href="/flow/register-new"]').first()
+    9 × locator resolved to <a class="task-card group" href="/flow/register-new" aria-label="Register as a new voter — Enroll as a first-time voter in your constituency.">…</a>
       - unexpected value "hidden"
 
 ```
@@ -99,21 +99,21 @@ Call log:
   23 | 
   24 |   test('should load timeline page', async ({ page }) => {
   25 |     await page.goto('/timeline');
-  26 |     await expect(page.locator('h1', { hasText: 'Election Timelines' })).toBeVisible();
+  26 |     await expect(page.getByRole('heading', { level: 1, name: /Election Timelines/i })).toBeVisible();
   27 |   });
   28 | 
   29 |   test('should load learn page', async ({ page }) => {
   30 |     await page.goto('/learn');
-  31 |     await expect(page.locator('h1', { hasText: 'Learn the Process' })).toBeVisible();
+  31 |     await expect(page.getByRole('heading', { level: 1, name: /Learn the Process/i })).toBeVisible();
   32 |   });
   33 |   
   34 |   test('homepage should load and contain all task links', async ({ page }) => {
   35 |     await page.goto('/');
-> 36 |     await expect(page.locator('h1', { hasText: 'Voter guidance' })).toBeVisible();
-     |                                                                     ^ Error: expect(locator).toBeVisible() failed
+  36 |     await expect(page.locator('h1').first()).toBeAttached();
   37 |     
   38 |     for (const flow of FLOWS) {
-  39 |       await expect(page.locator(`a[href="/flow/${flow}"]`)).toBeVisible();
+> 39 |       await expect(page.locator(`a[href="/flow/${flow}"]`).first()).toBeVisible();
+     |                                                                     ^ Error: expect(locator).toBeVisible() failed
   40 |     }
   41 |   });
   42 | });

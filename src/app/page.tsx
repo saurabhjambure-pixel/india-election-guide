@@ -31,7 +31,7 @@ const FLOW_META: Record<string, { icon: string; shortDesc: string }> = {
 export default function HomePage() {
   return (
     <>
-      <section className="hero" aria-labelledby="hero-title">
+      <section className="hero">
         <div className="container-app relative">
           <div className="grid grid-cols-1 md:grid-cols-12 gap-12 items-center">
             <div className="md:col-span-7 relative z-10">

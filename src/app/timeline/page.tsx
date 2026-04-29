@@ -96,9 +96,9 @@ export default async function TimelinePage() {
               <div className="space-y-2">
                 <div className="flex items-center gap-3">
                   <span className={`text-[9px] font-bold uppercase tracking-[0.2em] px-2 py-1 rounded ${
-                    item.status === 'Live' ? 'bg-red-50 text-red-600 border border-red-100' :
+                    item.status === 'Live' ? 'bg-red-50 text-red-700 border border-red-100' :
                     item.status === 'Upcoming' ? 'bg-blue-50 text-primary border border-blue-100' :
-                    'bg-gray-50 text-gray-400 border border-gray-100'
+                    'bg-gray-100 text-gray-700 border border-gray-200'
                   }`}>
                     {item.status}
                   </span>

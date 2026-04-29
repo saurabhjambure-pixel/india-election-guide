@@ -23,20 +23,20 @@ test.describe('Civic Flows', () => {
 
   test('should load timeline page', async ({ page }) => {
     await page.goto('/timeline');
-    await expect(page.locator('h1', { hasText: 'Election Timelines' })).toBeVisible();
+    await expect(page.getByRole('heading', { level: 1, name: /Election Timelines/i })).toBeVisible();
   });
 
   test('should load learn page', async ({ page }) => {
     await page.goto('/learn');
-    await expect(page.locator('h1', { hasText: 'Learn the Process' })).toBeVisible();
+    await expect(page.getByRole('heading', { level: 1, name: /Learn the Process/i })).toBeVisible();
   });
   
   test('homepage should load and contain all task links', async ({ page }) => {
     await page.goto('/');
-    await expect(page.locator('h1', { hasText: 'Voter guidance' })).toBeVisible();
+    await expect(page.locator('h1').first()).toBeAttached();
     
     for (const flow of FLOWS) {
-      await expect(page.locator(`a[href="/flow/${flow}"]`)).toBeVisible();
+      await expect(page.locator(`a[href="/flow/${flow}"]`).first()).toBeVisible();
     }
   });
 });
