@@ -44,7 +44,8 @@ export const MOCK_TIMELINES = [
 ]
 
 export async function getTimelineSummary() {
-  if (!process.env.GEMINI_API_KEY) {
+  const apiKey = process.env.GEMINI_API_KEY;
+  if (!apiKey || apiKey === 'mock_key') {
     return 'Official summary currently being updated. Please check official sources for latest status.';
   }
   
