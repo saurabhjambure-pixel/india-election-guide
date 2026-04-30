@@ -1,6 +1,7 @@
 import { describe, it, expect, vi } from 'vitest';
 import { classifyIntent, explainFlow } from '../civic-ai';
 import * as geminiClient from '../gemini-client';
+import type { CivicFlow } from '../../types/civic';
 
 vi.mock('../gemini-client', () => ({
   getGeminiModel: vi.fn(),
