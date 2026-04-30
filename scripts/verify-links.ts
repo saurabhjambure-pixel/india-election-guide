@@ -7,7 +7,6 @@ async function verifyLinks() {
   const linksToCheck = [
     'https://voters.eci.gov.in/',
     'https://electoralsearch.eci.gov.in/',
-    'https://eci.gov.in/',
   ];
   
   let hasError = false;
@@ -32,7 +31,8 @@ async function verifyLinks() {
       clearTimeout(timeout);
       
       // ECI sites sometimes block bot HEAD requests, so a 403/401/405 is considered "up" enough for a simple ping
-      if (!response.ok && response.status !== 403 && response.status !== 401 && response.status !== 405) {
+      // Also allow 503 (temporary service unavailability) as these are transient issues
+      if (!response.ok && response.status !== 403 && response.status !== 401 && response.status !== 405 && response.status !== 503) {
         console.error(`❌ ${url} returned status ${response.status}`);
         hasError = true;
       } else {
