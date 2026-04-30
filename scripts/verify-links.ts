@@ -21,9 +21,17 @@ async function verifyLinks() {
 
     try {
       console.log(`Checking ${url}...`);
-      const response = await fetch(url, { method: 'HEAD', headers: { 'User-Agent': 'IndiaElectionGuide/1.0' } });
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 10000); // 10s timeout
       
-      // ECI sites sometimes block bot HEAD requests, so a 403/401 is considered "up" enough for a simple ping
+      const response = await fetch(url, { 
+        method: 'HEAD', 
+        headers: { 'User-Agent': 'IndiaElectionGuide/1.0' },
+        signal: controller.signal
+      });
+      clearTimeout(timeout);
+      
+      // ECI sites sometimes block bot HEAD requests, so a 403/401/405 is considered "up" enough for a simple ping
       if (!response.ok && response.status !== 403 && response.status !== 401 && response.status !== 405) {
         console.error(`❌ ${url} returned status ${response.status}`);
         hasError = true;
