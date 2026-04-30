@@ -19,6 +19,7 @@ export const metadata: Metadata = {
 import ChatInput from '@/components/chat-input'
 import TaskCard from '@/components/task-card'
 import { CIVIC_FLOWS } from '@/data/civic-data'
+import type { CivicFlow } from '@/lib/types/civic'
 
 const FLOW_META: Record<string, { icon: string; shortDesc: string }> = {
   'register-new':    { icon: '🗳️', shortDesc: 'Enroll as a first-time voter in your constituency.' },
@@ -86,7 +87,16 @@ export default function HomePage() {
 
             <div role="listitem">
               <TaskCard
-                flow={{ id: 'timeline', title: 'Election Calendar', steps: [], nextActions: [], warnings: [], description: '' } as CivicFlow}
+                flow={{ 
+                  id: 'timeline', 
+                  title: 'Election Calendar', 
+                  intent: 'view_timeline',
+                  description: 'View upcoming election dates and registration deadlines.',
+                  steps: [], 
+                  nextActions: [], 
+                  warnings: [], 
+                  updatedAt: new Date().toISOString() 
+                } as CivicFlow}
                 icon="📅"
                 description="View upcoming election dates and registration deadlines."
               />

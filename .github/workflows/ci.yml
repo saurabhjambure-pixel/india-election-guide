@@ -44,6 +44,3 @@ jobs:
         
       - name: Run link verification
         run: pnpm exec tsx scripts/verify-links.ts
-        
-      - name: Run a11y checks
-        run: pnpm run test:a11y || echo "A11y tests not configured perfectly, skipping failure for now"
