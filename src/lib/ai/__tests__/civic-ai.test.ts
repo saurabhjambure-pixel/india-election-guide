@@ -23,7 +23,7 @@ describe('civic-ai', () => {
 
     vi.mocked(geminiClient.getGeminiModel).mockReturnValue({
       generateContent: vi.fn().mockResolvedValue(mockResponse),
-    } as any);
+    } as unknown as ReturnType<typeof geminiClient.getGeminiModel>);
 
     const result = await classifyIntent('How do I register?');
     expect(result.intent).toBe('register_new');
@@ -42,9 +42,9 @@ describe('civic-ai', () => {
 
     vi.mocked(geminiClient.getGeminiModel).mockReturnValue({
       generateContent: vi.fn().mockResolvedValue(mockResponse),
-    } as any);
+    } as unknown as ReturnType<typeof geminiClient.getGeminiModel>);
 
-    const flow = { id: 'test', title: 'Test', steps: [], nextActions: [], warnings: [], description: '' } as any;
+    const flow = { id: 'test', title: 'Test', steps: [], nextActions: [], warnings: [], description: '' } as unknown as CivicFlow;
     const result = await explainFlow(flow, true);
     expect(result.summary).toBe('Simple summary');
     expect(result.steps).toHaveLength(1);

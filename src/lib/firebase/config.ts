@@ -24,7 +24,7 @@ if (typeof window !== 'undefined') {
 
 export { app, analytics };
 
-export const logCustomEvent = (eventName: string, eventParams?: Record<string, any>) => {
+export const logCustomEvent = (eventName: string, eventParams?: Record<string, unknown>) => {
   if (typeof window !== 'undefined' && analytics) {
     import('firebase/analytics').then(({ logEvent }) => {
       logEvent(analytics as Analytics, eventName, eventParams);

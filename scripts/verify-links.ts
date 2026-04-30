@@ -2,12 +2,6 @@ import { isAllowedUrl } from '../src/data/civic-data';
 
 // A lightweight script to run in CI to verify allowed official links don't return 404s
 async function verifyLinks() {
-  const ALLOWED_SOURCE_DOMAINS = [
-    'eci.gov.in',
-    'voters.eci.gov.in',
-    'ecisveep.nic.in',
-    'electoralsearch.eci.gov.in',
-  ]
   
   // Just some sample high-value links to check to verify the domains are up
   const linksToCheck = [
@@ -36,8 +30,9 @@ async function verifyLinks() {
       } else {
         console.log(`✅ ${url} is up.`);
       }
-    } catch (err: any) {
-      console.error(`❌ Failed to fetch ${url}: ${err.message}`);
+    } catch (err: unknown) {
+      const error = err as Error;
+      console.error(`❌ Failed to fetch ${url}: ${error.message}`);
       hasError = true;
     }
   }

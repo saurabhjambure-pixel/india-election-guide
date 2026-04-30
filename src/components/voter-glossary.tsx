@@ -40,7 +40,7 @@ export default function VoterGlossary() {
             <p className="text-text-secondary text-sm leading-relaxed font-medium">{item.def}</p>
           </div>
         )) : (
-          <div className="p-8 text-center text-text-secondary font-medium">No terms found matching "{search}".</div>
+          <div className="p-8 text-center text-text-secondary font-medium">No terms found matching &quot;{search}&quot;.</div>
         )}
       </div>
     </div>

@@ -57,7 +57,7 @@ ${JSON.stringify(MOCK_TIMELINES, null, 2)}`;
   
     const result = await model.generateContent(prompt);
     return result.response.text();
-  } catch (err) {
+  } catch {
     return 'Unable to generate summary at this time.';
   }
 }

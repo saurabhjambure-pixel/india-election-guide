@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import type { Metadata } from 'next'
-import { CIVIC_FLOWS, SOURCES, isAllowedUrl } from '@/data/civic-data'
+import { CIVIC_FLOWS, SOURCES } from '@/data/civic-data'
 import StepCard from '@/components/step-card'
 import AiExplainButton from '@/components/ai-explain-button'
 import FlowCta from '@/components/flow-cta'

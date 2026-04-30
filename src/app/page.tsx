@@ -86,7 +86,7 @@ export default function HomePage() {
 
             <div role="listitem">
               <TaskCard
-                flow={{ id: 'timeline', title: 'Election Calendar', steps: [], nextActions: [], warnings: [], description: '' } as any}
+                flow={{ id: 'timeline', title: 'Election Calendar', steps: [], nextActions: [], warnings: [], description: '' } as CivicFlow}
                 icon="📅"
                 description="View upcoming election dates and registration deadlines."
               />

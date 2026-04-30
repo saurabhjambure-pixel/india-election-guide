@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect, type Page } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 
 const FLOWS = [
@@ -11,7 +11,7 @@ const FLOWS = [
 
 // In Next.js 16 production (RSC streaming), the page HTML arrives via inline script chunks.
 // Playwright sees them after a short wait once the browser processes those scripts.
-const waitForPageReady = async (page: any) => page.waitForTimeout(2000);
+const waitForPageReady = async (page: Page) => page.waitForTimeout(2000);
 
 test.describe('Accessibility Checks', () => {
   test('homepage should not have any automatically detectable accessibility issues', async ({ page }) => {

@@ -46,8 +46,9 @@ export async function classifyIntent(message: string): Promise<ClassifyResponse>
     const validated = ClassifyResponseSchema.parse(parsed);
     const safeFlowId = INTENT_TO_FLOW_ID[validated.intent as CivicIntent] ?? null;
     return { ...validated, recommended_flow_id: safeFlowId };
-  } catch (err: any) {
-    if (err.message?.includes('SAFETY') || err.message?.includes('blocked')) {
+  } catch (err: unknown) {
+    const error = err as Error;
+    if (error.message?.includes('SAFETY') || error.message?.includes('blocked')) {
       return {
         intent: 'out_of_scope',
         confidence: 1.0,
@@ -100,8 +101,9 @@ export async function explainFlow(
     const rawText = result.response.text().trim();
     const parsed = JSON.parse(rawText);
     return ExplainResponseSchema.parse(parsed);
-  } catch (err: any) {
-    if (err.message?.includes('SAFETY') || err.message?.includes('blocked')) {
+  } catch (err: unknown) {
+    const error = err as Error;
+    if (error.message?.includes('SAFETY') || error.message?.includes('blocked')) {
       return {
         summary: 'This explanation could not be generated due to safety filters.',
         steps: ['Please refer to the official documentation directly.']
