@@ -18,6 +18,13 @@ export interface NextAction {
   type: 'external' | 'internal';
 }
 
+export interface DocumentItem {
+  name: string;
+  category: 'age' | 'address' | 'identity' | 'other';
+  note: string;            // what it satisfies / any caveats
+  examples?: string[];     // concrete example documents in this category
+}
+
 export interface CivicFlow {
   id: string;
   intent: string;
@@ -26,6 +33,7 @@ export interface CivicFlow {
   eligibilityNote?: string;
   steps: CivicStep[];
   requiredInfo?: string[];
+  documents?: DocumentItem[];
   nextActions: NextAction[];
   warnings: string[];
   updatedAt: string;

@@ -5,6 +5,8 @@ import { CIVIC_FLOWS, SOURCES } from '@/data/civic-data'
 import StepCard from '@/components/step-card'
 import AiExplainButton from '@/components/ai-explain-button'
 import FlowCta from '@/components/flow-cta'
+import FlowFeedback from '@/components/flow-feedback'
+import DocumentGuide from '@/components/document-guide'
 
 interface Props {
   params: Promise<{ id: string }>
@@ -14,8 +16,10 @@ export async function generateStaticParams() {
   return CIVIC_FLOWS.map((f) => ({ id: f.id }))
 }
 
-export const dynamicParams = false;
-export const revalidate = false;
+// true: new flows added to civic-data.ts are served immediately on first request (ISR)
+// without a full redeploy — and are cached for 1 hour thereafter.
+export const dynamicParams = true;
+export const revalidate = 3600;
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id } = await params
@@ -62,12 +66,32 @@ export default async function FlowPage({ params }: Props) {
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-20">
           <div className="lg:col-span-8">
+            {/* Step progress bar */}
+            <div className="mb-12" aria-label={`Progress: ${flow.steps.length} steps in this guide`}>
+              <div className="flex items-center justify-between mb-3">
+                <span className="text-[11px] font-bold uppercase tracking-widest text-text-light">
+                  {flow.steps.length} step{flow.steps.length !== 1 ? 's' : ''} in this guide
+                </span>
+              </div>
+              <div
+                role="progressbar"
+                aria-valuemin={0}
+                aria-valuemax={flow.steps.length}
+                aria-valuenow={flow.steps.length}
+                aria-label={`${flow.steps.length} steps total`}
+                className="h-1 w-full bg-gray-100 rounded-full overflow-hidden"
+              >
+                <div className="h-full bg-primary rounded-full w-full" />
+              </div>
+            </div>
+
             <div className="step-list" role="list">
               {flow.steps.map((step, index) => (
                 <StepCard
                   key={step.id}
                   step={step}
                   stepNumber={index + 1}
+                  totalSteps={flow.steps.length}
                   sources={SOURCES}
                 />
               ))}
@@ -97,6 +121,9 @@ export default async function FlowPage({ params }: Props) {
                     </li>
                   ))}
                 </ul>
+                {flow.documents && flow.documents.length > 0 && (
+                  <DocumentGuide documents={flow.documents} />
+                )}
               </section>
             )}
 
@@ -123,6 +150,8 @@ export default async function FlowPage({ params }: Props) {
           </div>
           <FlowCta flowId={flow.id} actions={flow.nextActions} className="flex gap-4" />
         </div>
+
+        <FlowFeedback flowId={flow.id} />
       </div>
 
       <div className="mobile-cta">
@@ -131,3 +160,4 @@ export default async function FlowPage({ params }: Props) {
     </div>
   )
 }
+

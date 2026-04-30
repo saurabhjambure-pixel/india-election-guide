@@ -30,8 +30,20 @@ Return ONLY this JSON object, no other text:
 }
 `.trim();
 
+const AI_UNAVAILABLE_RESPONSE: ClassifyResponse = {
+  intent: 'out_of_scope',
+  confidence: 0,
+  needs_clarification: false,
+  follow_up_question: null,
+  user_friendly_summary: 'AI guidance is not available right now. Please use the task buttons below to find your guide.',
+  recommended_flow_id: null,
+};
+
 export async function classifyIntent(message: string): Promise<ClassifyResponse> {
   const model = getGeminiModel();
+
+  // Gemini not configured (no API key) — degrade to task-card navigation
+  if (!model) return AI_UNAVAILABLE_RESPONSE;
 
   const prompt = `${CLASSIFY_SYSTEM_PROMPT}\n\nUser message: "${message}"`;
   try {
@@ -90,6 +102,15 @@ export async function explainFlow(
   preferSimple = false
 ): Promise<ExplainResponse> {
   const model = getGeminiModel();
+
+  // Gemini not configured — return plain-text copy of the official steps
+  if (!model) {
+    return {
+      summary: flow.description,
+      steps: flow.steps.map((s) => `${s.title}: ${s.body}`),
+    };
+  }
+
   const prompt = buildExplainPrompt(flow, preferSimple);
   try {
     const result = await model.generateContent({

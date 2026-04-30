@@ -1,4 +1,4 @@
-import { initializeApp, getApps, getApp } from 'firebase/app';
+import { initializeApp, getApps, getApp, FirebaseApp } from 'firebase/app';
 import { getAnalytics, isSupported, Analytics } from 'firebase/analytics';
 
 const firebaseConfig = {
@@ -11,23 +11,51 @@ const firebaseConfig = {
   measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID,
 };
 
-const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
+// Firebase requires projectId at minimum — skip initialization entirely if not configured.
+// This makes the app work locally without a .env.local file; analytics events become no-ops.
+const isFirebaseConfigured = Boolean(firebaseConfig.projectId && firebaseConfig.apiKey && firebaseConfig.appId);
 
+let app: FirebaseApp | null = null;
 let analytics: Analytics | null = null;
-if (typeof window !== 'undefined') {
-  isSupported().then((yes) => {
-    if (yes) {
-      analytics = getAnalytics(app);
-    }
-  });
+
+if (isFirebaseConfigured) {
+  app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
+
+  if (typeof window !== 'undefined' && app) {
+    const firebaseApp = app;
+    isSupported().then((yes) => {
+      if (yes && firebaseApp) {
+        analytics = getAnalytics(firebaseApp);
+      }
+    }).catch(() => {
+      // Analytics unsupported or blocked (e.g. ad-blocker) — silent no-op
+    });
+  }
 }
 
 export { app, analytics };
 
-export const logCustomEvent = (eventName: string, eventParams?: Record<string, unknown>) => {
-  if (typeof window !== 'undefined' && analytics) {
-    import('firebase/analytics').then(({ logEvent }) => {
-      logEvent(analytics as Analytics, eventName, eventParams);
-    });
+// ---------------------------------------------------------------------------
+// Session ID — a non-PII UUID scoped to the browser tab session.
+// Stored in sessionStorage so it resets on new tab/window.
+// Included in every analytics event to enable funnel analysis:
+//   classify_success → flow_completed, explain_click, source_chip_clicked
+// ---------------------------------------------------------------------------
+function getSessionId(): string {
+  if (typeof window === 'undefined') return 'server';
+  const key = 'ieg_session_id';
+  let id = sessionStorage.getItem(key);
+  if (!id) {
+    id = crypto.randomUUID();
+    sessionStorage.setItem(key, id);
   }
+  return id;
+}
+
+export const logCustomEvent = (eventName: string, eventParams?: Record<string, unknown>) => {
+  if (!analytics || typeof window === 'undefined') return;
+  const params = { ...eventParams, session_id: getSessionId() };
+  import('firebase/analytics').then(({ logEvent }) => {
+    logEvent(analytics as Analytics, eventName, params);
+  }).catch(() => {/* silent — analytics failure must never break the app */});
 };

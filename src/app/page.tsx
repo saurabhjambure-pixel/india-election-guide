@@ -110,29 +110,68 @@ export default function HomePage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-20 items-center">
             <div>
               <div className="mb-8">
-                 <Image 
-                    src="/images/trust.png" 
-                    alt="Trust and Security Emblem" 
-                    width={80} 
-                    height={80}
-                    sizes="80px"
-                    className="w-20 h-20 object-contain drop-shadow-sm"
-                 />
+                <Image
+                  src="/images/trust.png"
+                  alt="Trust and Security Emblem"
+                  width={80}
+                  height={80}
+                  sizes="80px"
+                  className="w-20 h-20 object-contain drop-shadow-sm"
+                />
               </div>
               <h2 className="text-3xl font-extrabold mb-6 tracking-tight" id="trust-heading">Built on official data.</h2>
               <p className="text-text-light text-lg font-medium leading-relaxed">
                 This guide translates complex official notifications into clear, actionable steps. We never invent rules or store personal identity data.
               </p>
+              <p className="mt-4 text-xs font-bold uppercase tracking-widest text-text-light opacity-60">
+                Privacy by Design — No voter IDs or EPIC numbers are stored.
+              </p>
             </div>
-            <div className="space-y-10">
+
+            {/* Named official sources with domain names */}
+            <div className="space-y-4">
+              <p className="text-[11px] font-bold uppercase tracking-widest text-text-light mb-6">Official sources used in this guide</p>
               {[
-                { label: 'Official Sources', desc: 'Every procedural step links to the official ECI portal.' },
-                { label: 'Privacy by Design', desc: 'No voter IDs or EPIC numbers are ever stored.' },
-              ].map((item) => (
-                <div key={item.label}>
-                  <p className="font-bold text-text-title mb-2 tracking-tight">{item.label}</p>
-                  <p className="text-text-light text-sm font-medium">{item.desc}</p>
-                </div>
+                {
+                  name: 'Election Commission of India',
+                  domain: 'eci.gov.in',
+                  desc: 'Constitutional body overseeing all Indian elections.',
+                  href: 'https://eci.gov.in/',
+                },
+                {
+                  name: "Voters' Service Portal",
+                  domain: 'voters.eci.gov.in',
+                  desc: 'Register, correct details, shift address, download e-EPIC.',
+                  href: 'https://voters.eci.gov.in/',
+                },
+                {
+                  name: 'Electoral Search',
+                  domain: 'electoralsearch.eci.gov.in',
+                  desc: 'Check your name on the roll and find your polling station.',
+                  href: 'https://electoralsearch.eci.gov.in/',
+                },
+                {
+                  name: 'SVEEP',
+                  domain: 'ecisveep.nic.in',
+                  desc: "ECI's voter awareness and participation programme.",
+                  href: 'https://ecisveep.nic.in/',
+                },
+              ].map((src) => (
+                <a
+                  key={src.domain}
+                  href={src.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`${src.name} — ${src.domain} (opens in a new tab)`}
+                  className="flex items-start gap-4 p-4 bg-white border border-border rounded-2xl hover:border-primary/20 hover:shadow-subtle transition-all group"
+                >
+                  <span className="w-2 h-2 rounded-full bg-green-500 mt-2 shrink-0" aria-hidden="true" />
+                  <div>
+                    <p className="font-bold text-text-title text-sm group-hover:text-primary transition-colors">{src.name}</p>
+                    <p className="text-[11px] font-mono text-text-light mt-0.5">{src.domain}</p>
+                    <p className="text-xs text-text-light mt-1">{src.desc}</p>
+                  </div>
+                </a>
               ))}
             </div>
           </div>

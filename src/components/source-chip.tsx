@@ -18,7 +18,7 @@ export default function SourceChip({ source }: SourceChipProps) {
       rel="noopener noreferrer"
       onClick={() => logCustomEvent('source_chip_clicked', { source_id: source.id })}
       className="source-chip"
-      aria-label={`Official source: ${source.name}`}
+      aria-label={`Official source: ${source.name} (opens in a new tab)`}
       title={source.organization}
     >
       <span aria-hidden="true" className="mr-1">🔒</span>

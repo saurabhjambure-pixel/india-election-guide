@@ -12,19 +12,25 @@ interface Action {
 interface Props {
   flowId: string;
   actions: Action[];
+  variant?: 'default' | 'mobile';
   className?: string;
 }
 
-export default function FlowCta({ flowId, actions, className }: Props) {
+export default function FlowCta({ flowId, actions, variant, className }: Props) {
+  const isMobile = variant === 'mobile' || className?.includes('mobile-cta-btn');
+
   return (
     <div className={className}>
       {actions.map((action) => {
         if (action.type === 'external' && !isAllowedUrl(action.href)) return null;
-        
-        const isMobile = className?.includes('mobile-cta-btn');
-        const baseClass = isMobile 
-          ? "mobile-cta-btn" 
-          : "h-14 px-10 bg-primary text-white font-bold rounded-2xl hover:bg-primary-hover shadow-xl shadow-primary/20 transition-all flex items-center gap-2 active:scale-95";
+
+        const baseClass = isMobile
+          ? 'mobile-cta-btn'
+          : 'h-14 px-10 bg-primary text-white font-bold rounded-2xl hover:bg-primary-hover shadow-xl shadow-primary/20 transition-all flex items-center gap-2 active:scale-95';
+
+        const ariaLabel = action.type === 'external'
+          ? `${action.label} (opens in a new tab)`
+          : action.label;
 
         return (
           <a
@@ -32,6 +38,7 @@ export default function FlowCta({ flowId, actions, className }: Props) {
             href={action.href}
             target={action.type === 'external' ? '_blank' : undefined}
             rel={action.type === 'external' ? 'noopener noreferrer' : undefined}
+            aria-label={ariaLabel}
             onClick={() => logCustomEvent('flow_completed', { flow_id: flowId, action: action.label })}
             className={baseClass}
           >

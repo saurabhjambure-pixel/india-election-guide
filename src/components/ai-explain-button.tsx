@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { ExplainResponseSchema, type ExplainResponse } from '@/lib/ai/schemas'
+import { logCustomEvent } from '@/lib/firebase/config'
 
 interface AiExplainProps {
   flowId: string
@@ -15,11 +16,11 @@ export default function AiExplainButton({ flowId }: AiExplainProps) {
   async function handleExplain() {
     setLoading(true)
     setError(null)
+    logCustomEvent('explain_click', { flow_id: flowId })
     try {
-      const res = await fetch('/api/explain', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ flowId, preferSimpleLanguage: true }),
+      // GET request — browser and CDN will cache this response for 24 hours
+      const res = await fetch(`/api/explain?flowId=${encodeURIComponent(flowId)}&simple=true`, {
+        method: 'GET',
       })
       if (!res.ok) throw new Error('Explain failed')
       const rawData = await res.json()
@@ -39,16 +40,30 @@ export default function AiExplainButton({ flowId }: AiExplainProps) {
           <span className="ai-explain-box__badge">AI</span>
           Plain-language summary
         </div>
+
         <p className="ai-explain-box__summary">{data.summary}</p>
-        <ul className="ai-explain-box__steps" aria-label="Simplified steps">
+
+        {/* Numbered steps with visual hierarchy */}
+        <ol className="mt-4 space-y-3" aria-label="Simplified steps">
           {data.steps.map((step, i) => (
-            <li key={i} className="ai-explain-box__step">
-              {step}
+            <li
+              key={i}
+              className="flex gap-3 items-start"
+              aria-label={`Step ${i + 1} of ${data.steps.length}`}
+            >
+              <span
+                className="flex-shrink-0 w-6 h-6 rounded-full bg-primary/10 text-primary text-xs font-bold flex items-center justify-center mt-0.5"
+                aria-hidden="true"
+              >
+                {i + 1}
+              </span>
+              <span className="text-sm text-text-secondary leading-relaxed">{step}</span>
             </li>
           ))}
-        </ul>
-        <p style={{ marginTop: 12, fontSize: '0.72rem', color: 'var(--color-gray-400)' }}>
-          AI-generated summary · Verify details with official sources above
+        </ol>
+
+        <p className="mt-4 text-[11px] font-semibold text-text-light border-t border-gray-100 pt-3">
+          AI-generated from official ECI text · For legal accuracy, verify with the official sources linked above
         </p>
       </div>
     )
