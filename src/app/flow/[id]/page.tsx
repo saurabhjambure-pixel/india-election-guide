@@ -118,7 +118,7 @@ export default async function FlowPage({ params }: Props) {
 
         <div className="mt-32 p-12 bg-white border border-gray-100 rounded-[40px] flex flex-col md:flex-row items-center justify-between gap-8 shadow-sm">
           <div>
-            <h3 className="text-2xl font-bold mb-1 tracking-tight">Ready to begin?</h3>
+            <h2 className="text-2xl font-bold mb-1 tracking-tight">Ready to begin?</h2>
             <p className="text-text-light font-medium">Continue to the official Voters&apos; Service Portal.</p>
           </div>
           <FlowCta flowId={flow.id} actions={flow.nextActions} className="flex gap-4" />

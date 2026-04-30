@@ -58,9 +58,8 @@ export default function ChatInput() {
   async function handleSubmit(e: FormEvent) {
     e.preventDefault()
     if (timeoutRef.current) clearTimeout(timeoutRef.current)
-    timeoutRef.current = setTimeout(() => {
-      submitQuery(value.trim())
-    }, 300)
+    // Submit immediately — no debounce on explicit submit
+    submitQuery(value.trim())
   }
 
   return (

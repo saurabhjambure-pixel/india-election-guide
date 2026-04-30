@@ -24,7 +24,7 @@ export default function VoterGlossary() {
   return (
     <div className="bg-white border border-border rounded-2xl overflow-hidden shadow-sm h-full flex flex-col">
       <div className="p-6 bg-gray-50/50 border-b border-border">
-        <h3 className="text-xl font-bold mb-4 text-navy">Voter Glossary</h3>
+        <h2 className="text-xl font-bold mb-4 text-navy">Voter Glossary</h2>
         <input 
           type="search" 
           placeholder="Search terms (e.g., EPIC, Form 6)..." 

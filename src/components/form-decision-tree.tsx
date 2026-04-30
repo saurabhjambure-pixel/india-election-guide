@@ -18,7 +18,7 @@ export default function FormDecisionTree() {
 
   return (
     <div className="bg-white border border-border p-8 rounded-2xl shadow-subtle h-full">
-      <h3 className="text-xl font-bold text-navy mb-6">Which form do I need?</h3>
+      <h2 className="text-xl font-bold text-navy mb-6">Which form do I need?</h2>
       
       <div className="min-h-[160px]" aria-live="polite">
         {step === 'q1' && (

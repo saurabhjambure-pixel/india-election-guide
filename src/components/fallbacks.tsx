@@ -43,7 +43,7 @@ export function OutOfScopeState({ query }: { query: string }) {
   return (
     <div className="p-8 bg-gray-50 border border-border rounded-2xl text-center">
       <p className="text-4xl mb-4" aria-hidden="true">🤐</p>
-      <h3 className="text-xl font-bold mb-2">Out of Scope</h3>
+      <h2 className="text-xl font-bold mb-2">Out of Scope</h2>
       <p className="text-text-secondary text-sm mb-6 max-w-sm mx-auto">
         I noticed you asked about &quot;{query}&quot;. As an official election guide, I only provide non-partisan information about voting procedures and rules. I cannot provide political opinions, campaign info, or legal advice.
       </p>
