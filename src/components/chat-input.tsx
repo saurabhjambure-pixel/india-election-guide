@@ -119,10 +119,10 @@ export default function ChatInput() {
 
       {/* Clarification question — shown as an interactive prompt above the input */}
       {clarificationContext && (
-        <div className="mt-6 p-6 bg-gray-50 border border-gray-200 rounded-2xl" role="status" aria-live="polite">
-          <p className="text-[10px] font-bold text-text-light uppercase tracking-widest mb-2">One more thing</p>
-          <p className="text-text-title font-bold text-lg leading-snug">{clarificationContext.question}</p>
-          <p className="text-xs text-text-light mt-2">Type your answer above and press Send.</p>
+        <div className="mt-6 p-6 rounded-2xl note-box" role="status" aria-live="polite">
+          <p className="eyebrow mb-2">One more thing</p>
+          <p className="font-bold text-lg leading-snug serif" style={{ color: 'var(--ink)' }}>{clarificationContext.question}</p>
+          <p className="text-xs mt-2" style={{ color: 'var(--ink-3)' }}>Type your answer above and press Send.</p>
         </div>
       )}
 
@@ -133,7 +133,7 @@ export default function ChatInput() {
               <button
                 type="button"
                 onClick={() => handleExamplePrompt(p)}
-                className="text-[12px] font-bold text-text-light hover:text-primary transition-colors active:scale-95"
+                className="text-[12px] font-bold transition-colors active:scale-95 pill pill-accent"
               >
                 {p} <span className="opacity-20 ml-1">·</span>
               </button>
@@ -143,8 +143,8 @@ export default function ChatInput() {
       )}
 
       {error && (
-        <div className="mt-8 p-6 bg-red-50 border border-red-100 rounded-2xl">
-          <p role="alert" className="text-sm font-bold text-red-700">⚠ {error}</p>
+        <div className="mt-8 p-6 rounded-2xl border" style={{ background: 'rgba(225, 29, 72, 0.05)', borderColor: 'rgba(225, 29, 72, 0.2)' }}>
+          <p role="alert" className="text-sm font-bold" style={{ color: '#e11d48' }}>⚠ {error}</p>
         </div>
       )}
 

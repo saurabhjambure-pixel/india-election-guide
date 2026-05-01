@@ -25,7 +25,7 @@ const FAQ_CATEGORIES = [
     faqs: [
       {
         q: 'Who is eligible to vote in India?',
-        a: 'Any Indian citizen who is 18 years or older on January 1 of the year of the electoral roll revision, and is an ordinary resident of the polling area. NRIs can register as overseas electors using Form 6A.',
+        a: 'Any Indian citizen who is 18 years or older on any of the four qualifying dates (January 1, April 1, July 1, or October 1) of the year of revision, and is an ordinary resident of the polling area. NRIs can register as overseas electors using Form 6A.',
       },
       {
         q: 'Can I register online?',
@@ -75,7 +75,7 @@ const FAQ_CATEGORIES = [
     faqs: [
       {
         q: 'Can I vote without my EPIC card?',
-        a: 'Yes. Your EPIC (Voter ID) is not the only valid identity document at the polling booth. Any of the 11 approved photo-identity documents (Aadhaar, PAN card, passport, driving licence, etc.) are accepted. However, your name must be on the electoral roll at that booth — documents alone are not sufficient without prior registration.',
+        a: 'Yes. Your EPIC (Voter ID) is not the only valid identity document at the polling booth. Any of the 12 approved photo-identity documents (Aadhaar, PAN card, passport, driving licence, etc.) are accepted. However, your name must be on the electoral roll at that booth — documents alone are not sufficient without prior registration.',
       },
       {
         q: 'What are the polling booth timings?',

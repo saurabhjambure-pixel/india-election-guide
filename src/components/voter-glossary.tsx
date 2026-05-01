@@ -21,7 +21,7 @@ const GLOSSARY = [
   // Electoral Roll
   { term: 'Electoral Roll', def: 'The official list of registered voters for a specific constituency. Also called the voter list or electoral register.' },
   { term: 'Constituency',  def: 'A specific geographic area that elects one representative to a legislative body (Lok Sabha or State Assembly).' },
-  { term: 'Qualifying Date', def: 'The date on which you must be 18+ to be eligible to register. Currently January 1 of the year of revision (previously four dates a year).' },
+  { term: 'Qualifying Date', def: 'The date on which you must be 18+ to be eligible to register. There are now four qualifying dates a year: January 1, April 1, July 1, and October 1 (previously only January 1).' },
   { term: 'Summary Revision', def: 'The annual process of updating the electoral roll — adding new voters, removing deceased entries, and correcting errors. Usually done before major elections.' },
   { term: 'Special Summary Revision', def: 'An additional round of roll revision ordered by ECI, often held before a major election announcement.' },
   { term: 'Overseas Elector', def: 'An Indian citizen living abroad who is registered to vote in their home constituency in India using Form 6A.' },

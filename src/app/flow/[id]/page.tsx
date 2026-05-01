@@ -49,17 +49,17 @@ export default async function FlowPage({ params }: Props) {
     <div className="pb-40">
       <div className="container-app">
         <header className="flow-header">
-          <nav className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-widest text-text-light mb-12" aria-label="Breadcrumb">
-            <Link href="/" className="hover:text-primary transition-colors">Guide</Link>
+          <nav className="flex items-center gap-2 eyebrow mb-12" aria-label="Breadcrumb">
+            <Link href="/" className="hover:opacity-70 transition-colors">Guide</Link>
             <span aria-hidden="true" className="opacity-20">/</span>
-            <span className="text-text-title">{flow.title}</span>
+            <span style={{ color: 'var(--ink)' }}>{flow.title}</span>
           </nav>
-          
-          <div className="inline-flex items-center gap-2 px-3 py-1 bg-green-50 text-green-700 text-[10px] font-bold uppercase tracking-widest rounded-md mb-6 border border-green-100">
+
+          <div className="pill pill-good mb-6 text-[10px]">
             Official Guidance
           </div>
-          <h1 className="flow-title">{flow.title}</h1>
-          <p className="text-xl text-text-light font-medium max-w-2xl leading-relaxed">
+          <h1 className="flow-title serif">{flow.title}</h1>
+          <p className="text-xl font-medium max-w-2xl leading-relaxed" style={{ color: 'var(--ink-2)' }}>
             {flow.description}
           </p>
         </header>
@@ -69,7 +69,7 @@ export default async function FlowPage({ params }: Props) {
             {/* Step progress bar */}
             <div className="mb-12" aria-label={`Progress: ${flow.steps.length} steps in this guide`}>
               <div className="flex items-center justify-between mb-3">
-                <span className="text-[11px] font-bold uppercase tracking-widest text-text-light">
+                <span className="eyebrow">
                   {flow.steps.length} step{flow.steps.length !== 1 ? 's' : ''} in this guide
                 </span>
               </div>
@@ -79,9 +79,10 @@ export default async function FlowPage({ params }: Props) {
                 aria-valuemax={flow.steps.length}
                 aria-valuenow={flow.steps.length}
                 aria-label={`${flow.steps.length} steps total`}
-                className="h-1 w-full bg-gray-100 rounded-full overflow-hidden"
+                className="h-1 w-full rounded-full overflow-hidden"
+                style={{ background: 'var(--line)' }}
               >
-                <div className="h-full bg-primary rounded-full w-full" />
+                <div className="h-full rounded-full w-full" style={{ background: 'var(--accent)' }} />
               </div>
             </div>
 
@@ -115,8 +116,8 @@ export default async function FlowPage({ params }: Props) {
                 <h2 className="note-label" id="checklist-heading">What you&apos;ll need</h2>
                 <ul className="space-y-4">
                   {flow.requiredInfo.map((item) => (
-                    <li key={item} className="flex items-start gap-4 text-[14px] text-text-body font-medium leading-snug">
-                      <span className="w-1.5 h-1.5 bg-primary rounded-full mt-2 shrink-0" aria-hidden="true" />
+                    <li key={item} className="flex items-start gap-4 text-[14px] font-medium leading-snug" style={{ color: 'var(--ink-2)' }}>
+                      <span className="w-1.5 h-1.5 rounded-full mt-2 shrink-0" style={{ background: 'var(--accent)' }} aria-hidden="true" />
                       {item}
                     </li>
                   ))}
@@ -128,11 +129,11 @@ export default async function FlowPage({ params }: Props) {
             )}
 
             {flow.warnings.length > 0 && (
-              <section aria-labelledby="warnings-heading" className="p-8 bg-red-50/50 border border-red-100 rounded-3xl">
-                <h2 className="note-label text-red-800" id="warnings-heading">Important</h2>
+              <section aria-labelledby="warnings-heading" className="p-8 rounded-3xl border" style={{ background: 'rgba(225, 29, 72, 0.05)', borderColor: 'rgba(225, 29, 72, 0.2)' }}>
+                <h2 className="note-label" id="warnings-heading" style={{ color: '#e11d48' }}>Important</h2>
                 <ul className="space-y-4">
                   {flow.warnings.map((warning, i) => (
-                    <li key={i} className="flex gap-3 text-[14px] text-red-900 font-medium leading-relaxed">
+                    <li key={i} className="flex gap-3 text-[14px] font-medium leading-relaxed" style={{ color: '#c41e3a' }}>
                       <span aria-hidden="true">⚠️</span>
                       {warning}
                     </li>
@@ -143,10 +144,10 @@ export default async function FlowPage({ params }: Props) {
           </aside>
         </div>
 
-        <div className="mt-32 p-12 bg-white border border-gray-100 rounded-[40px] flex flex-col md:flex-row items-center justify-between gap-8 shadow-sm">
+        <div className="mt-32 p-12 rounded-[40px] flex flex-col md:flex-row items-center justify-between gap-8 card" style={{ background: 'var(--paper)', borderColor: 'var(--line)', boxShadow: 'var(--shadow-sm)' }}>
           <div>
-            <h2 className="text-2xl font-bold mb-1 tracking-tight">Ready to begin?</h2>
-            <p className="text-text-light font-medium">Continue to the official Voters&apos; Service Portal.</p>
+            <h2 className="text-2xl font-bold mb-1 tracking-tight serif" style={{ color: 'var(--ink)' }}>Ready to begin?</h2>
+            <p className="font-medium" style={{ color: 'var(--ink-2)' }}>Continue to the official Voters&apos; Service Portal.</p>
           </div>
           <FlowCta flowId={flow.id} actions={flow.nextActions} className="flex gap-4" />
         </div>

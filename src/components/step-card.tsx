@@ -25,10 +25,10 @@ export default function StepCard({ step, stepNumber, totalSteps, sources }: Step
         {stepNumber}
       </div>
       <div className="step-content">
-        <p className="text-[10px] font-bold uppercase tracking-widest text-text-light mb-2">
+        <p className="eyebrow mb-2">
           Step {stepNumber} of {totalSteps}
         </p>
-        <h2 className="step-title">{step.title}</h2>
+        <h2 className="step-title serif">{step.title}</h2>
         <p className="step-body">{step.body}</p>
 
         {resolvedSources.length > 0 && (

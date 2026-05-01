@@ -2,7 +2,6 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { useState, useEffect, useRef } from 'react'
 
 const NAV_LINKS = [
   { name: 'Guide', href: '/' },
@@ -12,125 +11,63 @@ const NAV_LINKS = [
 
 export default function SiteHeader() {
   const pathname = usePathname()
-  const [menuOpen, setMenuOpen] = useState(false)
-  const menuRef = useRef<HTMLDivElement>(null)
-
-  // Close drawer on Escape key
-  useEffect(() => {
-    function handleKeyDown(e: KeyboardEvent) {
-      if (e.key === 'Escape') setMenuOpen(false)
-    }
-    document.addEventListener('keydown', handleKeyDown)
-    return () => document.removeEventListener('keydown', handleKeyDown)
-  }, [])
-
-  // Trap focus inside drawer when open
-  useEffect(() => {
-    if (menuOpen) {
-      menuRef.current?.querySelector<HTMLElement>('a, button')?.focus()
-    }
-  }, [menuOpen])
 
   return (
-    <>
-      <header className="site-header" role="banner">
-        <div className="container-app w-full flex items-center justify-between">
-          <div className="flex items-center gap-10">
-            <Link href="/" className="site-header__logo" aria-label="India Election Guide - home">
-              <span className="site-header__logo-dot" aria-hidden="true" />
-              India Election Guide
-            </Link>
+    <header className="site-header hidden md:flex" role="banner">
+      <div className="container-app w-full flex items-center justify-between" style={{ maxWidth: 1200, padding: '0 40px' }}>
+        {/* Logo + Nav together on the left */}
+        <div className="flex items-center gap-10">
+          <Link href="/" className="site-header__logo" aria-label="India Election Guide - home">
+            India Election Guide
+          </Link>
 
-            {/* Desktop navigation — hidden on mobile */}
-            <nav className="hidden md:flex items-center gap-8" aria-label="Main navigation">
-              {NAV_LINKS.map((link) => (
+          <nav className="flex items-center gap-1" aria-label="Main navigation">
+            {NAV_LINKS.map((link) => {
+              const active = pathname === link.href
+              return (
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`text-[13px] font-bold tracking-wide transition-colors ${
-                    pathname === link.href ? 'text-primary' : 'text-text-secondary hover:text-navy'
-                  }`}
-                  aria-current={pathname === link.href ? 'page' : undefined}
+                  className="relative px-4 py-2 text-sm font-semibold transition-colors"
+                  style={{ color: active ? 'var(--ink)' : 'var(--ink-3)' }}
+                  aria-current={active ? 'page' : undefined}
                 >
                   {link.name}
+                  {active && (
+                    <span
+                      className="absolute bottom-0 left-4 right-4 h-0.5 rounded-full"
+                      style={{ background: 'var(--accent)' }}
+                    />
+                  )}
                 </Link>
-              ))}
-            </nav>
-          </div>
-
-          <div className="flex items-center gap-3">
-            {/* Official ECI badge — desktop only */}
-            <span className="hidden sm:inline-block site-header__badge" aria-label="Official sources only">
-              Official ECI Sources
-            </span>
-
-            {/* Mobile hamburger button */}
-            <button
-              className="md:hidden flex flex-col justify-center items-center w-10 h-10 rounded-lg border border-border bg-white/50 gap-[5px] transition-all"
-              onClick={() => setMenuOpen((v) => !v)}
-              aria-label={menuOpen ? 'Close navigation menu' : 'Open navigation menu'}
-              aria-expanded={menuOpen}
-              aria-controls="mobile-nav"
-            >
-              <span className={`w-5 h-0.5 bg-navy transition-transform origin-center ${menuOpen ? 'translate-y-[7px] rotate-45' : ''}`} />
-              <span className={`w-5 h-0.5 bg-navy transition-opacity ${menuOpen ? 'opacity-0' : ''}`} />
-              <span className={`w-5 h-0.5 bg-navy transition-transform origin-center ${menuOpen ? '-translate-y-[7px] -rotate-45' : ''}`} />
-            </button>
-          </div>
+              )
+            })}
+          </nav>
         </div>
-      </header>
 
-      {/* Mobile slide-down navigation drawer */}
-      <div
-        id="mobile-nav"
-        ref={menuRef}
-        role="dialog"
-        aria-modal="true"
-        aria-label="Navigation menu"
-        className={`md:hidden fixed inset-x-0 top-20 z-40 bg-white border-b border-border shadow-lg transition-all duration-200 ${
-          menuOpen ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 -translate-y-2 pointer-events-none'
-        }`}
-      >
-        <nav className="container-app py-6 flex flex-col gap-1" aria-label="Mobile navigation">
-          {NAV_LINKS.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className={`px-4 py-3 rounded-xl text-[15px] font-bold transition-colors ${
-                pathname === link.href
-                  ? 'text-primary bg-blue-50'
-                  : 'text-text-secondary hover:text-navy hover:bg-gray-50'
-              }`}
-              aria-current={pathname === link.href ? 'page' : undefined}
-              onClick={() => setMenuOpen(false)}
-            >
-              {link.name}
-            </Link>
-          ))}
-
-          {/* Helpline in mobile nav */}
-          <div className="mt-4 pt-4 border-t border-border px-4">
-            <p className="text-[11px] font-bold text-text-light uppercase tracking-widest mb-1">Voter Helpline</p>
-            <a
-              href="tel:1950"
-              className="text-primary font-bold text-lg hover:underline"
-              aria-label="Call Voter Helpline 1950"
-            >
-              1950
-            </a>
-            <p className="text-xs text-text-light mt-1">Free, available in multiple languages</p>
-          </div>
-        </nav>
+        {/* Right side: CTA + user icon */}
+        <div className="flex items-center gap-3">
+          <Link
+            href="https://eci.gov.in/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn btn-primary btn-sm"
+            aria-label="Official ECI Sources (opens in a new tab)"
+          >
+            Official ECI Sources
+          </Link>
+          <button
+            className="w-9 h-9 rounded-full flex items-center justify-center transition-colors"
+            style={{ background: 'var(--paper-2)', border: '1px solid var(--line)', color: 'var(--ink-3)' }}
+            aria-label="Account"
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <circle cx="12" cy="8" r="4" />
+              <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" />
+            </svg>
+          </button>
+        </div>
       </div>
-
-      {/* Backdrop overlay when menu is open */}
-      {menuOpen && (
-        <div
-          className="md:hidden fixed inset-0 z-30 bg-black/20"
-          aria-hidden="true"
-          onClick={() => setMenuOpen(false)}
-        />
-      )}
-    </>
+    </header>
   )
 }
