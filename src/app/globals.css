@@ -20,6 +20,34 @@
   --shadow-lg: 0 1px 2px oklch(0.18 0.015 60 / 0.04), 0 12px 32px oklch(0.18 0.015 60 / 0.08);
 }
 
+@theme inline {
+  /* Color utilities mapped from :root design tokens */
+  --color-ink:            var(--ink);
+  --color-ink-2:          var(--ink-2);
+  --color-ink-3:          var(--ink-3);
+  --color-ink-4:          var(--ink-4);
+  --color-paper:          var(--paper);
+  --color-paper-2:        var(--paper-2);
+  --color-paper-3:        var(--paper-3);
+  --color-accent:         var(--accent);
+  --color-accent-soft:    var(--accent-soft);
+  --color-accent-deep:    var(--accent-deep);
+  --color-trust:          var(--trust);
+  --color-line:           var(--line);
+  --color-line-2:         var(--line-2);
+
+  /* Semantic aliases used by learn page components */
+  --color-navy:           var(--ink);
+  --color-primary:        var(--accent);
+  --color-border:         var(--line);
+  --color-text-secondary: var(--ink-2);
+  --color-text-light:     var(--ink-3);
+
+  /* Shadow aliases */
+  --shadow-subtle: var(--shadow-sm);
+  --shadow-card:   var(--shadow-md);
+}
+
 :root {
   --paper: oklch(0.98 0.0006 240);
   --paper-2: oklch(0.97 0.0008 240);

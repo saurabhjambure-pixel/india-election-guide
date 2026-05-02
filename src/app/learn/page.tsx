@@ -137,12 +137,12 @@ export default function LearnPage() {
 
         {/* FAQ — 15 questions in 3 categories using native <details> accordion */}
         <section aria-labelledby="faq-heading">
-          <header className="p-8 bg-gray-50/50 border border-border rounded-t-[var(--radius-lg)] border-b-0">
+          <header className="p-8 bg-gray-50/50 border border-border rounded-t-[var(--r-lg)] border-b-0">
             <h2 className="text-xl font-bold" id="faq-heading">Frequently Asked Questions</h2>
             <p className="text-sm text-text-light mt-1">{FAQ_CATEGORIES.reduce((n, c) => n + c.faqs.length, 0)} questions across {FAQ_CATEGORIES.length} categories</p>
           </header>
 
-          <div className="border border-border rounded-b-[var(--radius-lg)] overflow-hidden">
+          <div className="border border-border rounded-b-[var(--r-lg)] overflow-hidden">
             {FAQ_CATEGORIES.map((cat, ci) => (
               <div key={cat.category}>
                 <div className="px-8 py-4 bg-gray-50 border-b border-border">
