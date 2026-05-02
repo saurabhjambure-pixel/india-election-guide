@@ -23,11 +23,11 @@ import { getFlows } from '@/lib/firebase/firestore'
 import type { CivicFlow } from '@/lib/types/civic'
 
 const FLOW_META: Record<string, { icon: string; shortDesc: string }> = {
-  'register-new':    { icon: '🗳️', shortDesc: 'Enroll as a first-time voter in your constituency.' },
+  'register-new': { icon: '🗳️', shortDesc: 'Enroll as a first-time voter in your constituency.' },
   'check-enrollment': { icon: '🔍', shortDesc: 'Verify your name on the current electoral roll.' },
   'correct-details': { icon: '✏️', shortDesc: 'Update your name, photo, or voter details.' },
   'shift-residence': { icon: '📦', shortDesc: 'Relocate your enrollment to a new address.' },
-  'polling-info':    { icon: '📍', shortDesc: 'Find your designated polling station.' },
+  'polling-info': { icon: '📍', shortDesc: 'Find your designated polling station.' },
 }
 
 export default async function HomePage() {
@@ -56,7 +56,7 @@ export default async function HomePage() {
                 id="hero-title"
                 style={{ fontSize: 'clamp(2rem, 4vw, 3.25rem)', lineHeight: 1.06, fontWeight: 800, letterSpacing: '-0.025em', color: 'var(--ink)' }}
               >
-                Empowering your civic<br />duty with absolute<br />clarity.
+                Empowering your civic duty <br /> with absolute clarity.
               </h1>
 
               <p className="mb-10" style={{ fontSize: '1.0625rem', lineHeight: 1.65, color: 'var(--ink-2)', maxWidth: '36rem' }}>
@@ -109,15 +109,15 @@ export default async function HomePage() {
 
             <div role="listitem">
               <TaskCard
-                flow={{ 
-                  id: 'timeline', 
-                  title: 'Election Calendar', 
+                flow={{
+                  id: 'timeline',
+                  title: 'Election Calendar',
                   intent: 'view_timeline',
                   description: 'View upcoming election dates and registration deadlines.',
-                  steps: [], 
-                  nextActions: [], 
-                  warnings: [], 
-                  updatedAt: new Date().toISOString() 
+                  steps: [],
+                  nextActions: [],
+                  warnings: [],
+                  updatedAt: new Date().toISOString()
                 } as CivicFlow}
                 icon="📅"
                 description="View upcoming election dates and registration deadlines."
