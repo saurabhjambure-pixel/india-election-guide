@@ -1,5 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { z } from 'zod';
 import { classifyIntent } from '@/lib/ai/civic-ai';
+
+const ClassifyRequestSchema = z.object({
+  message: z.string().trim().min(1).max(500),
+  context: z.string().trim().max(500).optional(),
+});
 
 // POST /api/classify
 // Accepts: { "message": "..." }
@@ -11,21 +17,15 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Payload too large' }, { status: 413 });
     }
 
-    const body = await req.json();
-
-    if (!body?.message || typeof body.message !== 'string') {
+    const parsed = ClassifyRequestSchema.safeParse(await req.json());
+    if (!parsed.success) {
       return NextResponse.json(
-        { error: 'message field is required and must be a string.' },
+        { error: 'Request body must include a non-empty message and optional context.' },
         { status: 400 }
       );
     }
 
-    const message = body.message.trim().slice(0, 500); // clamp input length
-    if (!message) {
-      return NextResponse.json({ error: 'message cannot be empty.' }, { status: 400 });
-    }
-
-    const result = await classifyIntent(message);
+    const result = await classifyIntent(parsed.data.message, parsed.data.context);
     return NextResponse.json(result);
   } catch (err) {
     const message = err instanceof Error ? err.message : 'Unknown error';

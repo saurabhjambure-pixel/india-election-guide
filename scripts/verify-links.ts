@@ -1,18 +1,16 @@
-import { isAllowedUrl } from '../src/data/civic-data';
+import { SOURCES } from '../src/data/civic-data';
+import { isAllowedExternalUrl } from '../src/lib/security/external-links';
 
 // A lightweight script to run in CI to verify allowed official links don't return 404s
 async function verifyLinks() {
   
   // Just some sample high-value links to check to verify the domains are up
-  const linksToCheck = [
-    'https://voters.eci.gov.in/',
-    'https://electoralsearch.eci.gov.in/',
-  ];
+  const linksToCheck = Array.from(new Set(Object.values(SOURCES).map((source) => source.url)));
   
   let hasError = false;
 
   for (const url of linksToCheck) {
-    if (!isAllowedUrl(url)) {
+    if (!isAllowedExternalUrl(url)) {
        console.error(`URL not allowed: ${url}`);
        hasError = true;
        continue;

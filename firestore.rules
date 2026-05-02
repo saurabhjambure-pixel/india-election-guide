@@ -1,6 +1,14 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
+    function isNonEmptyString(value, maxLen) {
+      return value is string && value.size() > 0 && value.size() <= maxLen;
+    }
+
+    function isOptionalString(value, maxLen) {
+      return value == null || (value is string && value.size() <= maxLen);
+    }
+
     // Civic data (flows, links, timelines) are read-only for all users
     match /civic_data/{document=**} {
       allow read: if true;
@@ -10,13 +18,12 @@ service cloud.firestore {
     // User feedback allows strictly structured anonymous writes
     match /feedback/{feedbackId} {
       allow read: if false; // Only admins can read
-      allow create: if request.resource.data.keys().hasOnly(['flowId', 'helpful', 'timestamp', 'comment']) 
+      allow create: if request.resource.data.keys().hasOnly(['flowId', 'helpful', 'timestamp', 'comment'])
                     && request.resource.data.keys().hasAll(['flowId', 'helpful', 'timestamp'])
-                    && request.resource.data.flowId is string
-                    && request.resource.data.flowId.size() <= 100
+                    && isNonEmptyString(request.resource.data.flowId, 100)
                     && request.resource.data.helpful is bool
                     && request.resource.data.timestamp is timestamp
-                    && (!('comment' in request.resource.data) || (request.resource.data.comment is string && request.resource.data.comment.size() <= 1000));
+                    && (!('comment' in request.resource.data) || isOptionalString(request.resource.data.comment, 1000));
       allow update, delete: if false;
     }
   }

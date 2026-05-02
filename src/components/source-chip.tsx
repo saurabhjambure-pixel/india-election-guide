@@ -1,15 +1,15 @@
 'use client'
 
 import type { SourceRef } from '@/lib/types/civic'
-import { isAllowedUrl } from '@/data/civic-data'
 import { logCustomEvent } from '@/lib/firebase/config'
+import { isAllowedExternalUrl } from '@/lib/security/external-links'
 
 interface SourceChipProps {
   source: SourceRef
 }
 
 export default function SourceChip({ source }: SourceChipProps) {
-  if (!isAllowedUrl(source.url)) return null;
+  if (!isAllowedExternalUrl(source.url)) return null;
 
   return (
     <a
@@ -21,7 +21,7 @@ export default function SourceChip({ source }: SourceChipProps) {
       aria-label={`Official source: ${source.name} (opens in a new tab)`}
       title={source.organization}
     >
-      <span aria-hidden="true" className="mr-1">🔒</span>
+      <span aria-hidden="true" className="mr-1">Official</span>
       {source.name}
     </a>
   )

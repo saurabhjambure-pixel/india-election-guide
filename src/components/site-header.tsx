@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import ExternalLink from './external-link'
 
 const NAV_LINKS = [
   { name: 'Guide', href: '/' },
@@ -47,15 +48,13 @@ export default function SiteHeader() {
 
         {/* Right side: CTA + user icon */}
         <div className="flex items-center gap-3">
-          <Link
+          <ExternalLink
             href="https://eci.gov.in/"
-            target="_blank"
-            rel="noopener noreferrer"
             className="btn btn-primary btn-sm"
             aria-label="Official ECI Sources (opens in a new tab)"
           >
             Official ECI Sources
-          </Link>
+          </ExternalLink>
           <button
             className="w-9 h-9 rounded-full flex items-center justify-center transition-colors"
             style={{ background: 'var(--paper-2)', border: '1px solid var(--line)', color: 'var(--ink-3)' }}

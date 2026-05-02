@@ -46,3 +46,15 @@ export interface ElectionTimeline {
   updatedAt: string;
   sourceUrl: string;
 }
+
+export type TimelineStatus = 'Completed' | 'Upcoming' | 'Live';
+
+export interface TimelineRecord {
+  state: string;
+  event: string;
+  status: TimelineStatus;
+  date: string;
+  year: number;
+  source: string;
+  sourceUrl: string;
+}

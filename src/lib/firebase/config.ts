@@ -39,7 +39,7 @@ export { app, analytics };
 // Session ID — a non-PII UUID scoped to the browser tab session.
 // Stored in sessionStorage so it resets on new tab/window.
 // Included in every analytics event to enable funnel analysis:
-//   classify_success → flow_completed, explain_click, source_chip_clicked
+//   task_selected → flow_completed, ai_explain_used, source_chip_clicked
 // ---------------------------------------------------------------------------
 function getSessionId(): string {
   if (typeof window === 'undefined') return 'server';

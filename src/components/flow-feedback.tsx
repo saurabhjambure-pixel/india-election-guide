@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore'
 import { app } from '@/lib/firebase/config'
 import { logCustomEvent } from '@/lib/firebase/config'
+import { redactSensitiveIds } from '@/lib/privacy'
 
 interface Props {
   flowId: string
@@ -35,7 +36,8 @@ export default function FlowFeedback({ flowId }: Props) {
           helpful,
           timestamp: serverTimestamp(),
         }
-        if (comment.trim()) payload.comment = comment.trim().slice(0, 1000)
+        const sanitizedComment = redactSensitiveIds(comment.trim()).slice(0, 1000)
+        if (sanitizedComment) payload.comment = sanitizedComment
         await addDoc(collection(db, 'feedback'), payload)
       }
       logCustomEvent('flow_feedback', { flow_id: flowId, helpful })

@@ -32,7 +32,10 @@ The product focuses on demystifying the complex electoral processes governed by 
 *   **Election Timelines:** A dynamic timeline tracking upcoming state and general election phases based on official ECI schedules.
 
 ### AI Classify Endpoint (`api/classify`)
-This Next.js Route Handler uses the Gemini API with structured output generation (Zod validation). It receives the user's natural language input and returns a strictly typed JSON response containing the classified intent (e.g., `REGISTRATION`, `CORRECTION`) and a brief, helpful explanation.
+This Next.js Route Handler uses the Gemini API with structured output generation and Zod validation. It receives the user's natural language input, validates the payload, treats user text as untrusted data inside the prompt, and returns a strictly typed JSON response containing the classified intent and routing metadata.
+
+### AI Timeline Summary
+The Timeline page includes a server-side "Election Summary" card. When `GEMINI_API_KEY` is configured, Gemini summarizes the verified timeline records into a short high-signal brief. When Gemini is unavailable, the page falls back to a deterministic summary built from the same timeline records.
 
 ### UI Trust Indicators
 *   **Source Chips:** Every piece of procedural advice is tagged with visual "Source Chips" indicating the origin of the information (e.g., "Source: ECI Guidelines").
@@ -49,9 +52,9 @@ This Next.js Route Handler uses the Gemini API with structured output generation
 
 | Service | Contribution to Product |
 | :--- | :--- |
-| **Gemini API** | Powers the core natural language understanding. It drives the `api/classify` endpoint, matching user queries to appropriate civic flows with high accuracy and strict schema validation. |
-| **Firestore** | Serves as the database for the deterministic civic content layer, storing structured data for flows, timelines, and FAQs, enabling rapid updates without code deployment. |
-| **Firebase Analytics** | Tracks user engagement with different civic flows, helping identify which processes citizens find most confusing or seek help with most frequently. |
+| **Gemini API** | Powers three bounded features: intent classification, plain-language flow explanation, and the Timeline summary card. Every call uses structured JSON output and explicit safety settings. |
+| **Firestore** | Stores structured civic flows, source metadata, and timeline records. The app reads from Firestore when admin credentials are available and falls back to local seed data otherwise. |
+| **Firebase Analytics** | Tracks product usage through `task_selected`, `flow_completed`, `source_chip_clicked`, `out_of_scope_triggered`, `fallback_shown`, and `ai_explain_used`. Query text and voter identifiers are not sent to analytics. |
 | **Firebase Hosting** | Provides fast, secure, globally distributed hosting for the Next.js application, ensuring high availability during traffic spikes around election events. |
 
 ## 6. Judging Rubric Alignment
@@ -88,7 +91,18 @@ Follow these steps to run the project locally.
     Create a `.env.local` file in the root directory and add the necessary keys:
     ```env
     GEMINI_API_KEY=your_gemini_api_key_here
-    # Add your Firebase configuration variables here
+    NEXT_PUBLIC_FIREBASE_API_KEY=...
+    NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=...
+    NEXT_PUBLIC_FIREBASE_PROJECT_ID=...
+    NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=...
+    NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=...
+    NEXT_PUBLIC_FIREBASE_APP_ID=...
+    NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID=...
+    ```
+
+    Optional server-side Firestore access:
+    ```env
+    GOOGLE_APPLICATION_CREDENTIALS=/absolute/path/to/serviceAccountKey.json
     ```
 
 3.  **Seed the Database (Optional but recommended):**
@@ -108,3 +122,7 @@ Follow these steps to run the project locally.
 *   Run end-to-end tests: `pnpm run test:e2e`
 *   Typecheck: `pnpm run typecheck`
 *   Lint: `pnpm run lint`
+*   Verify official links: `pnpm exec tsx scripts/verify-links.ts`
+
+### Accessibility
+Playwright includes axe-core smoke checks for the homepage, a representative flow page, and the timeline page. Color contrast is still reviewed manually because the automated suite intentionally disables that rule to avoid environment-specific false positives.

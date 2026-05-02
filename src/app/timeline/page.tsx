@@ -1,5 +1,9 @@
 import Link from 'next/link'
 import type { Metadata } from 'next'
+import ExternalLink from '@/components/external-link'
+import { generateTimelineSummary } from '@/lib/ai/timeline-summary'
+import { getTimelines } from '@/lib/firebase/firestore'
+import type { TimelineRecord, TimelineStatus } from '@/lib/types/civic'
 
 export const revalidate = 86400;
 
@@ -21,48 +25,6 @@ export const metadata: Metadata = {
 // Update this array and LAST_REVIEWED after each content review.
 const LAST_REVIEWED = 'April 2026'
 
-type TimelineStatus = 'Completed' | 'Upcoming' | 'Live'
-
-interface TimelineEvent {
-  state: string
-  event: string
-  status: TimelineStatus
-  date: string
-  year: number    // used for visual positioning
-  source: string
-  sourceUrl: string
-}
-
-const ELECTION_TIMELINES: TimelineEvent[] = [
-  {
-    state: 'National',
-    event: 'General Elections 2024',
-    status: 'Completed',
-    date: 'April 19 – June 1, 2024 (7 phases)',
-    year: 2024,
-    source: 'ECI Notification',
-    sourceUrl: 'https://eci.gov.in/elections/election-schedule/',
-  },
-  {
-    state: 'Bihar',
-    event: 'Legislative Assembly Elections',
-    status: 'Upcoming',
-    date: 'Expected late 2025 / 2026 — check ECI for confirmed schedule',
-    year: 2025,
-    source: 'ECI Schedule',
-    sourceUrl: 'https://eci.gov.in/elections/election-schedule/',
-  },
-  {
-    state: 'West Bengal',
-    event: 'Municipal Elections',
-    status: 'Upcoming',
-    date: 'Check State Election Commission for confirmed dates',
-    year: 2026,
-    source: 'State Election Commission',
-    sourceUrl: 'https://eci.gov.in/elections/election-schedule/',
-  },
-]
-
 const STATUS_STYLES: Record<TimelineStatus, { badge: string; dot: string }> = {
   Live:      { badge: 'bg-red-50 text-red-700 border border-red-100',   dot: 'bg-red-500' },
   Upcoming:  { badge: 'bg-blue-50 text-primary border border-blue-100', dot: 'bg-primary' },
@@ -77,8 +39,11 @@ function axisPosition(year: number, allYears: number[]): number {
   return Math.round(((year - min) / (max - min)) * 80 + 10) // 10–90 % range
 }
 
-export default function TimelinePage() {
-  const years = ELECTION_TIMELINES.map((e) => e.year)
+export default async function TimelinePage() {
+  const timelines = await getTimelines()
+  const summary = await generateTimelineSummary(timelines)
+  const years = timelines.map((e) => e.year)
+  const hasTimelines = timelines.length > 0
 
   return (
     <div className="py-16">
@@ -100,57 +65,93 @@ export default function TimelinePage() {
             The most up-to-date election schedules are published directly by the Election Commission of India.
             For confirmed dates, notifications, and phase-wise schedules, always check the official ECI portal.
           </p>
-          <a
+          <ExternalLink
             href="https://eci.gov.in/elections/election-schedule/"
-            target="_blank"
-            rel="noopener noreferrer"
             className="inline-flex items-center gap-2 mt-4 text-primary font-bold text-sm hover:underline"
             aria-label="View official ECI election schedule (opens in a new tab)"
           >
             View official ECI schedule ↗
-          </a>
+          </ExternalLink>
           <p className="text-xs text-text-light mt-4 font-medium">
             Below data last reviewed: {LAST_REVIEWED}. Content is manually maintained — verify with official sources.
           </p>
         </div>
 
+        <section
+          className="mb-12 rounded-[var(--radius-lg)] border border-border bg-white p-8 shadow-subtle"
+          aria-labelledby="timeline-summary-heading"
+        >
+          <div className="flex items-start justify-between gap-6">
+            <div className="max-w-3xl">
+              <p className="eyebrow mb-2">AI Election Summary</p>
+              <h2 id="timeline-summary-heading" className="text-2xl font-bold mb-3">
+                {summary.title}
+              </h2>
+              <p className="text-text-secondary leading-relaxed">{summary.summary}</p>
+            </div>
+            <div className="shrink-0 rounded-full border border-border px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-text-light">
+              {summary.sourceLabel}
+            </div>
+          </div>
+          {summary.highlights.length > 0 && (
+            <ul className="mt-6 space-y-3" aria-label="Timeline highlights">
+              {summary.highlights.map((highlight) => (
+                <li key={highlight} className="flex gap-3 text-sm font-medium text-text-secondary">
+                  <span aria-hidden="true" className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />
+                  <span>{highlight}</span>
+                </li>
+              ))}
+            </ul>
+          )}
+        </section>
+
         {/* Visual timeline axis */}
-        <div className="mb-10 hidden md:block" aria-hidden="true">
-          <div className="relative h-16">
-            {/* Axis line */}
-            <div className="absolute top-1/2 left-0 right-0 h-0.5 bg-gray-100 -translate-y-1/2" />
-            {/* Event markers on the axis */}
-            {ELECTION_TIMELINES.map((item) => {
-              const pos = axisPosition(item.year, years)
-              const styles = STATUS_STYLES[item.status]
-              return (
-                <div
-                  key={item.event}
-                  className="absolute top-1/2 -translate-y-1/2 flex flex-col items-center gap-1"
-                  style={{ left: `${pos}%`, transform: 'translate(-50%, -50%)' }}
-                >
-                  <div className={`w-3 h-3 rounded-full ring-2 ring-white ${styles.dot}`} />
-                  <span className="text-[10px] font-bold text-text-light whitespace-nowrap">{item.state}</span>
+        {hasTimelines && (
+          <div className="mb-10 hidden md:block" aria-hidden="true">
+            <div className="relative h-16">
+              {/* Axis line */}
+              <div className="absolute top-1/2 left-0 right-0 h-0.5 bg-gray-100 -translate-y-1/2" />
+              {/* Event markers on the axis */}
+              {timelines.map((item) => {
+                const pos = axisPosition(item.year, years)
+                const styles = STATUS_STYLES[item.status]
+                return (
+                  <div
+                    key={item.event}
+                    className="absolute top-1/2 -translate-y-1/2 flex flex-col items-center gap-1"
+                    style={{ left: `${pos}%`, transform: 'translate(-50%, -50%)' }}
+                  >
+                    <div className={`w-3 h-3 rounded-full ring-2 ring-white ${styles.dot}`} />
+                    <span className="text-[10px] font-bold text-text-light whitespace-nowrap">{item.state}</span>
+                  </div>
+                )
+              })}
+              {/* Year labels at ends */}
+              <span className="absolute left-0 bottom-0 text-[10px] text-text-light font-bold">{Math.min(...years)}</span>
+              <span className="absolute right-0 bottom-0 text-[10px] text-text-light font-bold">{Math.max(...years)}</span>
+            </div>
+            <div className="flex items-center gap-4 mt-2">
+              {(['Completed', 'Upcoming', 'Live'] as TimelineStatus[]).map((s) => (
+                <div key={s} className="flex items-center gap-1.5">
+                  <div className={`w-2 h-2 rounded-full ${STATUS_STYLES[s].dot}`} />
+                  <span className="text-[10px] font-bold text-text-light">{s}</span>
                 </div>
-              )
-            })}
-            {/* Year labels at ends */}
-            <span className="absolute left-0 bottom-0 text-[10px] text-text-light font-bold">{Math.min(...years)}</span>
-            <span className="absolute right-0 bottom-0 text-[10px] text-text-light font-bold">{Math.max(...years)}</span>
+              ))}
+            </div>
           </div>
-          <div className="flex items-center gap-4 mt-2">
-            {(['Completed', 'Upcoming', 'Live'] as TimelineStatus[]).map((s) => (
-              <div key={s} className="flex items-center gap-1.5">
-                <div className={`w-2 h-2 rounded-full ${STATUS_STYLES[s].dot}`} />
-                <span className="text-[10px] font-bold text-text-light">{s}</span>
-              </div>
-            ))}
-          </div>
-        </div>
+        )}
 
         {/* Event cards */}
         <div className="space-y-4">
-          {ELECTION_TIMELINES.map((item) => {
+          {!hasTimelines && (
+            <div className="rounded-[var(--radius-lg)] border border-border bg-white p-8 shadow-subtle">
+              <h3 className="text-xl font-bold mb-2">No verified timeline entries</h3>
+              <p className="text-text-secondary leading-relaxed">
+                Timeline records are temporarily unavailable. Use the official ECI schedule until the guide is refreshed.
+              </p>
+            </div>
+          )}
+          {timelines.map((item: TimelineRecord) => {
             const styles = STATUS_STYLES[item.status]
             return (
               <div
@@ -170,15 +171,13 @@ export default function TimelinePage() {
 
                 <div className="flex items-center gap-4">
                   <span className="text-[11px] font-bold text-text-light uppercase tracking-tighter">Source: {item.source}</span>
-                  <a
+                  <ExternalLink
                     href={item.sourceUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
                     className="px-6 py-2.5 bg-bg-subtle border border-border rounded-xl text-xs font-bold text-navy hover:bg-gray-100 transition-all active:scale-95"
                     aria-label={`View details for ${item.event} on ECI (opens in a new tab)`}
                   >
                     Details ↗
-                  </a>
+                  </ExternalLink>
                 </div>
               </div>
             )

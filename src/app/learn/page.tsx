@@ -18,6 +18,7 @@ export const metadata: Metadata = {
 }
 import FormDecisionTree from '@/components/form-decision-tree'
 import VoterGlossary from '@/components/voter-glossary'
+import FormsDocumentation from '@/components/forms-documentation'
 
 const FAQ_CATEGORIES = [
   {
@@ -123,42 +124,7 @@ export default function LearnPage() {
           </div>
         </header>
 
-        <section className="grid grid-cols-1 md:grid-cols-2 gap-10 mb-20">
-          <div className="space-y-6">
-            <h2 className="text-[11px] font-bold uppercase tracking-[0.2em] opacity-40">The Forms</h2>
-            {[
-              { id: '6',  title: 'New Registration',  desc: 'For first-time general voters residing in India.' },
-              { id: '6A', title: 'Overseas Voter',     desc: 'For NRI citizens living abroad.' },
-              { id: '7',  title: 'Deletion / Objection', desc: 'To object to inclusion or remove a name.' },
-              { id: '8',  title: 'Updates & Shifting', desc: 'For corrections, address change, or replacement EPIC.' },
-            ].map((f) => (
-              <div key={f.id} className="bg-white border border-border p-6 rounded-2xl shadow-subtle hover:shadow-card transition-all">
-                <p className="font-bold text-primary text-xs uppercase mb-1">Form {f.id}</p>
-                <p className="text-lg font-bold text-navy mb-1">{f.title}</p>
-                <p className="text-sm text-text-secondary">{f.desc}</p>
-              </div>
-            ))}
-          </div>
-
-          <div className="space-y-6">
-            <h2 className="text-[11px] font-bold uppercase tracking-[0.2em] opacity-40">Documentation</h2>
-            <div className="bg-navy rounded-3xl p-8 text-white h-full flex flex-col justify-center shadow-lg">
-              <ul className="space-y-6">
-                {[
-                  'Age proof: birth certificate, school leaving cert, Aadhaar, passport',
-                  'Address proof: Aadhaar, utility bill (≤3 months), bank passbook, rent agreement',
-                  'Passport-size photograph',
-                  'EPIC number (for corrections and address changes only)',
-                ].map((doc) => (
-                  <li key={doc} className="flex items-start gap-4 text-sm font-medium">
-                    <span className="w-6 h-6 bg-white/10 rounded-full flex items-center justify-center text-[10px] shrink-0 mt-0.5" aria-hidden="true">✓</span>
-                    {doc}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        </section>
+        <FormsDocumentation />
 
         <section className="grid grid-cols-1 md:grid-cols-2 gap-10 mb-20" aria-label="Interactive guides">
           <div>
@@ -189,7 +155,7 @@ export default function LearnPage() {
                       className="group bg-white"
                     >
                       <summary className="flex items-center justify-between gap-4 p-8 cursor-pointer list-none hover:bg-gray-50/50 transition-colors">
-                        <span className="font-bold text-navy text-base">{faq.q}</span>
+                        <span className="font-bold text-ink text-base">{faq.q}</span>
                         <span
                           className="shrink-0 w-6 h-6 rounded-full border border-gray-200 flex items-center justify-center text-text-light text-xs transition-transform group-open:rotate-45"
                           aria-hidden="true"
@@ -213,7 +179,7 @@ export default function LearnPage() {
           <p className="text-sm text-text-secondary mb-6 font-bold uppercase tracking-widest opacity-60">Still have questions?</p>
           <a
             href="tel:1950"
-            className="inline-flex items-center gap-3 px-10 py-4 bg-navy text-white font-bold rounded-2xl hover:bg-navy/90 transition-all shadow-xl active:scale-95"
+            className="inline-flex items-center gap-3 px-10 py-4 bg-ink text-paper font-bold rounded-2xl hover:bg-ink-2 transition-all shadow-xl active:scale-95"
             aria-label="Call Voter Helpline 1950"
           >
             <span aria-hidden="true">📞</span> Call Voter Helpline 1950

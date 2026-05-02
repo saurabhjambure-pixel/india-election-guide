@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useRef, useEffect } from 'react'
+import ExternalLink from './external-link'
 
 // ---------------------------------------------------------------------------
 // Tree data structure — adding a new branch is a data change, not a code change.
@@ -148,15 +149,13 @@ export default function FormDecisionTree() {
             <p className="text-3xl font-extrabold text-navy">{node.form}</p>
             <p className="text-sm font-medium text-text-secondary">{node.description}</p>
             {node.href && (
-              <a
+              <ExternalLink
                 href={node.href}
-                target="_blank"
-                rel="noopener noreferrer"
                 className="inline-flex items-center gap-1 text-sm font-bold text-primary hover:underline"
                 aria-label={`Apply ${node.form} on Voters' Service Portal (opens in a new tab)`}
               >
                 Apply on Voters&apos; Service Portal ↗
-              </a>
+              </ExternalLink>
             )}
             <div>
               <button onClick={reset} className="text-sm font-bold text-primary hover:underline mt-2">

@@ -56,12 +56,12 @@ export default function ChatInput() {
       setResult(data)
 
       if (data.recommended_flow_id && !data.needs_clarification && data.intent !== 'out_of_scope') {
-        logCustomEvent('classify_success', { flow_id: data.recommended_flow_id, intent: data.intent })
+        logCustomEvent('task_selected', { flow_id: data.recommended_flow_id, origin: 'ask-guide', intent: data.intent })
         setClarificationContext(null)
         router.push(`/flow/${data.recommended_flow_id}`)
       } else if (data.intent === 'out_of_scope') {
         setClarificationContext(null)
-        logCustomEvent('out_of_scope_triggered', { query: msg })
+        logCustomEvent('out_of_scope_triggered', { origin: 'ask-guide' })
       } else if (data.needs_clarification && data.follow_up_question && !context) {
         // First clarification round — show the question and re-enable input
         logCustomEvent('clarification_shown', { intent: data.intent })
@@ -85,7 +85,10 @@ export default function ChatInput() {
     e.preventDefault()
     if (timeoutRef.current) clearTimeout(timeoutRef.current)
     const context = clarificationContext ?? undefined
-    submitQuery(value.trim(), context)
+    const val = value.trim()
+    timeoutRef.current = setTimeout(() => {
+      submitQuery(val, context)
+    }, 300)
   }
 
   function handleExamplePrompt(p: string) {

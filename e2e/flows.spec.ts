@@ -1,4 +1,5 @@
-import { test, expect } from '@playwright/test';
+import AxeBuilder from '@axe-core/playwright';
+import { test, expect, type Page } from '@playwright/test';
 
 const FLOWS = [
   'register-new',
@@ -7,6 +8,14 @@ const FLOWS = [
   'shift-residence',
   'polling-info',
 ];
+
+async function expectNoCriticalA11yIssues(page: Page) {
+  const results = await new AxeBuilder({ page })
+    .withTags(['wcag2a', 'wcag2aa'])
+    .disableRules(['color-contrast'])
+    .analyze();
+  expect(results.violations).toEqual([]);
+}
 
 test.describe('Civic Flows', () => {
   for (const flow of FLOWS) {
@@ -24,6 +33,7 @@ test.describe('Civic Flows', () => {
   test('should load timeline page', async ({ page }) => {
     await page.goto('/timeline');
     await expect(page.getByRole('heading', { level: 1, name: /Election Timelines/i })).toBeVisible();
+    await expect(page.getByRole('heading', { level: 2, name: /Election Summary|No timeline updates available/i })).toBeVisible();
   });
 
   test('should load learn page', async ({ page }) => {
@@ -42,5 +52,20 @@ test.describe('Civic Flows', () => {
     for (const flow of FLOWS) {
       await expect(page.locator(`a[href="/flow/${flow}"]`).first()).toBeAttached();
     }
+  });
+
+  test('homepage passes the accessibility smoke check', async ({ page }) => {
+    await page.goto('/');
+    await expectNoCriticalA11yIssues(page);
+  });
+
+  test('flow page passes the accessibility smoke check', async ({ page }) => {
+    await page.goto('/flow/register-new');
+    await expectNoCriticalA11yIssues(page);
+  });
+
+  test('timeline page passes the accessibility smoke check', async ({ page }) => {
+    await page.goto('/timeline');
+    await expectNoCriticalA11yIssues(page);
   });
 });

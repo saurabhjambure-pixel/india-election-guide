@@ -1,7 +1,7 @@
 'use client'
 
 import { logCustomEvent } from '@/lib/firebase/config'
-import { isAllowedUrl } from '@/data/civic-data'
+import { isAllowedExternalUrl } from '@/lib/security/external-links'
 
 interface Action {
   label: string;
@@ -22,7 +22,7 @@ export default function FlowCta({ flowId, actions, variant, className }: Props) 
   return (
     <div className={className}>
       {actions.map((action) => {
-        if (action.type === 'external' && !isAllowedUrl(action.href)) return null;
+        if (action.type === 'external' && !isAllowedExternalUrl(action.href)) return null;
 
         const baseClass = isMobile
           ? 'mobile-cta-btn'

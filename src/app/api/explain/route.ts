@@ -1,6 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { z } from 'zod';
 import { explainFlow } from '@/lib/ai/civic-ai';
-import { CIVIC_FLOWS } from '@/data/civic-data';
+import { getFlowById } from '@/lib/firebase/firestore';
+
+const ExplainPostRequestSchema = z.object({
+  flowId: z.string().trim().min(1).max(100),
+  preferSimpleLanguage: z.boolean().optional(),
+});
 
 // GET /api/explain?flowId=register-new&simple=true
 // Converted from POST to GET so CDN and browser can cache deterministic responses.
@@ -10,14 +16,14 @@ export async function GET(req: NextRequest) {
     const flowId = searchParams.get('flowId');
     const preferSimple = searchParams.get('simple') === 'true';
 
-    if (!flowId || typeof flowId !== 'string') {
+    if (!flowId || flowId.length > 100) {
       return NextResponse.json(
         { error: 'flowId query param is required.' },
         { status: 400 }
       );
     }
 
-    const flow = CIVIC_FLOWS.find((f) => f.id === flowId);
+    const flow = await getFlowById(flowId);
     if (!flow) {
       return NextResponse.json(
         { error: `No flow found with id: ${flowId}` },
@@ -51,24 +57,23 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Payload too large' }, { status: 413 });
     }
 
-    const body = await req.json();
-
-    if (!body?.flowId || typeof body.flowId !== 'string') {
+    const parsed = ExplainPostRequestSchema.safeParse(await req.json());
+    if (!parsed.success) {
       return NextResponse.json(
         { error: 'flowId field is required and must be a string.' },
         { status: 400 }
       );
     }
 
-    const flow = CIVIC_FLOWS.find((f) => f.id === body.flowId);
+    const flow = await getFlowById(parsed.data.flowId);
     if (!flow) {
       return NextResponse.json(
-        { error: `No flow found with id: ${body.flowId}` },
+        { error: `No flow found with id: ${parsed.data.flowId}` },
         { status: 404 }
       );
     }
 
-    const preferSimple = body.preferSimpleLanguage === true;
+    const preferSimple = parsed.data.preferSimpleLanguage === true;
     const result = await explainFlow(flow, preferSimple);
     return NextResponse.json(result);
   } catch (err) {

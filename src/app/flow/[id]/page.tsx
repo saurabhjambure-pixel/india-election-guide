@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import type { Metadata } from 'next'
-import { CIVIC_FLOWS, SOURCES } from '@/data/civic-data'
+import { getFlows, getFlowById, getSources } from '@/lib/firebase/firestore'
 import StepCard from '@/components/step-card'
 import AiExplainButton from '@/components/ai-explain-button'
 import FlowCta from '@/components/flow-cta'
@@ -13,7 +13,8 @@ interface Props {
 }
 
 export async function generateStaticParams() {
-  return CIVIC_FLOWS.map((f) => ({ id: f.id }))
+  const flows = await getFlows()
+  return flows.map((f) => ({ id: f.id }))
 }
 
 // true: new flows added to civic-data.ts are served immediately on first request (ISR)
@@ -23,7 +24,7 @@ export const revalidate = 3600;
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id } = await params
-  const flow = CIVIC_FLOWS.find((f) => f.id === id)
+  const flow = await getFlowById(id)
   if (!flow) return { title: 'Not found' }
   return {
     title: `${flow.title} · India Election Guide`,
@@ -42,8 +43,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function FlowPage({ params }: Props) {
   const { id } = await params
-  const flow = CIVIC_FLOWS.find((f) => f.id === id)
+  const flow = await getFlowById(id)
   if (!flow) notFound()
+
+  const SOURCES = await getSources()
 
   return (
     <div className="pb-40">

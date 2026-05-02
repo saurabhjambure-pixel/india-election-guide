@@ -16,7 +16,7 @@ export default function AiExplainButton({ flowId }: AiExplainProps) {
   async function handleExplain() {
     setLoading(true)
     setError(null)
-    logCustomEvent('explain_click', { flow_id: flowId })
+    logCustomEvent('ai_explain_used', { flow_id: flowId })
     try {
       // GET request — browser and CDN will cache this response for 24 hours
       const res = await fetch(`/api/explain?flowId=${encodeURIComponent(flowId)}&simple=true`, {

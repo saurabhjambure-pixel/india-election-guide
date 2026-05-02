@@ -1,6 +1,9 @@
 import type { NextConfig } from "next";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
 
 const isDev = process.env.NODE_ENV === 'development';
+const projectRoot = path.dirname(fileURLToPath(import.meta.url));
 
 // Next.js (especially with Turbopack) requires:
 //   - 'unsafe-inline' in script-src: hydration bootstrap is inlined into the HTML
@@ -13,6 +16,9 @@ const scriptSrc = isDev
 
 const nextConfig: NextConfig = {
   compress: true,
+  turbopack: {
+    root: projectRoot,
+  },
   async headers() {
     return [
       {

@@ -1,3 +1,5 @@
+import ExternalLink from './external-link'
+
 export default function SiteFooter() {
   return (
     <footer className="site-footer hidden md:block" role="contentinfo">
@@ -22,53 +24,48 @@ export default function SiteFooter() {
             <nav aria-label="Official external links">
               <ul className="flex flex-col gap-1">
                 <li>
-                  <a
+                  <ExternalLink
                     href="https://voters.eci.gov.in/"
-                    target="_blank"
-                    rel="noopener noreferrer"
                     aria-label="Voters' Service Portal (opens in a new tab)"
                   >
                     Voters&apos; Service Portal ↗
-                  </a>
+                  </ExternalLink>
                 </li>
                 <li>
-                  <a
+                  <ExternalLink
                     href="https://electoralsearch.eci.gov.in/"
-                    target="_blank"
-                    rel="noopener noreferrer"
                     aria-label="Electoral Search (opens in a new tab)"
                   >
                     Electoral Search ↗
-                  </a>
+                  </ExternalLink>
                 </li>
                 <li>
-                  <a
+                  <ExternalLink
                     href="https://eci.gov.in/"
-                    target="_blank"
-                    rel="noopener noreferrer"
                     aria-label="Election Commission of India (opens in a new tab)"
                   >
                     Election Commission of India ↗
-                  </a>
+                  </ExternalLink>
                 </li>
               </ul>
             </nav>
           </div>
         </div>
         <hr className="site-footer__divider" />
-        <p className="text-ink-3">
-          Confirm all final details through the{' '}
-          <a
-            href="https://eci.gov.in/"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Election Commission of India (opens in a new tab)"
-          >
-            Election Commission of India
-          </a>{' '}
-          or helpline <strong>1950</strong>.
-          This guide does not store personal voter data or influence political choices.
-        </p>
+        <div className="space-y-2 text-ink-3">
+          <p>
+            Confirm all final details through the official portal or helpline <strong>1950</strong>.
+            This guide does not store personal voter data or influence political choices.
+          </p>
+          <p>
+            <ExternalLink
+              href="https://eci.gov.in/"
+              aria-label="Election Commission of India (opens in a new tab)"
+            >
+              Election Commission of India ↗
+            </ExternalLink>
+          </p>
+        </div>
       </div>
     </footer>
   )

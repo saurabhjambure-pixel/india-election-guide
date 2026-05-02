@@ -1,13 +1,34 @@
 import type { Metadata } from 'next'
+import { Geist, Geist_Mono, Instrument_Serif } from 'next/font/google'
 import './globals.css'
 import SiteHeader from '@/components/site-header'
 import SiteFooter from '@/components/site-footer'
 import MobileTabBar from '@/components/mobile-tab-bar'
 
+const geist = Geist({
+  subsets: ['latin'],
+  weight: ['400', '500', '600'],
+  variable: '--font-geist',
+})
+
+const geistMono = Geist_Mono({
+  subsets: ['latin'],
+  weight: ['400', '500'],
+  variable: '--font-geist-mono',
+})
+
+const instrumentSerif = Instrument_Serif({
+  subsets: ['latin'],
+  weight: ['400'],
+  style: ['normal', 'italic'],
+  variable: '--font-instrument-serif',
+})
+
 export const metadata: Metadata = {
   title: 'India Election Guide — Your official voter guidance assistant',
   description:
     'Step-by-step guidance on voter registration, enrollment checks, address updates, polling information, and election timelines — all grounded in official Election Commission of India sources.',
+  metadataBase: new URL('https://india-election-guide.vercel.app'),
   keywords: [
     'India election',
     'voter registration',
@@ -35,11 +56,8 @@ export default function RootLayout({
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="theme-color" content="#FAFAFA" />
         <link rel="icon" href="/favicon.ico" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet" />
       </head>
-      <body className="flex flex-col min-h-screen">
+      <body className={`${geist.variable} ${geistMono.variable} ${instrumentSerif.variable} flex flex-col min-h-screen`}>
         <a href="#main-content" className="skip-link">
           Skip to main content
         </a>

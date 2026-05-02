@@ -28,6 +28,10 @@ export function getGeminiModel(modelName = 'gemini-1.5-flash') {
         category: HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT,
         threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
       },
+      {
+        category: 'HARM_CATEGORY_CIVIC_INTEGRITY' as HarmCategory,
+        threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
+      },
     ]
   });
 }

@@ -6,9 +6,9 @@
   --good: oklch(0.55 0.12 155);
   --warn: oklch(0.65 0.14 70);
 
-  --serif: 'Instrument Serif', 'Iowan Old Style', 'Apple Garamond', Georgia, serif;
-  --sans: 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  --mono: 'Geist Mono', ui-monospace, 'SF Mono', monospace;
+  --serif: var(--font-instrument-serif), 'Iowan Old Style', 'Apple Garamond', Georgia, serif;
+  --sans: var(--font-geist), -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --mono: var(--font-geist-mono), ui-monospace, 'SF Mono', monospace;
 
   --r-sm: 10px;
   --r-md: 14px;
@@ -850,7 +850,8 @@ body {
 
 .site-footer a {
   color: var(--accent);
-  text-decoration: none;
+  text-decoration: underline;
+  text-underline-offset: 0.16em;
   transition: color 0.2s;
 }
 

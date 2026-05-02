@@ -17,8 +17,9 @@ export const metadata: Metadata = {
   },
 }
 import ChatInput from '@/components/chat-input'
+import ExternalLink from '@/components/external-link'
 import TaskCard from '@/components/task-card'
-import { CIVIC_FLOWS } from '@/data/civic-data'
+import { getFlows } from '@/lib/firebase/firestore'
 import type { CivicFlow } from '@/lib/types/civic'
 
 const FLOW_META: Record<string, { icon: string; shortDesc: string }> = {
@@ -29,7 +30,8 @@ const FLOW_META: Record<string, { icon: string; shortDesc: string }> = {
   'polling-info':    { icon: '📍', shortDesc: 'Find your designated polling station.' },
 }
 
-export default function HomePage() {
+export default async function HomePage() {
+  const CIVIC_FLOWS = await getFlows()
   return (
     <>
       <section className="hero" style={{ paddingTop: 72, paddingBottom: 80 }}>
@@ -64,69 +66,17 @@ export default function HomePage() {
               <ChatInput />
             </div>
 
-            {/* Right: browser mockup */}
-            <div className="hidden md:block pointer-events-none">
-              <div
-                className="rounded-2xl overflow-hidden"
-                style={{
-                  boxShadow: '0 2px 4px oklch(0.18 0.015 60 / 0.06), 0 20px 60px oklch(0.18 0.015 60 / 0.14)',
-                  border: '1px solid var(--line)',
-                  background: 'var(--paper)',
-                }}
-              >
-                {/* Browser chrome */}
-                <div
-                  className="flex items-center gap-2 px-4"
-                  style={{ height: 36, background: 'oklch(0.2 0.01 240)', borderBottom: '1px solid oklch(0.3 0.01 240)' }}
-                >
-                  <span className="w-3 h-3 rounded-full" style={{ background: 'oklch(0.65 0.18 25)' }} />
-                  <span className="w-3 h-3 rounded-full" style={{ background: 'oklch(0.72 0.16 70)' }} />
-                  <span className="w-3 h-3 rounded-full" style={{ background: 'oklch(0.65 0.18 140)' }} />
-                  <div
-                    className="mx-auto flex items-center gap-2 px-3 rounded text-xs"
-                    style={{ background: 'oklch(0.28 0.01 240)', color: 'oklch(0.6 0.01 240)', height: 22, minWidth: 180 }}
-                  >
-                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                      <circle cx="12" cy="12" r="10" /><path d="M12 8v4l3 3" />
-                    </svg>
-                    localhost:3000
-                  </div>
-                </div>
-
-                {/* Screenshot: inner mini-UI */}
-                <div style={{ background: 'var(--paper)', padding: '20px 24px 0' }}>
-                  {/* Mini header */}
-                  <div className="flex items-center justify-between mb-4" style={{ borderBottom: '1px solid var(--line-2)', paddingBottom: 12 }}>
-                    <span className="font-bold text-xs serif" style={{ color: 'var(--ink)' }}>India Election Guide</span>
-                    <div className="flex items-center gap-3">
-                      {['Guide', 'Timelines', 'Learn'].map(n => (
-                        <span key={n} className="text-[9px] font-semibold" style={{ color: n === 'Guide' ? 'var(--accent)' : 'var(--ink-4)' }}>{n}</span>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Mini hero content + illustration side by side */}
-                  <div className="flex items-start gap-3">
-                    <div className="flex-1">
-                      <p className="font-bold serif mb-1" style={{ fontSize: 14, lineHeight: 1.2, color: 'var(--ink)' }}>Voter guidance,<br />simplified.</p>
-                      <p className="mb-3" style={{ fontSize: 7, lineHeight: 1.5, color: 'var(--ink-3)' }}>Step-by-step procedural guides for Indian voters. Grounded in official Election Commission sources.</p>
-                      <div className="flex items-center gap-1 rounded-lg px-2" style={{ height: 22, background: 'var(--paper)', border: '1px solid var(--line)' }}>
-                        <span style={{ fontSize: 7, color: 'var(--ink-4)', flex: 1 }}>Ask a question...</span>
-                        <span className="rounded px-1.5 text-white" style={{ fontSize: 6, background: 'var(--accent)', height: 14, display: 'flex', alignItems: 'center' }}>Ask Guide</span>
-                      </div>
-                    </div>
-                    <div className="relative flex-shrink-0" style={{ width: 100, height: 100 }}>
-                      <Image
-                        src="/images/hero.png"
-                        alt=""
-                        fill
-                        sizes="100px"
-                        className="object-contain"
-                        aria-hidden="true"
-                      />
-                    </div>
-                  </div>
-                </div>
+            {/* Right: Hero Image */}
+            <div className="hidden md:flex justify-center items-center pointer-events-none">
+              <div className="relative" style={{ width: '100%', maxWidth: 500, aspectRatio: '1/1' }}>
+                <Image
+                  src="/images/hero-voting.svg"
+                  alt="Voter guidance illustration"
+                  fill
+                  sizes="(max-width: 768px) 100vw, 500px"
+                  className="object-contain"
+                  aria-hidden="true"
+                />
               </div>
             </div>
 
@@ -229,11 +179,9 @@ export default function HomePage() {
                   href: 'https://ecisveep.nic.in/',
                 },
               ].map((src) => (
-                <a
+                <ExternalLink
                   key={src.domain}
                   href={src.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
                   aria-label={`${src.name} — ${src.domain} (opens in a new tab)`}
                   className="flex items-start gap-4 p-4 rounded-2xl transition-all group card"
                   style={{ background: 'var(--paper)', borderColor: 'var(--line)', color: 'var(--ink)' }}
@@ -244,7 +192,7 @@ export default function HomePage() {
                     <p className="text-[11px] font-mono mt-0.5" style={{ color: 'var(--ink-3)' }}>{src.domain}</p>
                     <p className="text-xs mt-1" style={{ color: 'var(--ink-3)' }}>{src.desc}</p>
                   </div>
-                </a>
+                </ExternalLink>
               ))}
             </div>
           </div>
