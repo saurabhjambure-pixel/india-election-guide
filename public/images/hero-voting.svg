@@ -1,0 +1,156 @@
+<svg width="520" height="520" viewBox="0 0 520 520" xmlns="http://www.w3.org/2000/svg" fill="none">
+  <defs>
+    <radialGradient id="bgGrad" cx="50%" cy="40%" r="65%">
+      <stop offset="0%" stop-color="#FEFBF5"/>
+      <stop offset="100%" stop-color="#EDE7D9"/>
+    </radialGradient>
+    <filter id="evmShadow" x="-20%" y="-10%" width="140%" height="130%">
+      <feDropShadow dx="0" dy="8" stdDeviation="18" flood-color="#000" flood-opacity="0.22"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="520" height="520" rx="28" fill="url(#bgGrad)"/>
+
+  <!-- Tricolor accent bars at top -->
+  <rect x="0" y="0" width="520" height="8" fill="#FF9933"/>
+  <rect x="0" y="8" width="520" height="4" fill="#F8F8F8"/>
+  <rect x="0" y="12" width="520" height="8" fill="#138808"/>
+
+  <!-- ── Ashoka Chakra ── -->
+  <!-- Outer ring -->
+  <circle cx="260" cy="148" r="88" stroke="#000080" stroke-width="5" fill="none"/>
+  <!-- Inner decorative ring -->
+  <circle cx="260" cy="148" r="26" stroke="#000080" stroke-width="2.5" fill="none"/>
+  <!-- Center hub -->
+  <circle cx="260" cy="148" r="14" fill="#000080"/>
+
+  <!-- 24 spokes: from inner ring (r=26→y1=-28) to outer ring (r=88→y2=-86) -->
+  <g transform="translate(260,148)" stroke="#000080" stroke-width="2.5" stroke-linecap="round">
+    <line y1="-28" y2="-86"/>
+    <line y1="-28" y2="-86" transform="rotate(15)"/>
+    <line y1="-28" y2="-86" transform="rotate(30)"/>
+    <line y1="-28" y2="-86" transform="rotate(45)"/>
+    <line y1="-28" y2="-86" transform="rotate(60)"/>
+    <line y1="-28" y2="-86" transform="rotate(75)"/>
+    <line y1="-28" y2="-86" transform="rotate(90)"/>
+    <line y1="-28" y2="-86" transform="rotate(105)"/>
+    <line y1="-28" y2="-86" transform="rotate(120)"/>
+    <line y1="-28" y2="-86" transform="rotate(135)"/>
+    <line y1="-28" y2="-86" transform="rotate(150)"/>
+    <line y1="-28" y2="-86" transform="rotate(165)"/>
+    <line y1="-28" y2="-86" transform="rotate(180)"/>
+    <line y1="-28" y2="-86" transform="rotate(195)"/>
+    <line y1="-28" y2="-86" transform="rotate(210)"/>
+    <line y1="-28" y2="-86" transform="rotate(225)"/>
+    <line y1="-28" y2="-86" transform="rotate(240)"/>
+    <line y1="-28" y2="-86" transform="rotate(255)"/>
+    <line y1="-28" y2="-86" transform="rotate(270)"/>
+    <line y1="-28" y2="-86" transform="rotate(285)"/>
+    <line y1="-28" y2="-86" transform="rotate(300)"/>
+    <line y1="-28" y2="-86" transform="rotate(315)"/>
+    <line y1="-28" y2="-86" transform="rotate(330)"/>
+    <line y1="-28" y2="-86" transform="rotate(345)"/>
+  </g>
+
+  <!-- ── EVM Ballot Unit ── -->
+  <rect x="106" y="268" width="308" height="224" rx="18" fill="#1A1A2E" filter="url(#evmShadow)"/>
+
+  <!-- Top panel / header -->
+  <rect x="120" y="280" width="280" height="40" rx="10" fill="#10102A"/>
+  <!-- ECI emblem placeholder -->
+  <circle cx="137" cy="300" r="11" stroke="#4A7CC7" stroke-width="2" fill="none"/>
+  <circle cx="137" cy="300" r="5" fill="#4A7CC7" opacity="0.7"/>
+  <rect x="153" y="294" width="110" height="7" rx="3" fill="#3A5A9A" opacity="0.8"/>
+  <rect x="153" y="306" width="78" height="5" rx="2" fill="#2A4A7A" opacity="0.55"/>
+  <!-- Status LEDs top-right -->
+  <circle cx="374" cy="300" r="5" fill="#00C864"/>
+  <circle cx="388" cy="300" r="5" fill="#FFB800" opacity="0.45"/>
+
+  <!-- Row 1 -->
+  <rect x="120" y="328" width="280" height="36" rx="7" fill="#22223A"/>
+  <rect x="129" y="336" width="22" height="20" rx="5" fill="#FF9933"/>
+  <circle cx="140" cy="342" r="4" fill="#CC5500"/>
+  <circle cx="140" cy="350" r="3" fill="#CC5500"/>
+  <rect x="157" y="338" width="92" height="7" rx="3" fill="#5A5A7A"/>
+  <rect x="157" y="349" width="64" height="5" rx="2" fill="#3A3A5A"/>
+  <circle cx="370" cy="346" r="12" fill="#222240" stroke="#333360" stroke-width="1.5"/>
+  <text x="370" y="350" text-anchor="middle" font-family="monospace" font-size="10" fill="#5A5A7A">1</text>
+
+  <!-- Row 2 -->
+  <rect x="120" y="371" width="280" height="36" rx="7" fill="#22223A"/>
+  <rect x="129" y="379" width="22" height="20" rx="5" fill="#138808"/>
+  <rect x="136" y="381" width="8" height="14" rx="2" fill="#0A5506"/>
+  <rect x="142" y="379" width="5" height="16" rx="2" fill="#0A5506"/>
+  <rect x="157" y="381" width="100" height="7" rx="3" fill="#5A5A7A"/>
+  <rect x="157" y="392" width="70" height="5" rx="2" fill="#3A3A5A"/>
+  <circle cx="370" cy="389" r="12" fill="#222240" stroke="#333360" stroke-width="1.5"/>
+  <text x="370" y="393" text-anchor="middle" font-family="monospace" font-size="10" fill="#5A5A7A">2</text>
+
+  <!-- Row 3 — SELECTED (highlighted blue) -->
+  <rect x="120" y="414" width="280" height="36" rx="7" fill="#0B2D5C"/>
+  <rect x="129" y="422" width="22" height="20" rx="5" fill="#0055BB"/>
+  <!-- Party symbol: two wheels / bicycle simplified -->
+  <circle cx="136" cy="432" r="5" stroke="#3399FF" stroke-width="2" fill="none"/>
+  <circle cx="146" cy="432" r="5" stroke="#3399FF" stroke-width="2" fill="none"/>
+  <rect x="157" y="424" width="106" height="7" rx="3" fill="#8AB0D8"/>
+  <rect x="157" y="435" width="74" height="5" rx="2" fill="#5A80A8"/>
+  <!-- Glowing blue vote button -->
+  <circle cx="370" cy="432" r="13" fill="#0055EE"/>
+  <circle cx="370" cy="432" r="9" fill="#3388FF"/>
+  <text x="370" y="436" text-anchor="middle" font-family="monospace" font-size="10" fill="white" font-weight="bold">3</text>
+  <!-- Green LED: vote registered -->
+  <circle cx="394" cy="432" r="6" fill="#00E87A"/>
+  <circle cx="394" cy="432" r="3.5" fill="#AAFFD4"/>
+
+  <!-- Row 4 -->
+  <rect x="120" y="457" width="280" height="36" rx="7" fill="#22223A"/>
+  <rect x="129" y="465" width="22" height="20" rx="5" fill="#B22222"/>
+  <circle cx="140" cy="475" r="6" stroke="#E74C3C" stroke-width="2" fill="none"/>
+  <rect x="157" y="467" width="86" height="7" rx="3" fill="#5A5A7A"/>
+  <rect x="157" y="478" width="58" height="5" rx="2" fill="#3A3A5A"/>
+  <circle cx="370" cy="475" r="12" fill="#222240" stroke="#333360" stroke-width="1.5"/>
+  <text x="370" y="479" text-anchor="middle" font-family="monospace" font-size="10" fill="#5A5A7A">4</text>
+
+  <!-- ── Finger pressing button 3 ── -->
+  <!-- Finger body (index finger pointing downward, centered on button at cx=370) -->
+  <rect x="358" y="355" width="24" height="79" rx="12" fill="#D4956A"/>
+  <!-- Knuckle creases -->
+  <path d="M360 382 Q370 379 380 382" stroke="#C0824A" stroke-width="1.5" fill="none"/>
+  <path d="M360 402 Q370 399 380 402" stroke="#C0824A" stroke-width="1.5" fill="none"/>
+  <!-- Fingernail -->
+  <ellipse cx="370" cy="361" rx="9" ry="5.5" fill="#EDD0B0"/>
+  <!-- Indelible ink mark (Indian election tradition — left index finger) -->
+  <ellipse cx="363" cy="426" rx="7" ry="4.5" fill="#18186A" opacity="0.9" transform="rotate(-12 363 426)"/>
+  <ellipse cx="363" cy="426" rx="3.5" ry="2" fill="#2828AA" opacity="0.55" transform="rotate(-12 363 426)"/>
+
+  <!-- ── Decorative background elements ── -->
+  <!-- Faint mini Ashoka Chakra, bottom-left -->
+  <g transform="translate(74,462)" opacity="0.08">
+    <circle r="44" stroke="#000080" stroke-width="2.5"/>
+    <circle r="7" fill="#000080"/>
+    <g stroke="#000080" stroke-width="1.5">
+      <line y1="-9" y2="-42" transform="rotate(0)"/>
+      <line y1="-9" y2="-42" transform="rotate(30)"/>
+      <line y1="-9" y2="-42" transform="rotate(60)"/>
+      <line y1="-9" y2="-42" transform="rotate(90)"/>
+      <line y1="-9" y2="-42" transform="rotate(120)"/>
+      <line y1="-9" y2="-42" transform="rotate(150)"/>
+      <line y1="-9" y2="-42" transform="rotate(180)"/>
+      <line y1="-9" y2="-42" transform="rotate(210)"/>
+      <line y1="-9" y2="-42" transform="rotate(240)"/>
+      <line y1="-9" y2="-42" transform="rotate(270)"/>
+      <line y1="-9" y2="-42" transform="rotate(300)"/>
+      <line y1="-9" y2="-42" transform="rotate(330)"/>
+    </g>
+  </g>
+
+  <!-- Accent dots -->
+  <circle cx="72"  cy="190" r="7"  fill="#FF9933" opacity="0.38"/>
+  <circle cx="60"  cy="215" r="4"  fill="#138808" opacity="0.32"/>
+  <circle cx="454" cy="190" r="7"  fill="#000080" opacity="0.22"/>
+  <circle cx="462" cy="215" r="4"  fill="#FF9933" opacity="0.28"/>
+
+  <!-- Subtle bottom accent -->
+  <rect x="170" y="508" width="180" height="4" rx="2" fill="#000080" opacity="0.12"/>
+</svg>
