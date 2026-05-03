@@ -919,6 +919,68 @@ body {
   text-decoration: underline;
 }
 
+/* AI Explain Response Panel */
+.ai-explain-box {
+  padding: 24px;
+  background: var(--accent-soft);
+  border-left: 4px solid var(--accent);
+  border-radius: var(--r-md);
+  margin-top: 20px;
+  animation: fadeUp 0.4s ease-out both;
+}
+
+.ai-explain-box__header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--accent-deep);
+  margin-bottom: 16px;
+}
+
+.ai-explain-box__badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  background: var(--accent);
+  color: white;
+  font-size: 10px;
+  font-weight: bold;
+}
+
+.ai-explain-box__summary {
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--ink);
+  margin-bottom: 16px;
+}
+
+/* Skeleton Loader */
+.skeleton-loader {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.skeleton-line {
+  height: 14px;
+  background: linear-gradient(90deg, var(--paper-2), var(--paper-3), var(--paper-2));
+  background-size: 200% 100%;
+  border-radius: 4px;
+  animation: shimmer 1.4s infinite linear;
+}
+
+.skeleton-line:last-child {
+  width: 80%;
+}
+
 @layer base {
   body {
     font-family: var(--sans);

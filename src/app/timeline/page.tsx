@@ -23,12 +23,14 @@ export const metadata: Metadata = {
 
 // Timeline data — last reviewed April 2026
 // Update this array and LAST_REVIEWED after each content review.
-const LAST_REVIEWED = 'April 2026'
+const LAST_REVIEWED = 'May 2026'
 
 const STATUS_STYLES: Record<TimelineStatus, { badge: string; dot: string }> = {
   Live:      { badge: 'bg-red-50 text-red-700 border border-red-100',   dot: 'bg-red-500' },
   Upcoming:  { badge: 'bg-blue-50 text-primary border border-blue-100', dot: 'bg-primary' },
   Completed: { badge: 'bg-gray-100 text-gray-700 border border-gray-200', dot: 'bg-gray-400' },
+  'Pending Announcement': { badge: 'bg-amber-50 text-amber-700 border border-amber-100', dot: 'bg-amber-500' },
+  'Date TBC': { badge: 'bg-amber-50 text-amber-700 border border-amber-100', dot: 'bg-amber-500' },
 }
 
 // Derive a 0–100 position for the visual axis from the year span in the data

@@ -47,7 +47,7 @@ export interface ElectionTimeline {
   sourceUrl: string;
 }
 
-export type TimelineStatus = 'Completed' | 'Upcoming' | 'Live';
+export type TimelineStatus = 'Completed' | 'Upcoming' | 'Live' | 'Pending Announcement' | 'Date TBC';
 
 export interface TimelineRecord {
   state: string;

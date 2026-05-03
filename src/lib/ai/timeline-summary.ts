@@ -42,13 +42,18 @@ function buildTimelineFallback(timelines: TimelineRecord[]): TimelineSummary {
 
   const liveEvents = timelines.filter((item) => item.status === 'Live');
   const upcomingEvents = timelines.filter((item) => item.status === 'Upcoming');
-  const nextEvent = liveEvents[0] ?? upcomingEvents[0] ?? timelines[0];
+  const pendingEvents = timelines.filter((item) => item.status === 'Pending Announcement' || item.status === 'Date TBC');
+  const nextEvent = liveEvents[0] ?? upcomingEvents[0] ?? pendingEvents[0] ?? timelines[0];
 
   return {
     title: 'Election Summary',
     summary: liveEvents.length > 0
       ? `${liveEvents.length} election update${liveEvents.length === 1 ? ' is' : 's are'} currently live. ${nextEvent.event} in ${nextEvent.state} is the most immediate item to watch.`
-      : `${upcomingEvents.length} upcoming schedule item${upcomingEvents.length === 1 ? '' : 's'} are listed. ${nextEvent.event} in ${nextEvent.state} is the next key milestone to track.`,
+      : upcomingEvents.length > 0
+        ? `${upcomingEvents.length} upcoming schedule item${upcomingEvents.length === 1 ? '' : 's'} ${upcomingEvents.length === 1 ? 'is' : 'are'} listed. ${nextEvent.event} in ${nextEvent.state} is the next key milestone to track.`
+        : pendingEvents.length > 0
+          ? `No confirmed upcoming schedules. However, ${pendingEvents.length} election${pendingEvents.length === 1 ? '' : 's'} ${pendingEvents.length === 1 ? 'is' : 'are'} pending announcement. ${nextEvent.event} in ${nextEvent.state} is expected next.`
+          : `No upcoming schedule items are listed. ${nextEvent.event} in ${nextEvent.state} is the latest milestone.`,
     highlights: timelines.slice(0, 3).map((item) => `${item.state}: ${item.event} — ${item.date}`),
     sourceLabel: 'Fallback',
   };
@@ -57,7 +62,9 @@ function buildTimelineFallback(timelines: TimelineRecord[]): TimelineSummary {
 function buildTimelinePrompt(timelines: TimelineRecord[]): string {
   return [
     'You are a civic assistant for the India Election Guide.',
-    'Summarize only the verified election timeline entries provided below.',
+    'Summarize the verified election timeline entries provided below.',
+    'IMPORTANT: When counting "upcoming" items, ONLY count those with the status "Upcoming".',
+    'Do not include "Pending Announcement" or "Date TBC" in the "upcoming" count; refer to them as pending or to be confirmed.',
     'Do not invent dates, jurisdictions, or legal guidance.',
     'Return valid JSON matching the schema exactly.',
     JSON.stringify(timelines),
