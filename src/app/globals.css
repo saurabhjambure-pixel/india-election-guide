@@ -18,9 +18,7 @@
   --shadow-sm: 0 1px 2px oklch(0.18 0.015 60 / 0.04), 0 0 0 0.5px oklch(0.18 0.015 60 / 0.04);
   --shadow-md: 0 1px 2px oklch(0.18 0.015 60 / 0.04), 0 4px 12px oklch(0.18 0.015 60 / 0.06);
   --shadow-lg: 0 1px 2px oklch(0.18 0.015 60 / 0.04), 0 12px 32px oklch(0.18 0.015 60 / 0.08);
-}
 
-@theme inline {
   /* Color utilities mapped from :root design tokens */
   --color-ink:            var(--ink);
   --color-ink-2:          var(--ink-2);
@@ -36,7 +34,7 @@
   --color-line:           var(--line);
   --color-line-2:         var(--line-2);
 
-  /* Semantic aliases used by learn page components */
+  /* Semantic aliases */
   --color-navy:           var(--ink);
   --color-primary:        var(--accent);
   --color-border:         var(--line);

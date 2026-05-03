@@ -60,15 +60,16 @@ export default function FormsDocumentation() {
             <button 
               key={f.id} 
               onClick={() => setActiveFormId(f.id)}
+              style={isActive ? { backgroundColor: 'var(--ink)', borderColor: 'var(--ink)' } : {}}
               className={`w-full text-left p-6 rounded-2xl transition-all block ${
                 isActive 
-                  ? 'bg-ink border-ink shadow-card scale-[1.02]' 
+                  ? 'text-white shadow-card scale-[1.02]' 
                   : 'bg-white border-border shadow-subtle hover:shadow-card hover:scale-[1.01]'
               } border`}
             >
-              <p className={`font-bold text-xs uppercase mb-1 ${isActive ? 'text-white/80' : 'text-primary'}`}>Form {f.id}</p>
+              <p className={`font-bold text-xs uppercase mb-1 ${isActive ? 'text-white/70' : 'text-primary'}`}>Form {f.id}</p>
               <p className={`text-lg font-bold mb-1 ${isActive ? 'text-white' : 'text-ink'}`}>{f.title}</p>
-              <p className={`text-sm ${isActive ? 'text-white/90' : 'text-text-secondary'}`}>{f.desc}</p>
+              <p className={`text-sm ${isActive ? 'text-white/80' : 'text-text-secondary'}`}>{f.desc}</p>
             </button>
           );
         })}
@@ -76,9 +77,12 @@ export default function FormsDocumentation() {
 
       <div className="space-y-6">
         <h2 className="text-[11px] font-bold uppercase tracking-[0.2em] opacity-40">Documentation Required</h2>
-        <div className="bg-ink rounded-3xl p-8 text-white h-full flex flex-col justify-center shadow-lg transition-all duration-300">
+        <div 
+          style={{ backgroundColor: 'var(--ink)' }}
+          className="rounded-3xl p-8 text-white h-full flex flex-col justify-center shadow-lg transition-all duration-300"
+        >
           <div className="mb-8 fade-in" key={`title-${activeForm.id}`}>
-            <span className="inline-block px-3 py-1 bg-white/10 rounded-full text-xs font-bold tracking-widest uppercase mb-4">
+            <span className="inline-block px-3 py-1 bg-accent rounded-full text-[10px] text-white font-bold tracking-widest uppercase mb-4">
               Form {activeForm.id}
             </span>
             <h3 className="text-2xl font-bold">{activeForm.title}</h3>
@@ -86,7 +90,7 @@ export default function FormsDocumentation() {
           <ul className="space-y-6" key={`docs-${activeForm.id}`}>
             {activeForm.docs.map((doc, idx) => (
               <li key={idx} className="flex items-start gap-4 text-sm font-medium fade-in" style={{ animationDelay: `${idx * 50}ms` }}>
-                <span className="w-6 h-6 bg-white/10 rounded-full flex items-center justify-center text-[10px] shrink-0 mt-0.5" aria-hidden="true">✓</span>
+                <span className="w-6 h-6 bg-accent rounded-full flex items-center justify-center text-[10px] text-white shrink-0 mt-0.5" aria-hidden="true">✓</span>
                 {doc}
               </li>
             ))}

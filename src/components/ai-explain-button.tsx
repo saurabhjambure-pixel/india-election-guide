@@ -25,12 +25,21 @@ export default function AiExplainButton({ flowId }: AiExplainProps) {
       const res = await fetch(`/api/explain?flowId=${encodeURIComponent(flowId)}&simple=true`, {
         method: 'GET',
       })
-      if (!res.ok) throw new Error('Explain failed')
+      
+      if (!res.ok) {
+        if (res.status === 429) {
+          const body = await res.json();
+          setError(body.error || 'Daily AI limit reached.');
+          return;
+        }
+        throw new Error('Explain failed');
+      }
+
       const rawData = await res.json()
       const json = ExplainResponseSchema.parse(rawData)
       setData(json)
-    } catch {
-      setError('Could not generate explanation. Please try again.')
+    } catch (err: any) {
+      setError(err?.message || 'Could not generate explanation. Please try again.')
     } finally {
       setLoading(false)
     }

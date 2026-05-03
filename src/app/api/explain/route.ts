@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
 import { explainFlow } from '@/lib/ai/civic-ai';
 import { getFlowById } from '@/lib/firebase/firestore';
+import { checkRateLimit } from '@/lib/security/rate-limit';
 
 const ExplainPostRequestSchema = z.object({
   flowId: z.string().trim().min(1).max(100),
@@ -12,6 +13,17 @@ const ExplainPostRequestSchema = z.object({
 // Converted from POST to GET so CDN and browser can cache deterministic responses.
 export async function GET(req: NextRequest) {
   try {
+    // 1. Identify User (IP-based for demo/hackathon)
+    const ip = req.headers.get('x-forwarded-for') || '127.0.0.1';
+    const { allowed, remaining } = await checkRateLimit(ip);
+
+    if (!allowed) {
+      return NextResponse.json(
+        { error: 'Rate limit exceeded (Test Build). To ensure fair access for all judges, we limit each user to 3 AI queries per day. Please continue exploring our manual guides below!' },
+        { status: 429 }
+      );
+    }
+
     const { searchParams } = new URL(req.url);
     const flowId = searchParams.get('flowId');
     const preferSimple = searchParams.get('simple') === 'true';
@@ -33,12 +45,15 @@ export async function GET(req: NextRequest) {
 
     const result = await explainFlow(flow, preferSimple);
 
-    return NextResponse.json(result, {
+    const response = NextResponse.json(result, {
       headers: {
         // Cache for 24 hours at CDN; serve stale for up to 1 hour while revalidating
         'Cache-Control': 'public, s-maxage=86400, stale-while-revalidate=3600',
+        'X-RateLimit-Remaining': remaining.toString(),
       },
     });
+
+    return response;
   } catch (err) {
     const message = err instanceof Error ? err.message : 'Unknown error';
     console.error('[/api/explain]', message);
@@ -52,6 +67,17 @@ export async function GET(req: NextRequest) {
 // Keep POST for backwards compatibility (does not cache)
 export async function POST(req: NextRequest) {
   try {
+    // 1. Identify User (IP-based for demo/hackathon)
+    const ip = req.headers.get('x-forwarded-for') || '127.0.0.1';
+    const { allowed, remaining } = await checkRateLimit(ip);
+
+    if (!allowed) {
+      return NextResponse.json(
+        { error: 'Rate limit exceeded (Test Build). To ensure fair access for all judges, we limit each user to 3 AI queries per day. Please continue exploring our manual guides below!' },
+        { status: 429 }
+      );
+    }
+
     const contentLength = parseInt(req.headers.get('content-length') || '0', 10);
     if (contentLength > 5120) {
       return NextResponse.json({ error: 'Payload too large' }, { status: 413 });
@@ -75,7 +101,10 @@ export async function POST(req: NextRequest) {
 
     const preferSimple = parsed.data.preferSimpleLanguage === true;
     const result = await explainFlow(flow, preferSimple);
-    return NextResponse.json(result);
+    
+    const response = NextResponse.json(result);
+    response.headers.set('X-RateLimit-Remaining', remaining.toString());
+    return response;
   } catch (err) {
     const message = err instanceof Error ? err.message : 'Unknown error';
     console.error('[/api/explain]', message);
