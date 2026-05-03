@@ -46,7 +46,7 @@ export default function SiteHeader() {
           </nav>
         </div>
 
-        {/* Right side: CTA + user icon */}
+        {/* Right side: CTA button */}
         <div className="flex items-center gap-3">
           <ExternalLink
             href="https://eci.gov.in/"
@@ -55,16 +55,6 @@ export default function SiteHeader() {
           >
             Official ECI Sources
           </ExternalLink>
-          <button
-            className="w-9 h-9 rounded-full flex items-center justify-center transition-colors"
-            style={{ background: 'var(--paper-2)', border: '1px solid var(--line)', color: 'var(--ink-3)' }}
-            aria-label="Account"
-          >
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <circle cx="12" cy="8" r="4" />
-              <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" />
-            </svg>
-          </button>
         </div>
       </div>
     </header>
