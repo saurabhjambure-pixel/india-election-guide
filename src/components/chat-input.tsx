@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useRef, useEffect, type FormEvent } from 'react'
+import { flushSync } from 'react-dom'
 import { useRouter } from 'next/navigation'
 import { ClassifyResponseSchema, type ClassifyResponse } from '@/lib/ai/schemas'
 import { OutOfScopeState } from './fallbacks'
@@ -10,7 +11,7 @@ const EXAMPLE_PROMPTS = [
   "I just turned 18, how do I register?",
   "My name is wrong on my voter card",
   "I moved to a new city",
-  "Is my name on the voter list?",
+  "How do I check if I'm on the voter list?",
   "When is the next election in my state?",
 ]
 
@@ -92,8 +93,11 @@ export default function ChatInput() {
   }
 
   function handleExamplePrompt(p: string) {
-    setClarificationContext(null)
-    setValue(p)
+    flushSync(() => {
+      setClarificationContext(null)
+      setValue(p)
+    })
+    inputRef.current?.focus()
     submitQuery(p)
   }
 
@@ -108,7 +112,7 @@ export default function ChatInput() {
           id="chat-input"
           type="text"
           className="search-input"
-          placeholder={clarificationContext ? 'Type your answer…' : 'Ask a question...'}
+          placeholder={clarificationContext ? 'Type your answer…' : 'e.g. How do I correct my name on my Voter ID?'}
           value={value}
           onChange={(e) => setValue(e.target.value)}
           disabled={loading}
@@ -116,7 +120,7 @@ export default function ChatInput() {
           autoComplete="off"
         />
         <button type="submit" className="search-btn" disabled={loading || !value.trim()}>
-          {loading ? '...' : clarificationContext ? 'Send' : 'Ask Guide'}
+          {loading ? '...' : clarificationContext ? 'Send' : 'Ask a Question'}
         </button>
       </form>
 
@@ -136,9 +140,9 @@ export default function ChatInput() {
               <button
                 type="button"
                 onClick={() => handleExamplePrompt(p)}
-                className="text-[12px] font-bold transition-colors active:scale-95 pill pill-accent"
+                className="bg-gray-100 hover:bg-blue-50 border border-gray-200 rounded-full px-3 py-1 text-sm cursor-pointer transition-colors duration-200"
               >
-                {p} <span className="opacity-20 ml-1">·</span>
+                {p}
               </button>
             </div>
           ))}

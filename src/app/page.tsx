@@ -56,7 +56,7 @@ export default async function HomePage() {
                 id="hero-title"
                 style={{ fontSize: 'clamp(2rem, 4vw, 3.25rem)', lineHeight: 1.06, fontWeight: 800, letterSpacing: '-0.025em', color: 'var(--ink)' }}
               >
-                Empowering your civic duty <br /> with absolute clarity.
+                Your step-by-step guide to registering and voting in India — <br /> grounded in official Election Commission sources.
               </h1>
 
               <p className="mb-10" style={{ fontSize: '1.0625rem', lineHeight: 1.65, color: 'var(--ink-2)', maxWidth: '36rem' }}>
