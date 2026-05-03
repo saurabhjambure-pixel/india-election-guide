@@ -9,7 +9,12 @@ interface StepCardProps {
   sources: Record<string, SourceRef>
 }
 
-export default function StepCard({ step, stepNumber, totalSteps, sources }: StepCardProps) {
+export default function StepCard({
+  step,
+  stepNumber,
+  totalSteps,
+  sources,
+}: StepCardProps) {
   const resolvedSources = step.sourceIds
     .map((id) => sources[id])
     .filter(Boolean)

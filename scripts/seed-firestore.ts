@@ -1,6 +1,6 @@
-import { initializeApp } from 'firebase-admin/app';
-import { getFirestore } from 'firebase-admin/firestore';
-import { CIVIC_FLOWS, SOURCES } from '../src/data/civic-data';
+import { initializeApp } from 'firebase-admin/app'
+import { getFirestore } from 'firebase-admin/firestore'
+import { CIVIC_FLOWS, SOURCES } from '../src/data/civic-data'
 
 const MOCK_TIMELINES = [
   {
@@ -30,46 +30,60 @@ const MOCK_TIMELINES = [
     source: 'State Election Commission',
     sourceUrl: 'https://eci.gov.in/elections/election-schedule/',
   },
-];
+]
 
-// Note: To run this script, you must have a serviceAccountKey.json 
+// Note: To run this script, you must have a serviceAccountKey.json
 // from your Firebase project and set the GOOGLE_APPLICATION_CREDENTIALS environment variable.
 
 async function seed() {
   if (!process.env.GOOGLE_APPLICATION_CREDENTIALS) {
-    console.warn('Skipping Firestore seed. GOOGLE_APPLICATION_CREDENTIALS is not set.');
-    return;
+    console.warn(
+      'Skipping Firestore seed. GOOGLE_APPLICATION_CREDENTIALS is not set.'
+    )
+    return
   }
 
-  const app = initializeApp();
-  const db = getFirestore(app);
+  const app = initializeApp()
+  const db = getFirestore(app)
 
-  console.log('Seeding sources...');
-  const sourcesBatch = db.batch();
+  console.log('Seeding sources...')
+  const sourcesBatch = db.batch()
   for (const source of Object.values(SOURCES)) {
-    const ref = db.collection('civic_data').doc('sources').collection('items').doc(source.id);
-    sourcesBatch.set(ref, source);
+    const ref = db
+      .collection('civic_data')
+      .doc('sources')
+      .collection('items')
+      .doc(source.id)
+    sourcesBatch.set(ref, source)
   }
-  await sourcesBatch.commit();
+  await sourcesBatch.commit()
 
-  console.log('Seeding flows...');
-  const flowsBatch = db.batch();
+  console.log('Seeding flows...')
+  const flowsBatch = db.batch()
   for (const flow of CIVIC_FLOWS) {
-    const ref = db.collection('civic_data').doc('flows').collection('items').doc(flow.id);
-    flowsBatch.set(ref, flow);
+    const ref = db
+      .collection('civic_data')
+      .doc('flows')
+      .collection('items')
+      .doc(flow.id)
+    flowsBatch.set(ref, flow)
   }
-  await flowsBatch.commit();
+  await flowsBatch.commit()
 
-  console.log('Seeding timelines...');
-  const timelinesBatch = db.batch();
+  console.log('Seeding timelines...')
+  const timelinesBatch = db.batch()
   for (let i = 0; i < MOCK_TIMELINES.length; i++) {
-    const timeline = MOCK_TIMELINES[i];
-    const ref = db.collection('civic_data').doc('timelines').collection('items').doc(`timeline-${i}`);
-    timelinesBatch.set(ref, timeline);
+    const timeline = MOCK_TIMELINES[i]
+    const ref = db
+      .collection('civic_data')
+      .doc('timelines')
+      .collection('items')
+      .doc(`timeline-${i}`)
+    timelinesBatch.set(ref, timeline)
   }
-  await timelinesBatch.commit();
+  await timelinesBatch.commit()
 
-  console.log('Database seeded successfully.');
+  console.log('Database seeded successfully.')
 }
 
-seed().catch(console.error);
+seed().catch(console.error)

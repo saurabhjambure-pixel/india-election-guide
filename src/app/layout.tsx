@@ -57,12 +57,18 @@ export default function RootLayout({
         <meta name="theme-color" content="#FAFAFA" />
         <link rel="icon" href="/favicon.ico" />
       </head>
-      <body className={`${geist.variable} ${geistMono.variable} ${instrumentSerif.variable} flex flex-col min-h-screen`}>
+      <body
+        className={`${geist.variable} ${geistMono.variable} ${instrumentSerif.variable} flex flex-col min-h-screen`}
+      >
         <a href="#main-content" className="skip-link">
           Skip to main content
         </a>
         <SiteHeader />
-        <main id="main-content" tabIndex={-1} className="outline-none flex-grow">
+        <main
+          id="main-content"
+          tabIndex={-1}
+          className="outline-none flex-grow"
+        >
           {children}
         </main>
         <SiteFooter />

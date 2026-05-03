@@ -22,24 +22,30 @@ export default function AiExplainButton({ flowId }: AiExplainProps) {
     logCustomEvent('ai_explain_used', { flow_id: flowId })
     try {
       // GET request — browser and CDN will cache this response for 24 hours
-      const res = await fetch(`/api/explain?flowId=${encodeURIComponent(flowId)}&simple=true`, {
-        method: 'GET',
-      })
-      
+      const res = await fetch(
+        `/api/explain?flowId=${encodeURIComponent(flowId)}&simple=true`,
+        {
+          method: 'GET',
+        }
+      )
+
       if (!res.ok) {
         if (res.status === 429) {
-          const body = await res.json();
-          setError(body.error || 'Daily AI limit reached.');
-          return;
+          const body = await res.json()
+          setError(body.error || 'Daily AI limit reached.')
+          return
         }
-        throw new Error('Explain failed');
+        throw new Error('Explain failed')
       }
 
       const rawData = await res.json()
       const json = ExplainResponseSchema.parse(rawData)
       setData(json)
     } catch (err: unknown) {
-      const message = err instanceof Error ? err.message : 'Could not generate explanation. Please try again.'
+      const message =
+        err instanceof Error
+          ? err.message
+          : 'Could not generate explanation. Please try again.'
       setError(message)
     } finally {
       setLoading(false)
@@ -98,7 +104,15 @@ export default function AiExplainButton({ flowId }: AiExplainProps) {
   if (error) {
     return (
       <div style={{ marginBottom: 28 }}>
-        <p role="alert" style={{ marginTop: 0, color: 'var(--color-red)', fontSize: '0.82rem', marginBottom: 8 }}>
+        <p
+          role="alert"
+          style={{
+            marginTop: 0,
+            color: 'var(--color-red)',
+            fontSize: '0.82rem',
+            marginBottom: 8,
+          }}
+        >
           {error}
         </p>
         <RetryButton onClick={handleExplain} />
@@ -128,11 +142,14 @@ export default function AiExplainButton({ flowId }: AiExplainProps) {
           transition: 'border-color 0.2s, box-shadow 0.2s',
         }}
         onMouseEnter={(e) => {
-          (e.currentTarget as HTMLButtonElement).style.borderColor = 'var(--color-navy)'
-          ;(e.currentTarget as HTMLButtonElement).style.boxShadow = 'var(--shadow-md)'
+          ;(e.currentTarget as HTMLButtonElement).style.borderColor =
+            'var(--color-navy)'
+          ;(e.currentTarget as HTMLButtonElement).style.boxShadow =
+            'var(--shadow-md)'
         }}
         onMouseLeave={(e) => {
-          (e.currentTarget as HTMLButtonElement).style.borderColor = 'var(--color-gray-200)'
+          ;(e.currentTarget as HTMLButtonElement).style.borderColor =
+            'var(--color-gray-200)'
           ;(e.currentTarget as HTMLButtonElement).style.boxShadow = 'none'
         }}
         aria-label="Explain this flow in simple language using AI"

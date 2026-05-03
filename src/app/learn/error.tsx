@@ -2,12 +2,22 @@
 
 import { useEffect } from 'react'
 
-export default function LearnError({ error, reset }: { error: Error & { digest?: string }, reset: () => void }) {
-  useEffect(() => { console.error('[LearnError]', error) }, [error])
+export default function LearnError({
+  error,
+  reset,
+}: {
+  error: Error & { digest?: string }
+  reset: () => void
+}) {
+  useEffect(() => {
+    console.error('[LearnError]', error)
+  }, [error])
 
   return (
     <div className="py-20 text-center container-app">
-      <h2 className="text-2xl font-bold text-navy mb-4">Could not load Learn content</h2>
+      <h2 className="text-2xl font-bold text-navy mb-4">
+        Could not load Learn content
+      </h2>
       <p className="text-text-secondary mb-2">
         There was a problem loading the learning resources. Please try again.
       </p>

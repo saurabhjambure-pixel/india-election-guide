@@ -3,9 +3,16 @@ interface AiResponsePanelProps {
   steps: string[]
 }
 
-export default function AiResponsePanel({ summary, steps }: AiResponsePanelProps) {
+export default function AiResponsePanel({
+  summary,
+  steps,
+}: AiResponsePanelProps) {
   return (
-    <div className="ai-explain-box" role="region" aria-label="AI plain-language explanation">
+    <div
+      className="ai-explain-box"
+      role="region"
+      aria-label="AI plain-language explanation"
+    >
       <div className="ai-explain-box__header">
         <span className="ai-explain-box__badge">✨</span>
         AI Summary
@@ -27,13 +34,16 @@ export default function AiResponsePanel({ summary, steps }: AiResponsePanelProps
             >
               {i + 1}
             </span>
-            <span className="text-sm text-text-secondary leading-relaxed">{step}</span>
+            <span className="text-sm text-text-secondary leading-relaxed">
+              {step}
+            </span>
           </li>
         ))}
       </ol>
 
       <p className="mt-4 text-[11px] font-semibold text-text-light border-t border-gray-100 pt-3">
-        AI-generated from official ECI text · For legal accuracy, verify with the official sources linked above
+        AI-generated from official ECI text · For legal accuracy, verify with
+        the official sources linked above
       </p>
     </div>
   )

@@ -39,14 +39,18 @@ const TABS: TabItem[] = [
     name: 'Learn',
     href: '/learn',
     Icon: BookOpen,
-    isActive: (pathname) => pathname.startsWith('/learn') && !pathname.includes('#glossary'),
+    isActive: (pathname) =>
+      pathname.startsWith('/learn') && !pathname.includes('#glossary'),
   },
   {
     name: 'Glossary',
     href: '/learn#glossary',
     Icon: BookMarked,
     isActive: (pathname) =>
-      pathname === '/learn' && (typeof window !== 'undefined' ? window.location.hash === '#glossary' : false),
+      pathname === '/learn' &&
+      (typeof window !== 'undefined'
+        ? window.location.hash === '#glossary'
+        : false),
   },
   {
     name: 'Help',
@@ -78,7 +82,7 @@ function MobileTabBarInner() {
               'flex flex-col items-center justify-center gap-0.5 px-0.5 py-1.5 rounded-md text-[10.5px] font-medium transition-colors duration-200 border-t-2',
               active
                 ? 'text-blue-600 bg-blue-50 border-blue-600'
-                : 'text-gray-500 border-transparent hover:text-gray-600',
+                : 'text-gray-500 border-transparent hover:text-gray-600'
             )}
             aria-current={active ? 'page' : undefined}
           >
@@ -95,10 +99,7 @@ export default function MobileTabBar() {
   return (
     <Suspense
       fallback={
-        <nav
-          className="tabbar md:hidden min-h-[78px]"
-          aria-hidden="true"
-        />
+        <nav className="tabbar md:hidden min-h-[78px]" aria-hidden="true" />
       }
     >
       <MobileTabBarInner />

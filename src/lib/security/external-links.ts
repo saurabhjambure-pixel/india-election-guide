@@ -3,19 +3,22 @@ const ALLOWED_SOURCE_DOMAINS = new Set([
   'ecisveep.nic.in',
   'electoralsearch.eci.gov.in',
   'eci.gov.in',
-]);
+])
 
 export function isAllowedExternalUrl(url: string): boolean {
   try {
-    const parsed = new URL(url);
-    return parsed.protocol === 'https:' && ALLOWED_SOURCE_DOMAINS.has(parsed.hostname);
+    const parsed = new URL(url)
+    return (
+      parsed.protocol === 'https:' &&
+      ALLOWED_SOURCE_DOMAINS.has(parsed.hostname)
+    )
   } catch {
-    return false;
+    return false
   }
 }
 
 export function assertAllowedExternalUrl(url: string): string | null {
-  return isAllowedExternalUrl(url) ? url : null;
+  return isAllowedExternalUrl(url) ? url : null
 }
 
-export { ALLOWED_SOURCE_DOMAINS };
+export { ALLOWED_SOURCE_DOMAINS }

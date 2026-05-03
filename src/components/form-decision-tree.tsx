@@ -74,7 +74,8 @@ const TREE: TreeNode[] = [
     type: 'result',
     id: 'result_form6',
     form: 'Form 6',
-    description: 'New voter registration — enroll on the electoral roll for the first time.',
+    description:
+      'New voter registration — enroll on the electoral roll for the first time.',
     href: '/flow/register-new',
     linkKind: 'internal',
     ctaLabel: 'Go to Register as a new voter Guide →',
@@ -83,7 +84,8 @@ const TREE: TreeNode[] = [
     type: 'result',
     id: 'result_form8_personal',
     form: 'Form 8',
-    description: 'Correct your name, age, photograph, or other particulars on the electoral roll.',
+    description:
+      'Correct your name, age, photograph, or other particulars on the electoral roll.',
     href: '/flow/correct-details',
     linkKind: 'internal',
     ctaLabel: 'Go to Correct Voter Details Guide →',
@@ -92,7 +94,8 @@ const TREE: TreeNode[] = [
     type: 'result',
     id: 'result_form8a',
     form: 'Form 8A',
-    description: 'Shift your enrollment when you move to a new address (including a new constituency).',
+    description:
+      'Shift your enrollment when you move to a new address (including a new constituency).',
     href: '/flow/shift-residence',
     linkKind: 'internal',
     ctaLabel: 'Go to Shift Residence Guide →',
@@ -101,7 +104,8 @@ const TREE: TreeNode[] = [
     type: 'result',
     id: 'result_form8_same_const',
     form: 'Form 8',
-    description: 'Update your address within the same assembly constituency on the electoral roll.',
+    description:
+      'Update your address within the same assembly constituency on the electoral roll.',
     href: '/flow/correct-details',
     linkKind: 'internal',
     ctaLabel: 'Go to Correct Voter Details Guide →',
@@ -110,7 +114,8 @@ const TREE: TreeNode[] = [
     type: 'result',
     id: 'result_form7',
     form: 'Form 7',
-    description: 'Object to inclusion of a name or seek deletion of an incorrect entry from the roll.',
+    description:
+      'Object to inclusion of a name or seek deletion of an incorrect entry from the roll.',
     href: 'https://voters.eci.gov.in/',
     linkKind: 'external',
     ctaLabel: "Go to Form 7 on Voters' Service Portal →",
@@ -121,7 +126,8 @@ const TREE: TreeNode[] = [
     type: 'result',
     id: 'result_form6a',
     form: 'Form 6A',
-    description: 'Register as an overseas elector (Indian citizen resident abroad).',
+    description:
+      'Register as an overseas elector (Indian citizen resident abroad).',
     href: 'https://voters.eci.gov.in/',
     linkKind: 'external',
     ctaLabel: "Go to Form 6A on Voters' Service Portal →",
@@ -130,7 +136,10 @@ const TREE: TreeNode[] = [
   },
 ]
 
-const NODE_MAP = Object.fromEntries(TREE.map((n) => [n.id, n])) as Record<string, TreeNode>
+const NODE_MAP = Object.fromEntries(TREE.map((n) => [n.id, n])) as Record<
+  string,
+  TreeNode
+>
 const START_ID = 'q_first_time'
 
 const choiceBtnClass =
@@ -151,7 +160,9 @@ export default function FormDecisionTree() {
 
   return (
     <div className="bg-white border border-border p-8 rounded-2xl shadow-subtle h-full">
-      <h2 className="text-xl font-bold text-navy mb-6">Which form do I need?</h2>
+      <h2 className="text-xl font-bold text-navy mb-6">
+        Which form do I need?
+      </h2>
 
       <div className="min-h-[160px]" aria-live="polite">
         {node.type === 'question' && (
@@ -216,7 +227,9 @@ export default function FormDecisionTree() {
               Recommended Form
             </p>
             <p className="text-3xl font-extrabold text-navy">{node.form}</p>
-            <p className="text-sm font-medium text-text-secondary">{node.description}</p>
+            <p className="text-sm font-medium text-text-secondary">
+              {node.description}
+            </p>
             {node.linkKind === 'internal' ? (
               <Link
                 href={node.href}

@@ -1,71 +1,86 @@
-import { initializeApp, getApps } from 'firebase-admin/app';
-import { getFirestore, Firestore } from 'firebase-admin/firestore';
-import type { CivicFlow, SourceRef, TimelineRecord } from '@/lib/types/civic';
+import { initializeApp, getApps } from 'firebase-admin/app'
+import { getFirestore, Firestore } from 'firebase-admin/firestore'
+import type { CivicFlow, SourceRef, TimelineRecord } from '@/lib/types/civic'
 
-let db: Firestore | null = null;
-let hasWarnedAboutCredentials = false;
+let db: Firestore | null = null
+let hasWarnedAboutCredentials = false
 
 export function getAdminDb(): Firestore | null {
-  if (db) return db;
+  if (db) return db
 
   if (!process.env.GOOGLE_APPLICATION_CREDENTIALS) {
     if (!hasWarnedAboutCredentials) {
-      console.warn('GOOGLE_APPLICATION_CREDENTIALS not set, firebase-admin cannot initialize.');
-      hasWarnedAboutCredentials = true;
+      console.warn(
+        'GOOGLE_APPLICATION_CREDENTIALS not set, firebase-admin cannot initialize.'
+      )
+      hasWarnedAboutCredentials = true
     }
-    return null;
+    return null
   }
 
   if (getApps().length === 0) {
-    initializeApp();
+    initializeApp()
   }
-  
-  db = getFirestore();
-  return db;
+
+  db = getFirestore()
+  return db
 }
 
 export async function getFlows(): Promise<CivicFlow[]> {
-  const adminDb = getAdminDb();
+  const adminDb = getAdminDb()
   if (!adminDb) {
-    const { CIVIC_FLOWS } = await import('@/data/civic-data');
-    return CIVIC_FLOWS;
+    const { CIVIC_FLOWS } = await import('@/data/civic-data')
+    return CIVIC_FLOWS
   }
-  
-  const snapshot = await adminDb.collection('civic_data').doc('flows').collection('items').get();
-  return snapshot.docs.map(doc => doc.data() as CivicFlow);
+
+  const snapshot = await adminDb
+    .collection('civic_data')
+    .doc('flows')
+    .collection('items')
+    .get()
+  return snapshot.docs.map((doc) => doc.data() as CivicFlow)
 }
 
 export async function getFlowById(id: string): Promise<CivicFlow | null> {
-  const adminDb = getAdminDb();
+  const adminDb = getAdminDb()
   if (!adminDb) {
-    const { CIVIC_FLOWS } = await import('@/data/civic-data');
-    return CIVIC_FLOWS.find(f => f.id === id) || null;
+    const { CIVIC_FLOWS } = await import('@/data/civic-data')
+    return CIVIC_FLOWS.find((f) => f.id === id) || null
   }
-  
-  const doc = await adminDb.collection('civic_data').doc('flows').collection('items').doc(id).get();
-  if (!doc.exists) return null;
-  
-  return doc.data() as CivicFlow;
+
+  const doc = await adminDb
+    .collection('civic_data')
+    .doc('flows')
+    .collection('items')
+    .doc(id)
+    .get()
+  if (!doc.exists) return null
+
+  return doc.data() as CivicFlow
 }
 
 export async function getSources(): Promise<Record<string, SourceRef>> {
-  const adminDb = getAdminDb();
+  const adminDb = getAdminDb()
   if (!adminDb) {
-    const { SOURCES } = await import('@/data/civic-data');
-    return SOURCES;
+    const { SOURCES } = await import('@/data/civic-data')
+    return SOURCES
   }
-  
-  const snapshot = await adminDb.collection('civic_data').doc('sources').collection('items').get();
-  const sources: Record<string, SourceRef> = {};
-  snapshot.docs.forEach(doc => {
-    sources[doc.id] = doc.data() as SourceRef;
-  });
-  
-  return sources;
+
+  const snapshot = await adminDb
+    .collection('civic_data')
+    .doc('sources')
+    .collection('items')
+    .get()
+  const sources: Record<string, SourceRef> = {}
+  snapshot.docs.forEach((doc) => {
+    sources[doc.id] = doc.data() as SourceRef
+  })
+
+  return sources
 }
 
 export async function getTimelines(): Promise<TimelineRecord[]> {
-  const adminDb = getAdminDb();
+  const adminDb = getAdminDb()
   if (!adminDb) {
     return [
       {
@@ -95,9 +110,13 @@ export async function getTimelines(): Promise<TimelineRecord[]> {
         source: 'State Election Commission',
         sourceUrl: 'https://eci.gov.in/elections/election-schedule/',
       },
-    ];
+    ]
   }
-  
-  const snapshot = await adminDb.collection('civic_data').doc('timelines').collection('items').get();
-  return snapshot.docs.map(doc => doc.data() as TimelineRecord);
+
+  const snapshot = await adminDb
+    .collection('civic_data')
+    .doc('timelines')
+    .collection('items')
+    .get()
+  return snapshot.docs.map((doc) => doc.data() as TimelineRecord)
 }

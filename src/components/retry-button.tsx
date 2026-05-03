@@ -3,7 +3,10 @@ interface RetryButtonProps {
   disabled?: boolean
 }
 
-export default function RetryButton({ onClick, disabled = false }: RetryButtonProps) {
+export default function RetryButton({
+  onClick,
+  disabled = false,
+}: RetryButtonProps) {
   return (
     <button
       onClick={onClick}
@@ -26,13 +29,17 @@ export default function RetryButton({ onClick, disabled = false }: RetryButtonPr
       }}
       onMouseEnter={(e) => {
         if (!disabled) {
-          (e.currentTarget as HTMLButtonElement).style.background = 'var(--accent-soft)'
-          ;(e.currentTarget as HTMLButtonElement).style.borderColor = 'var(--accent)'
+          ;(e.currentTarget as HTMLButtonElement).style.background =
+            'var(--accent-soft)'
+          ;(e.currentTarget as HTMLButtonElement).style.borderColor =
+            'var(--accent)'
         }
       }}
       onMouseLeave={(e) => {
-        (e.currentTarget as HTMLButtonElement).style.background = 'var(--paper)'
-        ;(e.currentTarget as HTMLButtonElement).style.borderColor = 'var(--line)'
+        ;(e.currentTarget as HTMLButtonElement).style.background =
+          'var(--paper)'
+        ;(e.currentTarget as HTMLButtonElement).style.borderColor =
+          'var(--line)'
       }}
       aria-label="Try again"
     >

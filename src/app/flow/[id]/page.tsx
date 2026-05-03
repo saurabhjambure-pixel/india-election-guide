@@ -19,8 +19,8 @@ export async function generateStaticParams() {
 
 // true: new flows added to civic-data.ts are served immediately on first request (ISR)
 // without a full redeploy — and are cached for 1 hour thereafter.
-export const dynamicParams = true;
-export const revalidate = 3600;
+export const dynamicParams = true
+export const revalidate = 3600
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id } = await params
@@ -52,9 +52,16 @@ export default async function FlowPage({ params }: Props) {
     <div className="pb-40">
       <div className="container-app">
         <header className="flow-header">
-          <nav className="flex items-center gap-2 eyebrow mb-12" aria-label="Breadcrumb">
-            <Link href="/" className="hover:opacity-70 transition-colors">Guide</Link>
-            <span aria-hidden="true" className="opacity-20">/</span>
+          <nav
+            className="flex items-center gap-2 eyebrow mb-12"
+            aria-label="Breadcrumb"
+          >
+            <Link href="/" className="hover:opacity-70 transition-colors">
+              Guide
+            </Link>
+            <span aria-hidden="true" className="opacity-20">
+              /
+            </span>
             <span style={{ color: 'var(--ink)' }}>{flow.title}</span>
           </nav>
 
@@ -62,7 +69,10 @@ export default async function FlowPage({ params }: Props) {
             Official Guidance
           </div>
           <h1 className="flow-title serif">{flow.title}</h1>
-          <p className="text-xl font-medium max-w-2xl leading-relaxed" style={{ color: 'var(--ink-2)' }}>
+          <p
+            className="text-xl font-medium max-w-2xl leading-relaxed"
+            style={{ color: 'var(--ink-2)' }}
+          >
             {flow.description}
           </p>
         </header>
@@ -70,10 +80,14 @@ export default async function FlowPage({ params }: Props) {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-20">
           <div className="lg:col-span-8">
             {/* Step progress bar */}
-            <div className="mb-12" aria-label={`Progress: ${flow.steps.length} steps in this guide`}>
+            <div
+              className="mb-12"
+              aria-label={`Progress: ${flow.steps.length} steps in this guide`}
+            >
               <div className="flex items-center justify-between mb-3">
                 <span className="eyebrow">
-                  {flow.steps.length} step{flow.steps.length !== 1 ? 's' : ''} in this guide
+                  {flow.steps.length} step{flow.steps.length !== 1 ? 's' : ''}{' '}
+                  in this guide
                 </span>
               </div>
               <div
@@ -85,7 +99,10 @@ export default async function FlowPage({ params }: Props) {
                 className="h-1 w-full rounded-full overflow-hidden"
                 style={{ background: 'var(--line)' }}
               >
-                <div className="h-full rounded-full w-full" style={{ background: 'var(--accent)' }} />
+                <div
+                  className="h-full rounded-full w-full"
+                  style={{ background: 'var(--accent)' }}
+                />
               </div>
             </div>
 
@@ -116,27 +133,57 @@ export default async function FlowPage({ params }: Props) {
 
             {flow.requiredInfo && flow.requiredInfo.length > 0 && (
               <section aria-labelledby="checklist-heading">
-                <h2 className="note-label" id="checklist-heading">What you&apos;ll need</h2>
+                <h2 className="note-label" id="checklist-heading">
+                  What you&apos;ll need
+                </h2>
                 <ul className="space-y-4">
                   {flow.requiredInfo.map((item) => (
-                    <li key={item} className="flex items-start gap-4 text-[14px] font-medium leading-snug" style={{ color: 'var(--ink-2)' }}>
-                      <span className="w-1.5 h-1.5 rounded-full mt-2 shrink-0" style={{ background: 'var(--accent)' }} aria-hidden="true" />
+                    <li
+                      key={item}
+                      className="flex items-start gap-4 text-[14px] font-medium leading-snug"
+                      style={{ color: 'var(--ink-2)' }}
+                    >
+                      <span
+                        className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
+                        style={{ background: 'var(--accent)' }}
+                        aria-hidden="true"
+                      />
                       {item}
                     </li>
                   ))}
                 </ul>
                 {flow.documents && flow.documents.length > 0 && (
-                  <DocumentGuide documents={flow.documents} documentGuideLink="/learn#documents" />
+                  <DocumentGuide
+                    documents={flow.documents}
+                    documentGuideLink="/learn#documents"
+                  />
                 )}
               </section>
             )}
 
             {flow.warnings.length > 0 && (
-              <section aria-labelledby="warnings-heading" className="p-8 rounded-3xl border" style={{ background: 'rgba(225, 29, 72, 0.05)', borderColor: 'rgba(225, 29, 72, 0.2)' }}>
-                <h2 className="note-label" id="warnings-heading" style={{ color: '#e11d48' }}>Important</h2>
+              <section
+                aria-labelledby="warnings-heading"
+                className="p-8 rounded-3xl border"
+                style={{
+                  background: 'rgba(225, 29, 72, 0.05)',
+                  borderColor: 'rgba(225, 29, 72, 0.2)',
+                }}
+              >
+                <h2
+                  className="note-label"
+                  id="warnings-heading"
+                  style={{ color: '#e11d48' }}
+                >
+                  Important
+                </h2>
                 <ul className="space-y-4">
                   {flow.warnings.map((warning, i) => (
-                    <li key={i} className="flex gap-3 text-[14px] font-medium leading-relaxed" style={{ color: '#c41e3a' }}>
+                    <li
+                      key={i}
+                      className="flex gap-3 text-[14px] font-medium leading-relaxed"
+                      style={{ color: '#c41e3a' }}
+                    >
                       <span aria-hidden="true">⚠️</span>
                       {warning}
                     </li>
@@ -147,21 +194,42 @@ export default async function FlowPage({ params }: Props) {
           </aside>
         </div>
 
-        <div className="mt-32 p-12 rounded-[40px] flex flex-col md:flex-row items-center justify-between gap-8 card" style={{ background: 'var(--paper)', borderColor: 'var(--line)', boxShadow: 'var(--shadow-sm)' }}>
+        <div
+          className="mt-32 p-12 rounded-[40px] flex flex-col md:flex-row items-center justify-between gap-8 card"
+          style={{
+            background: 'var(--paper)',
+            borderColor: 'var(--line)',
+            boxShadow: 'var(--shadow-sm)',
+          }}
+        >
           <div>
-            <h2 className="text-2xl font-bold mb-1 tracking-tight serif" style={{ color: 'var(--ink)' }}>Ready to begin?</h2>
-            <p className="font-medium" style={{ color: 'var(--ink-2)' }}>Continue to the official Voters&apos; Service Portal.</p>
+            <h2
+              className="text-2xl font-bold mb-1 tracking-tight serif"
+              style={{ color: 'var(--ink)' }}
+            >
+              Ready to begin?
+            </h2>
+            <p className="font-medium" style={{ color: 'var(--ink-2)' }}>
+              Continue to the official Voters&apos; Service Portal.
+            </p>
           </div>
-          <FlowCta flowId={flow.id} actions={flow.nextActions} className="flex gap-4" />
+          <FlowCta
+            flowId={flow.id}
+            actions={flow.nextActions}
+            className="flex gap-4"
+          />
         </div>
 
         <FlowFeedback flowId={flow.id} />
       </div>
 
       <div className="mobile-cta">
-        <FlowCta flowId={flow.id} actions={flow.nextActions.slice(0, 1)} className="mobile-cta-btn" />
+        <FlowCta
+          flowId={flow.id}
+          actions={flow.nextActions.slice(0, 1)}
+          className="mobile-cta-btn"
+        />
       </div>
     </div>
   )
 }
-

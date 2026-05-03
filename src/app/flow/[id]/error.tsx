@@ -3,12 +3,22 @@
 import { useEffect } from 'react'
 import Link from 'next/link'
 
-export default function FlowError({ error, reset }: { error: Error & { digest?: string }, reset: () => void }) {
-  useEffect(() => { console.error('[FlowError]', error) }, [error])
+export default function FlowError({
+  error,
+  reset,
+}: {
+  error: Error & { digest?: string }
+  reset: () => void
+}) {
+  useEffect(() => {
+    console.error('[FlowError]', error)
+  }, [error])
 
   return (
     <div className="py-20 text-center container-app">
-      <h2 className="text-2xl font-bold text-navy mb-4">Could not load this guide</h2>
+      <h2 className="text-2xl font-bold text-navy mb-4">
+        Could not load this guide
+      </h2>
       <p className="text-text-secondary mb-2">
         There was a problem loading the voter guide. Please try again.
       </p>
@@ -24,7 +34,10 @@ export default function FlowError({ error, reset }: { error: Error & { digest?: 
         >
           Try again
         </button>
-        <Link href="/" className="px-6 py-2 border border-navy text-navy rounded-xl font-bold hover:bg-gray-50">
+        <Link
+          href="/"
+          className="px-6 py-2 border border-navy text-navy rounded-xl font-bold hover:bg-gray-50"
+        >
           Back to Guide
         </Link>
       </div>

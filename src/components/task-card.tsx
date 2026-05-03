@@ -11,7 +11,12 @@ interface TaskCardProps {
   href?: string
 }
 
-export default function TaskCard({ flow, icon, description, href }: TaskCardProps) {
+export default function TaskCard({
+  flow,
+  icon,
+  description,
+  href,
+}: TaskCardProps) {
   return (
     <Link
       href={href || `/flow/${flow.id}`}
@@ -19,13 +24,28 @@ export default function TaskCard({ flow, icon, description, href }: TaskCardProp
       className="task-card group"
       aria-label={`${flow.title} — ${description}`}
     >
-      <div className="task-card__icon" aria-hidden="true">{icon}</div>
+      <div className="task-card__icon" aria-hidden="true">
+        {icon}
+      </div>
       <div className="task-card__body">
         <h3 className="task-card__title">{flow.title}</h3>
         <p className="task-card__desc">{description}</p>
       </div>
-      <div className="hidden md:flex items-center transition-all group-hover:translate-x-1" aria-hidden="true" style={{ color: 'var(--ink-4)' }}>
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+      <div
+        className="hidden md:flex items-center transition-all group-hover:translate-x-1"
+        aria-hidden="true"
+        style={{ color: 'var(--ink-4)' }}
+      >
+        <svg
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
           <path d="M5 12h14m-7-7 7 7-7 7" />
         </svg>
       </div>

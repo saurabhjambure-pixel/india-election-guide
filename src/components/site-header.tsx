@@ -16,10 +16,17 @@ export default function SiteHeader() {
 
   return (
     <header className="site-header hidden md:flex" role="banner">
-      <div className="container-app w-full flex items-center justify-between" style={{ maxWidth: 1200, padding: '0 40px' }}>
+      <div
+        className="container-app w-full flex items-center justify-between"
+        style={{ maxWidth: 1200, padding: '0 40px' }}
+      >
         {/* Logo + Nav together on the left */}
         <div className="flex items-center gap-10">
-          <Link href="/" className="site-header__logo" aria-label="India Election Guide - home">
+          <Link
+            href="/"
+            className="site-header__logo"
+            aria-label="India Election Guide - home"
+          >
             India Election Guide
           </Link>
 

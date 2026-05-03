@@ -1,14 +1,16 @@
 import Image from 'next/image'
 import type { Metadata } from 'next'
 
-export const revalidate = false;
+export const revalidate = false
 
 export const metadata: Metadata = {
   title: 'Learn the Process · India Election Guide',
-  description: 'Essential information about your rights and the procedural steps to voting in India.',
+  description:
+    'Essential information about your rights and the procedural steps to voting in India.',
   openGraph: {
     title: 'Learn the Process · India Election Guide',
-    description: 'Essential information about your rights and the procedural steps to voting in India.',
+    description:
+      'Essential information about your rights and the procedural steps to voting in India.',
     url: 'https://india-election-guide.vercel.app/learn',
     siteName: 'India Election Guide',
     images: [{ url: '/images/og.png', width: 1200, height: 630 }],
@@ -92,7 +94,7 @@ const FAQ_CATEGORIES = [
       },
       {
         q: 'What should I do if I face a problem at the polling booth?',
-        a: 'First speak to the Presiding Officer at the booth. If unresolved, call the national Voter Helpline at 1950 or use the cVIGIL app to report the issue with a photo or video. You can also report to your district\'s Returning Officer.',
+        a: "First speak to the Presiding Officer at the booth. If unresolved, call the national Voter Helpline at 1950 or use the cVIGIL app to report the issue with a photo or video. You can also report to your district's Returning Officer.",
       },
     ],
   },
@@ -105,9 +107,12 @@ export default function LearnPage() {
         <header className="mb-20">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
             <div>
-              <h1 className="text-4xl md:text-5xl font-extrabold mb-6 tracking-tighter leading-tight">Learn the Process</h1>
+              <h1 className="text-4xl md:text-5xl font-extrabold mb-6 tracking-tighter leading-tight">
+                Learn the Process
+              </h1>
               <p className="text-text-secondary text-lg max-w-xl font-medium leading-relaxed">
-                Essential information about your rights and the procedural steps to voting in India.
+                Essential information about your rights and the procedural steps
+                to voting in India.
               </p>
               <div className="mt-8">
                 <a
@@ -139,31 +144,87 @@ export default function LearnPage() {
 
           {/* Form-by-Form Comparison Table */}
           <div className="mb-16">
-            <h3 className="text-xl font-bold mb-6">Document Requirements by Form</h3>
+            <h3 className="text-xl font-bold mb-6">
+              Document Requirements by Form
+            </h3>
             <div className="overflow-x-auto">
               <table className="w-full border-collapse">
                 <thead>
-                  <tr className="border-b-2" style={{ borderColor: 'var(--accent)' }}>
-                    <th className="text-left py-3 px-4 font-bold" style={{ color: 'var(--ink)' }}>Form</th>
-                    <th className="text-left py-3 px-4 font-bold" style={{ color: 'var(--ink)' }}>Purpose</th>
-                    <th className="text-left py-3 px-4 font-bold" style={{ color: 'var(--ink)' }}>Required Proof</th>
+                  <tr
+                    className="border-b-2"
+                    style={{ borderColor: 'var(--accent)' }}
+                  >
+                    <th
+                      className="text-left py-3 px-4 font-bold"
+                      style={{ color: 'var(--ink)' }}
+                    >
+                      Form
+                    </th>
+                    <th
+                      className="text-left py-3 px-4 font-bold"
+                      style={{ color: 'var(--ink)' }}
+                    >
+                      Purpose
+                    </th>
+                    <th
+                      className="text-left py-3 px-4 font-bold"
+                      style={{ color: 'var(--ink)' }}
+                    >
+                      Required Proof
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr style={{ borderColor: 'var(--line)' }} className="border-b">
-                    <td className="py-3 px-4 font-bold" style={{ color: 'var(--ink)' }}>Form 6</td>
-                    <td className="py-3 px-4" style={{ color: 'var(--ink-2)' }}>New Registration</td>
-                    <td className="py-3 px-4" style={{ color: 'var(--ink-2)' }}>Age + Address + Identity (3 documents)</td>
+                  <tr
+                    style={{ borderColor: 'var(--line)' }}
+                    className="border-b"
+                  >
+                    <td
+                      className="py-3 px-4 font-bold"
+                      style={{ color: 'var(--ink)' }}
+                    >
+                      Form 6
+                    </td>
+                    <td className="py-3 px-4" style={{ color: 'var(--ink-2)' }}>
+                      New Registration
+                    </td>
+                    <td className="py-3 px-4" style={{ color: 'var(--ink-2)' }}>
+                      Age + Address + Identity (3 documents)
+                    </td>
                   </tr>
-                  <tr style={{ borderColor: 'var(--line)' }} className="border-b">
-                    <td className="py-3 px-4 font-bold" style={{ color: 'var(--ink)' }}>Form 8A</td>
-                    <td className="py-3 px-4" style={{ color: 'var(--ink-2)' }}>Correction of Details</td>
-                    <td className="py-3 px-4" style={{ color: 'var(--ink-2)' }}>Identity + Address (2 documents)</td>
+                  <tr
+                    style={{ borderColor: 'var(--line)' }}
+                    className="border-b"
+                  >
+                    <td
+                      className="py-3 px-4 font-bold"
+                      style={{ color: 'var(--ink)' }}
+                    >
+                      Form 8A
+                    </td>
+                    <td className="py-3 px-4" style={{ color: 'var(--ink-2)' }}>
+                      Correction of Details
+                    </td>
+                    <td className="py-3 px-4" style={{ color: 'var(--ink-2)' }}>
+                      Identity + Address (2 documents)
+                    </td>
                   </tr>
-                  <tr style={{ borderColor: 'var(--line)' }} className="border-b">
-                    <td className="py-3 px-4 font-bold" style={{ color: 'var(--ink)' }}>Form 8</td>
-                    <td className="py-3 px-4" style={{ color: 'var(--ink-2)' }}>Updates & Shifting</td>
-                    <td className="py-3 px-4" style={{ color: 'var(--ink-2)' }}>Age + Address + Identity (varies by update type)</td>
+                  <tr
+                    style={{ borderColor: 'var(--line)' }}
+                    className="border-b"
+                  >
+                    <td
+                      className="py-3 px-4 font-bold"
+                      style={{ color: 'var(--ink)' }}
+                    >
+                      Form 8
+                    </td>
+                    <td className="py-3 px-4" style={{ color: 'var(--ink-2)' }}>
+                      Updates & Shifting
+                    </td>
+                    <td className="py-3 px-4" style={{ color: 'var(--ink-2)' }}>
+                      Age + Address + Identity (varies by update type)
+                    </td>
                   </tr>
                 </tbody>
               </table>
@@ -172,11 +233,21 @@ export default function LearnPage() {
 
           {/* Document Categories - Card Layout */}
           <div className="mb-16">
-            <h3 className="text-xl font-bold mb-6">Accepted Documents by Category</h3>
+            <h3 className="text-xl font-bold mb-6">
+              Accepted Documents by Category
+            </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {/* Age Proof Card */}
-              <div className="border-l-4 p-6 rounded-lg" style={{ borderColor: '#a855f7', backgroundColor: '#faf5ff' }}>
-                <h4 className="font-bold text-lg mb-3" style={{ color: '#6b21a8' }}>Proof of Age</h4>
+              <div
+                className="border-l-4 p-6 rounded-lg"
+                style={{ borderColor: '#a855f7', backgroundColor: '#faf5ff' }}
+              >
+                <h4
+                  className="font-bold text-lg mb-3"
+                  style={{ color: '#6b21a8' }}
+                >
+                  Proof of Age
+                </h4>
                 <ul className="space-y-2 text-sm">
                   <li>✓ Birth Certificate</li>
                   <li>✓ School/College Certificate (Class 10 mark sheet)</li>
@@ -188,10 +259,23 @@ export default function LearnPage() {
               </div>
 
               {/* Address Proof Card */}
-              <div className="border-l-4 p-6 rounded-lg" style={{ borderColor: 'var(--accent)', backgroundColor: 'rgba(59, 130, 246, 0.05)' }}>
-                <h4 className="font-bold text-lg mb-3" style={{ color: '#1e40af' }}>Proof of Address</h4>
+              <div
+                className="border-l-4 p-6 rounded-lg"
+                style={{
+                  borderColor: 'var(--accent)',
+                  backgroundColor: 'rgba(59, 130, 246, 0.05)',
+                }}
+              >
+                <h4
+                  className="font-bold text-lg mb-3"
+                  style={{ color: '#1e40af' }}
+                >
+                  Proof of Address
+                </h4>
                 <ul className="space-y-2 text-sm">
-                  <li>✓ Utility Bill (Electricity, Water, Gas — within 3 months)</li>
+                  <li>
+                    ✓ Utility Bill (Electricity, Water, Gas — within 3 months)
+                  </li>
                   <li>✓ Rental Agreement</li>
                   <li>✓ Aadhaar Card</li>
                   <li>✓ Passport</li>
@@ -201,8 +285,16 @@ export default function LearnPage() {
               </div>
 
               {/* Photo ID Card */}
-              <div className="border-l-4 p-6 rounded-lg" style={{ borderColor: '#22c55e', backgroundColor: '#f0fdf4' }}>
-                <h4 className="font-bold text-lg mb-3" style={{ color: '#15803d' }}>Photo ID Documents</h4>
+              <div
+                className="border-l-4 p-6 rounded-lg"
+                style={{ borderColor: '#22c55e', backgroundColor: '#f0fdf4' }}
+              >
+                <h4
+                  className="font-bold text-lg mb-3"
+                  style={{ color: '#15803d' }}
+                >
+                  Photo ID Documents
+                </h4>
                 <ul className="space-y-2 text-sm">
                   <li>✓ Passport</li>
                   <li>✓ Aadhaar Card</li>
@@ -214,8 +306,16 @@ export default function LearnPage() {
               </div>
 
               {/* Supporting Documents Card */}
-              <div className="border-l-4 p-6 rounded-lg" style={{ borderColor: '#6b7280', backgroundColor: '#f9fafb' }}>
-                <h4 className="font-bold text-lg mb-3" style={{ color: '#374151' }}>Supporting Documents</h4>
+              <div
+                className="border-l-4 p-6 rounded-lg"
+                style={{ borderColor: '#6b7280', backgroundColor: '#f9fafb' }}
+              >
+                <h4
+                  className="font-bold text-lg mb-3"
+                  style={{ color: '#374151' }}
+                >
+                  Supporting Documents
+                </h4>
                 <ul className="space-y-2 text-sm">
                   <li>✓ Marriage Certificate (for name changes)</li>
                   <li>✓ Court Order (for legal corrections)</li>
@@ -228,15 +328,24 @@ export default function LearnPage() {
           </div>
 
           {/* Important Note */}
-          <div className="p-6 rounded-lg border-l-4" style={{ borderColor: '#eab308', backgroundColor: '#fefce8' }}>
+          <div
+            className="p-6 rounded-lg border-l-4"
+            style={{ borderColor: '#eab308', backgroundColor: '#fefce8' }}
+          >
             <p className="text-sm" style={{ color: '#713f12' }}>
-              <strong>Note:</strong> Original documents or certified copies must be produced at the time of voter registration.
-              Document requirements vary slightly by state. For exact requirements and state-specific acceptance, refer to the specific form and your state&apos;s ECI guidelines.
+              <strong>Note:</strong> Original documents or certified copies must
+              be produced at the time of voter registration. Document
+              requirements vary slightly by state. For exact requirements and
+              state-specific acceptance, refer to the specific form and your
+              state&apos;s ECI guidelines.
             </p>
           </div>
         </section>
 
-        <section className="grid grid-cols-1 md:grid-cols-2 gap-10 mb-20" aria-label="Interactive guides">
+        <section
+          className="grid grid-cols-1 md:grid-cols-2 gap-10 mb-20"
+          aria-label="Interactive guides"
+        >
           <div>
             <FormDecisionTree />
           </div>
@@ -248,24 +357,30 @@ export default function LearnPage() {
         {/* FAQ — 15 questions in 3 categories using native <details> accordion */}
         <section aria-labelledby="faq-heading">
           <header className="p-8 bg-gray-50/50 border border-border rounded-t-[var(--r-lg)] border-b-0">
-            <h2 className="text-xl font-bold" id="faq-heading">Frequently Asked Questions</h2>
-            <p className="text-sm text-text-light mt-1">{FAQ_CATEGORIES.reduce((n, c) => n + c.faqs.length, 0)} questions across {FAQ_CATEGORIES.length} categories</p>
+            <h2 className="text-xl font-bold" id="faq-heading">
+              Frequently Asked Questions
+            </h2>
+            <p className="text-sm text-text-light mt-1">
+              {FAQ_CATEGORIES.reduce((n, c) => n + c.faqs.length, 0)} questions
+              across {FAQ_CATEGORIES.length} categories
+            </p>
           </header>
 
           <div className="border border-border rounded-b-[var(--r-lg)] overflow-hidden">
             {FAQ_CATEGORIES.map((cat, ci) => (
               <div key={cat.category}>
                 <div className="px-8 py-4 bg-gray-50 border-b border-border">
-                  <h3 className="text-[11px] font-bold uppercase tracking-widest text-text-light">{cat.category}</h3>
+                  <h3 className="text-[11px] font-bold uppercase tracking-widest text-text-light">
+                    {cat.category}
+                  </h3>
                 </div>
                 <div className="divide-y divide-border">
                   {cat.faqs.map((faq, fi) => (
-                    <details
-                      key={fi}
-                      className="group bg-white"
-                    >
+                    <details key={fi} className="group bg-white">
                       <summary className="flex items-center justify-between gap-4 p-8 cursor-pointer list-none hover:bg-gray-50/50 transition-colors">
-                        <span className="font-bold text-ink text-base">{faq.q}</span>
+                        <span className="font-bold text-ink text-base">
+                          {faq.q}
+                        </span>
                         <span
                           className="shrink-0 w-6 h-6 rounded-full border border-gray-200 flex items-center justify-center text-text-light text-xs transition-transform group-open:rotate-45"
                           aria-hidden="true"
@@ -279,14 +394,18 @@ export default function LearnPage() {
                     </details>
                   ))}
                 </div>
-                {ci < FAQ_CATEGORIES.length - 1 && <div className="border-b border-border" />}
+                {ci < FAQ_CATEGORIES.length - 1 && (
+                  <div className="border-b border-border" />
+                )}
               </div>
             ))}
           </div>
         </section>
 
         <div className="mt-20 text-center">
-          <p className="text-sm text-text-secondary mb-6 font-bold uppercase tracking-widest opacity-60">Still have questions?</p>
+          <p className="text-sm text-text-secondary mb-6 font-bold uppercase tracking-widest opacity-60">
+            Still have questions?
+          </p>
           <a
             href="tel:1950"
             className="inline-flex items-center gap-3 px-10 py-4 bg-ink text-paper font-bold rounded-2xl hover:bg-ink-2 transition-all shadow-xl active:scale-95"

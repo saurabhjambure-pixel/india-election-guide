@@ -12,8 +12,13 @@ export default function SiteFooter() {
               All procedural guidance is sourced from official ECI resources.
             </p>
             <p className="mt-4 text-sm text-ink-3">
-              Hindi translation coming soon. For Hindi assistance, call Voter Helpline{' '}
-              <a href="tel:1950" className="font-bold hover:underline" aria-label="Call Voter Helpline 1950">
+              Hindi translation coming soon. For Hindi assistance, call Voter
+              Helpline{' '}
+              <a
+                href="tel:1950"
+                className="font-bold hover:underline"
+                aria-label="Call Voter Helpline 1950"
+              >
                 1950
               </a>
               .
@@ -54,8 +59,9 @@ export default function SiteFooter() {
         <hr className="site-footer__divider" />
         <div className="space-y-2 text-ink-3">
           <p>
-            Confirm all final details through the official portal or helpline <strong>1950</strong>.
-            This guide does not store personal voter data or influence political choices.
+            Confirm all final details through the official portal or helpline{' '}
+            <strong>1950</strong>. This guide does not store personal voter data
+            or influence political choices.
           </p>
           <p>
             <ExternalLink

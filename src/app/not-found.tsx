@@ -13,15 +13,29 @@ export default function NotFound() {
       aria-labelledby="not-found-title"
     >
       <div className="container-app">
-        <p style={{ fontSize: '3rem', marginBottom: 16 }} aria-hidden="true">🗳️</p>
+        <p style={{ fontSize: '3rem', marginBottom: 16 }} aria-hidden="true">
+          🗳️
+        </p>
         <h1
           id="not-found-title"
-          style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--color-navy)', marginBottom: 10 }}
+          style={{
+            fontSize: '1.5rem',
+            fontWeight: 800,
+            color: 'var(--color-navy)',
+            marginBottom: 10,
+          }}
         >
           Page not found
         </h1>
-        <p style={{ fontSize: '0.95rem', color: 'var(--color-gray-600)', marginBottom: 28 }}>
-          This flow or page doesn&apos;t exist. Return to the home page to select a task.
+        <p
+          style={{
+            fontSize: '0.95rem',
+            color: 'var(--color-gray-600)',
+            marginBottom: 28,
+          }}
+        >
+          This flow or page doesn&apos;t exist. Return to the home page to
+          select a task.
         </p>
         <Link
           href="/"

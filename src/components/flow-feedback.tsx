@@ -36,7 +36,10 @@ export default function FlowFeedback({ flowId }: Props) {
           helpful,
           timestamp: serverTimestamp(),
         }
-        const sanitizedComment = redactSensitiveIds(comment.trim()).slice(0, 1000)
+        const sanitizedComment = redactSensitiveIds(comment.trim()).slice(
+          0,
+          1000
+        )
         if (sanitizedComment) payload.comment = sanitizedComment
         await addDoc(collection(db, 'feedback'), payload)
       }
@@ -51,17 +54,30 @@ export default function FlowFeedback({ flowId }: Props) {
 
   if (stage === 'done') {
     return (
-      <div className="mt-16 p-8 bg-green-50 border border-green-100 rounded-2xl text-center" role="status" aria-live="polite">
-        <p className="text-green-800 font-bold text-lg mb-1">Thanks for your feedback!</p>
-        <p className="text-green-700 text-sm">It helps us improve the guide for voters across India.</p>
+      <div
+        className="mt-16 p-8 bg-green-50 border border-green-100 rounded-2xl text-center"
+        role="status"
+        aria-live="polite"
+      >
+        <p className="text-green-800 font-bold text-lg mb-1">
+          Thanks for your feedback!
+        </p>
+        <p className="text-green-700 text-sm">
+          It helps us improve the guide for voters across India.
+        </p>
       </div>
     )
   }
 
   if (stage === 'error') {
     return (
-      <div className="mt-16 p-8 bg-red-50 border border-red-100 rounded-2xl text-center" role="alert">
-        <p className="text-red-800 font-bold">Could not save feedback — please try again later.</p>
+      <div
+        className="mt-16 p-8 bg-red-50 border border-red-100 rounded-2xl text-center"
+        role="alert"
+      >
+        <p className="text-red-800 font-bold">
+          Could not save feedback — please try again later.
+        </p>
       </div>
     )
   }
@@ -94,7 +110,8 @@ export default function FlowFeedback({ flowId }: Props) {
       {stage === 'commenting' && (
         <div className="space-y-4">
           <p className="text-sm text-text-secondary font-medium">
-            What could be clearer? <span className="text-text-light">(optional)</span>
+            What could be clearer?{' '}
+            <span className="text-text-light">(optional)</span>
           </p>
           <textarea
             value={comment}

@@ -10,9 +10,9 @@ export const CIVIC_INTENTS = [
   'learn_process',
   'direct_answer',
   'out_of_scope',
-] as const;
+] as const
 
-export type CivicIntent = (typeof CIVIC_INTENTS)[number];
+export type CivicIntent = (typeof CIVIC_INTENTS)[number]
 
 // Map intent to its official flow id in civic-data
 export const INTENT_TO_FLOW_ID: Partial<Record<CivicIntent, string>> = {
@@ -21,4 +21,4 @@ export const INTENT_TO_FLOW_ID: Partial<Record<CivicIntent, string>> = {
   correct_details: 'correct-details',
   shift_residence: 'shift-residence',
   find_polling_info: 'polling-info',
-};
+}

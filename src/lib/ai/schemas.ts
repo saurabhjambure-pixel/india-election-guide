@@ -1,5 +1,5 @@
-import { z } from 'zod';
-import { CIVIC_INTENTS } from './intents';
+import { z } from 'zod'
+import { CIVIC_INTENTS } from './intents'
 
 // Schema for the classify endpoint response
 export const ClassifyResponseSchema = z.object({
@@ -10,14 +10,14 @@ export const ClassifyResponseSchema = z.object({
   user_friendly_summary: z.string().max(300),
   recommended_flow_id: z.string().nullable(),
   direct_answer: z.string().nullable().optional(),
-});
+})
 
-export type ClassifyResponse = z.infer<typeof ClassifyResponseSchema>;
+export type ClassifyResponse = z.infer<typeof ClassifyResponseSchema>
 
 // Schema for the explain endpoint response
 export const ExplainResponseSchema = z.object({
   summary: z.string().max(500),
   steps: z.array(z.string().max(300)).max(10),
-});
+})
 
-export type ExplainResponse = z.infer<typeof ExplainResponseSchema>;
+export type ExplainResponse = z.infer<typeof ExplainResponseSchema>

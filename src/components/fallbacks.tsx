@@ -15,7 +15,10 @@ export function ErrorState({
 }: ErrorStateProps) {
   return (
     <div className="py-20 text-center container-app">
-      <div className="w-16 h-16 bg-red-50 text-red-600 rounded-full flex items-center justify-center mx-auto mb-6 text-2xl" aria-hidden="true">
+      <div
+        className="w-16 h-16 bg-red-50 text-red-600 rounded-full flex items-center justify-center mx-auto mb-6 text-2xl"
+        aria-hidden="true"
+      >
         ⚠
       </div>
       <h1 className="text-2xl font-bold mb-3">{title}</h1>
@@ -33,7 +36,10 @@ export function ErrorState({
 export function LoadingState({ message = 'Loading...' }: { message?: string }) {
   return (
     <div className="py-20 text-center container-app">
-      <div className="w-10 h-10 border-4 border-blue-100 border-t-primary rounded-full animate-spin mx-auto mb-4" aria-hidden="true" />
+      <div
+        className="w-10 h-10 border-4 border-blue-100 border-t-primary rounded-full animate-spin mx-auto mb-4"
+        aria-hidden="true"
+      />
       <p className="text-text-secondary font-medium">{message}</p>
     </div>
   )
@@ -42,14 +48,23 @@ export function LoadingState({ message = 'Loading...' }: { message?: string }) {
 export function OutOfScopeState({ query }: { query: string }) {
   return (
     <div className="p-8 bg-gray-50 border border-border rounded-2xl text-center">
-      <p className="text-4xl mb-4" aria-hidden="true">🤐</p>
+      <p className="text-4xl mb-4" aria-hidden="true">
+        🤐
+      </p>
       <h2 className="text-xl font-bold mb-2">Out of Scope</h2>
       <p className="text-text-secondary text-sm mb-6 max-w-sm mx-auto">
-        I noticed you asked about &quot;{query}&quot;. As an official election guide, I only provide non-partisan information about voting procedures and rules. I cannot provide political opinions, campaign info, or legal advice.
+        I noticed you asked about &quot;{query}&quot;. As an official election
+        guide, I only provide non-partisan information about voting procedures
+        and rules. I cannot provide political opinions, campaign info, or legal
+        advice.
       </p>
       <div className="flex flex-col gap-2 max-w-xs mx-auto">
-        <Link href="/" className="text-primary font-bold text-sm">View guided voter tasks →</Link>
-        <Link href="/learn" className="text-primary font-bold text-sm">Learn about voting rules →</Link>
+        <Link href="/" className="text-primary font-bold text-sm">
+          View guided voter tasks →
+        </Link>
+        <Link href="/learn" className="text-primary font-bold text-sm">
+          Learn about voting rules →
+        </Link>
       </div>
     </div>
   )
