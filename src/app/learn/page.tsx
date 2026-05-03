@@ -75,7 +75,7 @@ const FAQ_CATEGORIES = [
     category: 'Voting Day',
     faqs: [
       {
-        q: 'Can I vote without my EPIC card?',
+        q: 'Can I vote without my EPIC?',
         a: 'Yes. Your EPIC (Voter ID) is not the only valid identity document at the polling booth. Any of the 12 approved photo-identity documents (Aadhaar, PAN card, passport, driving licence, etc.) are accepted. However, your name must be on the electoral roll at that booth — documents alone are not sufficient without prior registration.',
       },
       {
@@ -109,6 +109,14 @@ export default function LearnPage() {
               <p className="text-text-secondary text-lg max-w-xl font-medium leading-relaxed">
                 Essential information about your rights and the procedural steps to voting in India.
               </p>
+              <div className="mt-8">
+                <a
+                  href="#glossary"
+                  className="inline-flex items-center gap-2 px-4 py-2 bg-accent/10 text-accent font-bold rounded-full text-sm hover:bg-accent/20 transition-all border border-accent/20"
+                >
+                  Jump to Glossary ↓
+                </a>
+              </div>
             </div>
             <div className="flex justify-center md:justify-end opacity-90 drop-shadow-sm pointer-events-none">
               <Image
@@ -232,7 +240,7 @@ export default function LearnPage() {
           <div>
             <FormDecisionTree />
           </div>
-          <div>
+          <div id="glossary" className="scroll-mt-24">
             <VoterGlossary />
           </div>
         </section>

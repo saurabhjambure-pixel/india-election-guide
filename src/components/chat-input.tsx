@@ -11,7 +11,7 @@ const EXAMPLE_PROMPTS = [
   "I just turned 18, how do I register?",
   "My name is wrong on my voter card",
   "I moved to a new city",
-  "How do I check if I'm on the voter list?",
+  "How do I check if I'm on the Electoral Roll?",
   "When is the next election in my state?",
 ]
 

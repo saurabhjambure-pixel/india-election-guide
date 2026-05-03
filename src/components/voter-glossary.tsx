@@ -9,7 +9,7 @@ const GLOSSARY = [
   { term: 'Form 7',       def: 'Application for objection to inclusion or for deletion of a name from the electoral roll.' },
   { term: 'Form 8',       def: 'Application for correction of entries, shifting of residence, replacement of EPIC, or marking as PwD in the electoral roll.' },
   // Identity & Cards
-  { term: 'EPIC',         def: 'Electors Photo Identity Card — your official Voter ID card issued by the Election Commission of India. Also called Voter ID.' },
+  { term: 'EPIC',         def: 'Electors Photo Identity Card — your official photo identity card issued by the Election Commission of India. Also called Voter ID.' },
   { term: 'e-EPIC',       def: 'Digital version of your Voter ID (EPIC) that can be downloaded as a PDF from voters.eci.gov.in. Accepted at polling booths.' },
   // Officials
   { term: 'BLO',          def: 'Booth Level Officer — a local government official who maintains the electoral roll for your polling booth and assists with registrations.' },
@@ -19,7 +19,7 @@ const GLOSSARY = [
   { term: 'Polling Agent', def: 'A representative appointed by a candidate to observe the polling process at a polling booth on election day.' },
   { term: 'Presiding Officer', def: 'The government official in charge of a polling booth on election day, responsible for conducting polling in an orderly manner.' },
   // Electoral Roll
-  { term: 'Electoral Roll', def: 'The official list of registered voters for a specific constituency. Also called the voter list or electoral register.' },
+  { term: 'Electoral Roll', def: 'The official list of registered voters for a specific constituency. Sometimes informally called voter list or voter roll; "Electoral Roll" is the official ECI term.' },
   { term: 'Constituency',  def: 'A specific geographic area that elects one representative to a legislative body (Lok Sabha or State Assembly).' },
   { term: 'Qualifying Date', def: 'The date on which you must be 18+ to be eligible to register. There are now four qualifying dates a year: January 1, April 1, July 1, and October 1 (previously only January 1).' },
   { term: 'Summary Revision', def: 'The annual process of updating the electoral roll — adding new voters, removing deceased entries, and correcting errors. Usually done before major elections.' },

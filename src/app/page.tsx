@@ -162,7 +162,7 @@ export default async function HomePage() {
                   href: 'https://eci.gov.in/',
                 },
                 {
-                  name: "Voters' Service Portal",
+                  name: "Voters' Service Portal (formerly NVSP)",
                   domain: 'voters.eci.gov.in',
                   desc: 'Register, correct details, shift address, download e-EPIC.',
                   href: 'https://voters.eci.gov.in/',

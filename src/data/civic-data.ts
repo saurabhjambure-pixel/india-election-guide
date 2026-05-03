@@ -50,7 +50,7 @@ export const CIVIC_FLOWS: CivicFlow[] = [
       {
         id: 'step-3',
         title: 'Fill Form 6 on the Voters\' Service Portal',
-        body: 'Go to the Voters\' Service Portal (voters.eci.gov.in) and click "New Registration (Form 6)". Create an account or log in, then fill in your personal details, upload your photograph and documents, and select your constituency based on your current address. Alternatively, download Form 6, fill it offline, and submit it to your local Booth Level Officer (BLO).',
+        body: 'Go to the Voters\' Service Portal (formerly NVSP) at voters.eci.gov.in and click "New Registration (Form 6)". Create an account or log in, then fill in your personal details, upload your photograph and documents, and select your constituency based on your current address. Alternatively, download Form 6, fill it offline, and submit it to your local Booth Level Officer (BLO).',
         sourceIds: ['eci-voter-portal', 'sveep-general-voters']
       },
       {
@@ -67,7 +67,7 @@ export const CIVIC_FLOWS: CivicFlow[] = [
       },
       {
         id: 'step-6',
-        title: 'Collect your EPIC card',
+        title: 'Collect your EPIC',
         body: 'Once approved, your Electors\' Photo Identity Card (EPIC / Voter ID) will be delivered to your registered address by your Booth Level Officer (BLO), or you can collect it from the ERO office. You can also download an e-EPIC (digital voter ID) from the Voters\' Service Portal — this is accepted as valid identity at polling booths.',
         sourceIds: ['eci-voter-portal']
       }
@@ -122,7 +122,7 @@ export const CIVIC_FLOWS: CivicFlow[] = [
       {
         id: 'step-2',
         title: 'Search by EPIC number (faster)',
-        body: 'If you have your Voter ID card (EPIC), click "Search by EPIC No." on the Electoral Search portal and enter the 10-character EPIC number printed on your card. This is the quickest and most accurate way to verify enrollment.',
+        body: 'If you have your EPIC (Voter ID), click "Search by EPIC No." on the Electoral Search portal and enter the 10-character EPIC number printed on your card. This is the quickest and most accurate way to verify enrollment.',
         sourceIds: ['eci-electoral-search']
       },
       {
@@ -134,7 +134,7 @@ export const CIVIC_FLOWS: CivicFlow[] = [
       {
         id: 'step-4',
         title: 'Download or print your enrollment slip',
-        body: 'Once found, you can download a print-out of your electoral details showing your polling station. Keep this for reference on election day. You can also download your e-EPIC (digital voter ID) from the Voters\' Service Portal if you haven\'t received a physical card.',
+        body: 'Once found, you can download a print-out of your electoral details showing your polling station. Keep this for reference on election day. You can also download your e-EPIC (digital voter ID) from the Voters\' Service Portal (formerly NVSP) if you haven\'t received a physical card.',
         sourceIds: ['eci-electoral-search', 'eci-voter-portal']
       }
     ],
@@ -143,7 +143,7 @@ export const CIVIC_FLOWS: CivicFlow[] = [
     ],
     warnings: [
       'Your name must be on the roll before election day — you cannot vote using only your Aadhaar or other identity documents if your name is absent from the electoral roll.',
-      'The voter roll is updated periodically. Always check close to the election date.'
+      'The Electoral Roll is updated periodically. Always check close to the election date.'
     ],
     updatedAt: '2026-04-30T00:00:00Z'
   },
@@ -157,7 +157,7 @@ export const CIVIC_FLOWS: CivicFlow[] = [
       {
         id: 'step-1',
         title: 'Identify the error on your voter record',
-        body: 'First verify the error by checking your current details on the Electoral Search portal (electoralsearch.eci.gov.in) or by looking at your physical EPIC card. Common errors: misspelled name, wrong date of birth, wrong father/mother/spouse name, or outdated photo.',
+        body: 'First verify the error by checking your current details on the Electoral Search portal (electoralsearch.eci.gov.in) or by looking at your physical EPIC. Common errors: misspelled name, wrong date of birth, wrong father/mother/spouse name, or outdated photo.',
         sourceIds: ['eci-electoral-search']
       },
       {
@@ -175,13 +175,13 @@ export const CIVIC_FLOWS: CivicFlow[] = [
       {
         id: 'step-4',
         title: 'Track your correction request',
-        body: 'Use your reference number on the Voters\' Service Portal to track the status. The ERO may call or visit for verification. Processing typically takes 30–45 days after the summary revision period begins.',
+        body: 'Use your reference number on the Voters\' Service Portal (formerly NVSP) to track the status. The ERO may call or visit for verification. Processing typically takes 30–45 days after the summary revision period begins.',
         sourceIds: ['eci-voter-portal']
       },
       {
         id: 'step-5',
         title: 'Receive your corrected EPIC',
-        body: 'Once the correction is approved and the roll is published, your details will be updated. You can download an updated e-EPIC from the portal, or collect a new physical EPIC card from your BLO or ERO office.',
+        body: 'Once the correction is approved and the roll is published, your details will be updated. You can download an updated e-EPIC from the portal, or collect a new physical EPIC from your BLO or ERO office.',
         sourceIds: ['eci-voter-portal']
       }
     ],
@@ -193,8 +193,8 @@ export const CIVIC_FLOWS: CivicFlow[] = [
       {
         category: 'identity',
         name: 'Your EPIC Number',
-        note: 'The 10-character alphanumeric number on your current Voter ID card. Required to identify your existing record.',
-        examples: ['Printed on your EPIC / Voter ID card (e.g. ABC1234567)']
+        note: 'The 10-character alphanumeric number on your current EPIC. Required to identify your existing record.',
+        examples: ['Printed on your EPIC (e.g. ABC1234567)']
       },
       {
         category: 'other',
@@ -240,7 +240,7 @@ export const CIVIC_FLOWS: CivicFlow[] = [
       {
         id: 'step-4',
         title: 'Track and await verification',
-        body: 'Track your application using your reference number on the Voters\' Service Portal. The BLO for your new address will verify your residency in person. Be available at your new address for this visit. Processing takes 30–45 days.',
+        body: 'Track your application using your reference number on the Voters\' Service Portal (formerly NVSP). The BLO for your new address will verify your residency in person. Be available at your new address for this visit. Processing takes 30–45 days.',
         sourceIds: ['eci-voter-portal']
       },
       {
@@ -259,7 +259,7 @@ export const CIVIC_FLOWS: CivicFlow[] = [
         category: 'identity',
         name: 'Your EPIC Number',
         note: 'Required to locate your existing registration before the shift is processed.',
-        examples: ['Printed on your Voter ID card — 10 characters (e.g. ABC1234567)']
+        examples: ['Printed on your EPIC — 10 characters (e.g. ABC1234567)']
       },
       {
         category: 'address',

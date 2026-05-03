@@ -8,6 +8,7 @@ const NAV_LINKS = [
   { name: 'Guide', href: '/' },
   { name: 'Timelines', href: '/timeline' },
   { name: 'Learn', href: '/learn' },
+  { name: 'Glossary', href: '/learn#glossary' },
 ]
 
 export default function SiteHeader() {

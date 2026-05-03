@@ -1,18 +1,25 @@
 'use client'
 
+import Link from 'next/link'
 import { useState, useRef, useEffect } from 'react'
 import ExternalLink from './external-link'
 
 // ---------------------------------------------------------------------------
-// Tree data structure — adding a new branch is a data change, not a code change.
-// Each node is either a Question (yes/no branches) or a Result (leaf node).
+// Tree data — Question (yes/no), Choice (multi-option), or Result (leaf).
 // ---------------------------------------------------------------------------
 type QuestionNode = {
   type: 'question'
   id: string
   text: string
-  yes: string   // id of next node on "Yes"
-  no: string    // id of next node on "No"
+  yes: string
+  no: string
+}
+
+type ChoiceNode = {
+  type: 'choice'
+  id: string
+  text: string
+  options: { label: string; next: string }[]
 }
 
 type ResultNode = {
@@ -20,78 +27,114 @@ type ResultNode = {
   id: string
   form: string
   description: string
-  href?: string
+  href: string
+  linkKind: 'internal' | 'external'
+  ctaLabel: string
+  externalAriaLabel?: string
 }
 
-type TreeNode = QuestionNode | ResultNode
+type TreeNode = QuestionNode | ChoiceNode | ResultNode
 
 const TREE: TreeNode[] = [
   {
     type: 'question',
     id: 'q_first_time',
     text: 'Are you registering to vote for the first time?',
-    yes: 'q_nri',
-    no: 'q_delete',
+    yes: 'result_form6',
+    no: 'q_what_do',
   },
   {
-    type: 'question',
-    id: 'q_nri',
-    text: 'Are you an NRI (Non-Resident Indian) living abroad?',
-    yes: 'result_6a',
-    no: 'result_6',
-  },
-  {
-    type: 'question',
-    id: 'q_delete',
-    text: 'Do you want to delete or object to a name on the voter list?',
-    yes: 'result_7',
-    no: 'q_update',
-  },
-  {
-    type: 'question',
-    id: 'q_update',
-    text: 'Do you need to update details, shift residence, or get a replacement EPIC?',
-    yes: 'result_8',
-    no: 'result_unknown',
+    type: 'choice',
+    id: 'q_what_do',
+    text: 'What do you want to do?',
+    options: [
+      {
+        label: 'Update my name, age, photo, or other personal details',
+        next: 'result_form8_personal',
+      },
+      {
+        label: 'Change my registered address (new constituency)',
+        next: 'result_form8a',
+      },
+      {
+        label: 'Change address within the same constituency',
+        next: 'result_form8_same_const',
+      },
+      {
+        label: 'Report a wrongly included entry / deletion',
+        next: 'result_form7',
+      },
+      {
+        label: "I'm an overseas Indian citizen",
+        next: 'result_form6a',
+      },
+    ],
   },
   {
     type: 'result',
-    id: 'result_6',
+    id: 'result_form6',
     form: 'Form 6',
-    description: 'For general new voters applying for the first time.',
-    href: 'https://voters.eci.gov.in/',
+    description: 'New voter registration — enroll on the electoral roll for the first time.',
+    href: '/flow/register-new',
+    linkKind: 'internal',
+    ctaLabel: 'Go to Register as a new voter Guide →',
   },
   {
     type: 'result',
-    id: 'result_6a',
-    form: 'Form 6A',
-    description: 'For overseas electors (NRIs) registering to vote from abroad.',
-    href: 'https://voters.eci.gov.in/',
-  },
-  {
-    type: 'result',
-    id: 'result_7',
-    form: 'Form 7',
-    description: 'For objection to inclusion of a name or deletion of a name from the electoral roll.',
-    href: 'https://voters.eci.gov.in/',
-  },
-  {
-    type: 'result',
-    id: 'result_8',
+    id: 'result_form8_personal',
     form: 'Form 8',
-    description: 'For shifting of residence, correction of entries, or replacement EPIC card.',
-    href: 'https://voters.eci.gov.in/',
+    description: 'Correct your name, age, photograph, or other particulars on the electoral roll.',
+    href: '/flow/correct-details',
+    linkKind: 'internal',
+    ctaLabel: 'Go to Correct Voter Details Guide →',
   },
   {
     type: 'result',
-    id: 'result_unknown',
-    form: 'Not sure?',
-    description: 'Visit voters.eci.gov.in or call the Voter Helpline at 1950 for personalised guidance.',
+    id: 'result_form8a',
+    form: 'Form 8A',
+    description: 'Shift your enrollment when you move to a new address (including a new constituency).',
+    href: '/flow/shift-residence',
+    linkKind: 'internal',
+    ctaLabel: 'Go to Shift Residence Guide →',
+  },
+  {
+    type: 'result',
+    id: 'result_form8_same_const',
+    form: 'Form 8',
+    description: 'Update your address within the same assembly constituency on the electoral roll.',
+    href: '/flow/correct-details',
+    linkKind: 'internal',
+    ctaLabel: 'Go to Correct Voter Details Guide →',
+  },
+  {
+    type: 'result',
+    id: 'result_form7',
+    form: 'Form 7',
+    description: 'Object to inclusion of a name or seek deletion of an incorrect entry from the roll.',
+    href: 'https://voters.eci.gov.in/',
+    linkKind: 'external',
+    ctaLabel: "Go to Form 7 on Voters' Service Portal →",
+    externalAriaLabel:
+      'Open Form 7 application on the Election Commission Voters Service Portal (opens in a new tab)',
+  },
+  {
+    type: 'result',
+    id: 'result_form6a',
+    form: 'Form 6A',
+    description: 'Register as an overseas elector (Indian citizen resident abroad).',
+    href: 'https://voters.eci.gov.in/',
+    linkKind: 'external',
+    ctaLabel: "Go to Form 6A on Voters' Service Portal →",
+    externalAriaLabel:
+      'Open Form 6A overseas elector registration on the Election Commission Voters Service Portal (opens in a new tab)',
   },
 ]
 
-const NODE_MAP = Object.fromEntries(TREE.map((n) => [n.id, n]))
+const NODE_MAP = Object.fromEntries(TREE.map((n) => [n.id, n])) as Record<string, TreeNode>
 const START_ID = 'q_first_time'
+
+const choiceBtnClass =
+  'px-6 py-3 bg-gray-100 text-navy rounded-xl font-bold hover:bg-gray-200 transition text-left w-full'
 
 export default function FormDecisionTree() {
   const [currentId, setCurrentId] = useState(START_ID)
@@ -122,17 +165,43 @@ export default function FormDecisionTree() {
             </p>
             <div className="flex flex-wrap gap-4">
               <button
+                type="button"
                 onClick={() => setCurrentId(node.yes)}
                 className="px-6 py-3 bg-navy text-white rounded-xl font-bold hover:bg-navy/90 transition shadow-sm"
               >
                 Yes
               </button>
               <button
+                type="button"
                 onClick={() => setCurrentId(node.no)}
                 className="px-6 py-3 bg-gray-100 text-navy rounded-xl font-bold hover:bg-gray-200 transition"
               >
                 No
               </button>
+            </div>
+          </div>
+        )}
+
+        {node.type === 'choice' && (
+          <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4">
+            <p
+              tabIndex={-1}
+              ref={headingRef}
+              className="text-lg font-medium text-navy focus:outline-none"
+            >
+              {node.text}
+            </p>
+            <div className="flex flex-col gap-3 max-w-2xl">
+              {node.options.map((opt) => (
+                <button
+                  key={opt.next}
+                  type="button"
+                  onClick={() => setCurrentId(opt.next)}
+                  className={choiceBtnClass}
+                >
+                  {opt.label}
+                </button>
+              ))}
             </div>
           </div>
         )}
@@ -148,17 +217,28 @@ export default function FormDecisionTree() {
             </p>
             <p className="text-3xl font-extrabold text-navy">{node.form}</p>
             <p className="text-sm font-medium text-text-secondary">{node.description}</p>
-            {node.href && (
+            {node.linkKind === 'internal' ? (
+              <Link
+                href={node.href}
+                className="inline-flex items-center justify-center px-6 py-3 bg-navy text-white rounded-xl font-bold hover:bg-navy/90 transition shadow-sm"
+              >
+                {node.ctaLabel}
+              </Link>
+            ) : (
               <ExternalLink
                 href={node.href}
-                className="inline-flex items-center gap-1 text-sm font-bold text-primary hover:underline"
-                aria-label={`Apply ${node.form} on Voters' Service Portal (opens in a new tab)`}
+                className="inline-flex items-center justify-center px-6 py-3 bg-navy text-white rounded-xl font-bold hover:bg-navy/90 transition shadow-sm"
+                aria-label={node.externalAriaLabel}
               >
-                Apply on Voters&apos; Service Portal ↗
+                {node.ctaLabel}
               </ExternalLink>
             )}
             <div>
-              <button onClick={reset} className="text-sm font-bold text-primary hover:underline mt-2">
+              <button
+                type="button"
+                onClick={reset}
+                className="text-sm font-bold text-primary hover:underline mt-2"
+              >
                 Start Over
               </button>
             </div>
