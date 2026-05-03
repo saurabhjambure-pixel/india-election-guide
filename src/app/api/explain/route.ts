@@ -9,19 +9,32 @@ const ExplainPostRequestSchema = z.object({
   preferSimpleLanguage: z.boolean().optional(),
 });
 
+const RATE_LIMIT_ERROR = { error: 'Rate limit exceeded. Each user is limited to 3 AI queries per day to ensure fair access. Please continue exploring our manual guides.' };
+
+async function handleExplainRequest(flowId: string, preferSimple: boolean, remaining: number) {
+  const flow = await getFlowById(flowId);
+  if (!flow) {
+    return NextResponse.json(
+      { error: `No flow found with id: ${flowId}` },
+      { status: 404 }
+    );
+  }
+
+  const result = await explainFlow(flow, preferSimple);
+  const response = NextResponse.json(result);
+  response.headers.set('X-RateLimit-Remaining', remaining.toString());
+  return response;
+}
+
 // GET /api/explain?flowId=register-new&simple=true
 // Converted from POST to GET so CDN and browser can cache deterministic responses.
 export async function GET(req: NextRequest) {
   try {
-    // 1. Identify User (IP-based for demo/hackathon)
     const ip = req.headers.get('x-forwarded-for') || '127.0.0.1';
     const { allowed, remaining } = await checkRateLimit(ip);
 
     if (!allowed) {
-      return NextResponse.json(
-        { error: 'Rate limit exceeded (Test Build). To ensure fair access for all judges, we limit each user to 3 AI queries per day. Please continue exploring our manual guides below!' },
-        { status: 429 }
-      );
+      return NextResponse.json(RATE_LIMIT_ERROR, { status: 429 });
     }
 
     const { searchParams } = new URL(req.url);
@@ -35,25 +48,11 @@ export async function GET(req: NextRequest) {
       );
     }
 
-    const flow = await getFlowById(flowId);
-    if (!flow) {
-      return NextResponse.json(
-        { error: `No flow found with id: ${flowId}` },
-        { status: 404 }
-      );
-    }
+    const result = await handleExplainRequest(flowId, preferSimple, remaining);
 
-    const result = await explainFlow(flow, preferSimple);
-
-    const response = NextResponse.json(result, {
-      headers: {
-        // Cache for 24 hours at CDN; serve stale for up to 1 hour while revalidating
-        'Cache-Control': 'public, s-maxage=86400, stale-while-revalidate=3600',
-        'X-RateLimit-Remaining': remaining.toString(),
-      },
-    });
-
-    return response;
+    // Add caching headers for GET
+    result.headers.set('Cache-Control', 'public, s-maxage=86400, stale-while-revalidate=3600');
+    return result;
   } catch (err) {
     const message = err instanceof Error ? err.message : 'Unknown error';
     console.error('[/api/explain]', message);
@@ -67,15 +66,11 @@ export async function GET(req: NextRequest) {
 // Keep POST for backwards compatibility (does not cache)
 export async function POST(req: NextRequest) {
   try {
-    // 1. Identify User (IP-based for demo/hackathon)
     const ip = req.headers.get('x-forwarded-for') || '127.0.0.1';
     const { allowed, remaining } = await checkRateLimit(ip);
 
     if (!allowed) {
-      return NextResponse.json(
-        { error: 'Rate limit exceeded (Test Build). To ensure fair access for all judges, we limit each user to 3 AI queries per day. Please continue exploring our manual guides below!' },
-        { status: 429 }
-      );
+      return NextResponse.json(RATE_LIMIT_ERROR, { status: 429 });
     }
 
     const contentLength = parseInt(req.headers.get('content-length') || '0', 10);
@@ -91,20 +86,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const flow = await getFlowById(parsed.data.flowId);
-    if (!flow) {
-      return NextResponse.json(
-        { error: `No flow found with id: ${parsed.data.flowId}` },
-        { status: 404 }
-      );
-    }
-
-    const preferSimple = parsed.data.preferSimpleLanguage === true;
-    const result = await explainFlow(flow, preferSimple);
-    
-    const response = NextResponse.json(result);
-    response.headers.set('X-RateLimit-Remaining', remaining.toString());
-    return response;
+    return await handleExplainRequest(parsed.data.flowId, parsed.data.preferSimpleLanguage === true, remaining);
   } catch (err) {
     const message = err instanceof Error ? err.message : 'Unknown error';
     console.error('[/api/explain]', message);

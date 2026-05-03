@@ -46,7 +46,7 @@ importers:
         specifier: ^4.11.2
         version: 4.11.2
       '@playwright/test':
-        specifier: ^1.59.1
+        specifier: ^1.48.0
         version: 1.59.1
       '@tailwindcss/postcss':
         specifier: ^4

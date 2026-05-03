@@ -19,7 +19,7 @@ export async function POST(req: NextRequest) {
 
     if (!allowed) {
       return NextResponse.json(
-        { error: 'Rate limit exceeded (Test Build). To ensure fair access for all judges, we limit each user to 3 AI queries per day. Please continue exploring our manual guides below!' },
+        { error: 'Rate limit exceeded. Each user is limited to 3 AI queries per day to ensure fair access. Please continue exploring our manual guides.' },
         { status: 429 }
       );
     }

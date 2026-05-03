@@ -132,7 +132,8 @@ export async function classifyIntent(message: string, context?: string): Promise
         needs_clarification: false,
         follow_up_question: null,
         user_friendly_summary: 'Your request was flagged by our safety system and cannot be processed.',
-        recommended_flow_id: null
+        recommended_flow_id: null,
+        direct_answer: null,
       };
     }
     throw err;

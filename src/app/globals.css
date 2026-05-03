@@ -2,6 +2,19 @@
 
 @theme {
   /* India Election Guide - OKLch Color System */
+  --paper: oklch(0.98 0.0006 240);
+  --paper-2: oklch(0.97 0.0008 240);
+  --paper-3: oklch(0.95 0.001 240);
+  --ink: oklch(0.18 0.014 240);
+  --ink-2: oklch(0.32 0.012 240);
+  --ink-3: oklch(0.5 0.009 240);
+  --ink-4: oklch(0.68 0.006 240);
+  --line: oklch(0.9 0.008 240);
+  --line-2: oklch(0.94 0.006 240);
+  --accent: oklch(0.45 0.08 200);
+  --accent-soft: oklch(0.93 0.025 200);
+  --accent-deep: oklch(0.35 0.08 200);
+  --trust: oklch(0.38 0.06 240);
   --trust-soft: oklch(0.95 0.02 235);
   --good: oklch(0.55 0.12 155);
   --warn: oklch(0.65 0.14 70);
@@ -18,66 +31,8 @@
   --shadow-sm: 0 1px 2px oklch(0.18 0.015 60 / 0.04), 0 0 0 0.5px oklch(0.18 0.015 60 / 0.04);
   --shadow-md: 0 1px 2px oklch(0.18 0.015 60 / 0.04), 0 4px 12px oklch(0.18 0.015 60 / 0.06);
   --shadow-lg: 0 1px 2px oklch(0.18 0.015 60 / 0.04), 0 12px 32px oklch(0.18 0.015 60 / 0.08);
-
-  /* Color utilities mapped from :root design tokens */
-  --color-ink:            var(--ink);
-  --color-ink-2:          var(--ink-2);
-  --color-ink-3:          var(--ink-3);
-  --color-ink-4:          var(--ink-4);
-  --color-paper:          var(--paper);
-  --color-paper-2:        var(--paper-2);
-  --color-paper-3:        var(--paper-3);
-  --color-accent:         var(--accent);
-  --color-accent-soft:    var(--accent-soft);
-  --color-accent-deep:    var(--accent-deep);
-  --color-trust:          var(--trust);
-  --color-line:           var(--line);
-  --color-line-2:         var(--line-2);
-
-  /* Semantic aliases */
-  --color-navy:           var(--ink);
-  --color-primary:        var(--accent);
-  --color-border:         var(--line);
-  --color-text-secondary: var(--ink-2);
-  --color-text-light:     var(--ink-3);
-
-  /* Shadow aliases */
   --shadow-subtle: var(--shadow-sm);
-  --shadow-card:   var(--shadow-md);
-}
-
-:root {
-  --paper: oklch(0.98 0.0006 240);
-  --paper-2: oklch(0.97 0.0008 240);
-  --paper-3: oklch(0.95 0.001 240);
-  --ink: oklch(0.18 0.014 240);
-  --ink-2: oklch(0.32 0.012 240);
-  --ink-3: oklch(0.5 0.009 240);
-  --ink-4: oklch(0.68 0.006 240);
-  --line: oklch(0.9 0.008 240);
-  --line-2: oklch(0.94 0.006 240);
-  --accent: oklch(0.45 0.08 200);
-  --accent-soft: oklch(0.93 0.025 200);
-  --accent-deep: oklch(0.35 0.08 200);
-  --trust: oklch(0.38 0.06 240);
-  --trust-soft: oklch(0.95 0.02 235);
-}
-
-[data-theme="calm"] {
-  --paper: oklch(0.985 0.004 230);
-  --paper-2: oklch(0.965 0.006 230);
-  --paper-3: oklch(0.94 0.008 230);
-  --ink: oklch(0.16 0.015 240);
-  --ink-2: oklch(0.3 0.012 240);
-  --ink-3: oklch(0.48 0.008 240);
-  --ink-4: oklch(0.66 0.006 240);
-  --line: oklch(0.88 0.008 230);
-  --line-2: oklch(0.92 0.006 230);
-  --accent: oklch(0.45 0.08 195);
-  --accent-soft: oklch(0.93 0.025 195);
-  --accent-deep: oklch(0.35 0.08 195);
-  --trust: oklch(0.35 0.06 240);
-  --trust-soft: oklch(0.95 0.015 240);
+  --shadow-card: var(--shadow-md);
 }
 
 * { box-sizing: border-box; }
