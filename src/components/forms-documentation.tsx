@@ -53,7 +53,7 @@ export default function FormsDocumentation() {
   return (
     <section className="grid grid-cols-1 md:grid-cols-2 gap-10 mb-20">
       <div className="space-y-6">
-        <h2 className="text-[11px] font-bold uppercase tracking-[0.2em] opacity-40">The Forms</h2>
+        <h2 className="text-[11px] font-bold uppercase tracking-[0.2em] text-ink-3">The Forms</h2>
         {FORMS_DATA.map((f) => {
           const isActive = activeFormId === f.id;
           return (
@@ -76,7 +76,7 @@ export default function FormsDocumentation() {
       </div>
 
       <div className="space-y-6">
-        <h2 className="text-[11px] font-bold uppercase tracking-[0.2em] opacity-40">Documentation Required</h2>
+        <h2 className="text-[11px] font-bold uppercase tracking-[0.2em] text-ink-3">Documentation Required</h2>
         <div 
           style={{ backgroundColor: 'var(--ink)' }}
           className="rounded-3xl p-8 text-white h-full flex flex-col justify-center shadow-lg transition-all duration-300"
@@ -85,11 +85,11 @@ export default function FormsDocumentation() {
             <span className="inline-block px-3 py-1 bg-accent rounded-full text-[10px] text-white font-bold tracking-widest uppercase mb-4">
               Form {activeForm.id}
             </span>
-            <h3 className="text-2xl font-bold">{activeForm.title}</h3>
+            <h3 className="text-2xl font-bold text-white">{activeForm.title}</h3>
           </div>
           <ul className="space-y-6" key={`docs-${activeForm.id}`}>
             {activeForm.docs.map((doc, idx) => (
-              <li key={idx} className="flex items-start gap-4 text-sm font-medium fade-in" style={{ animationDelay: `${idx * 50}ms` }}>
+              <li key={idx} className="flex items-start gap-4 text-sm font-medium text-white fade-in" style={{ animationDelay: `${idx * 50}ms` }}>
                 <span className="w-6 h-6 bg-accent rounded-full flex items-center justify-center text-[10px] text-white shrink-0 mt-0.5" aria-hidden="true">✓</span>
                 {doc}
               </li>
