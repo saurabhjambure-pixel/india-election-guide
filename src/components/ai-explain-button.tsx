@@ -38,8 +38,9 @@ export default function AiExplainButton({ flowId }: AiExplainProps) {
       const rawData = await res.json()
       const json = ExplainResponseSchema.parse(rawData)
       setData(json)
-    } catch (err: any) {
-      setError(err?.message || 'Could not generate explanation. Please try again.')
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : 'Could not generate explanation. Please try again.'
+      setError(message)
     } finally {
       setLoading(false)
     }

@@ -45,7 +45,7 @@ const TABS: TabItem[] = [
     name: 'Glossary',
     href: '/learn#glossary',
     Icon: BookMarked,
-    isActive: (pathname, searchParams) =>
+    isActive: (pathname, _searchParams) =>
       pathname === '/learn' && (typeof window !== 'undefined' ? window.location.hash === '#glossary' : false),
   },
   {

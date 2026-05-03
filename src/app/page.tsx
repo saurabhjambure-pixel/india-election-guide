@@ -34,7 +34,7 @@ export default async function HomePage() {
   const CIVIC_FLOWS = await getFlows()
   return (
     <>
-      <section className="hero" style={{ paddingTop: 72, paddingBottom: 80 }}>
+      <section className="hero" style={{ paddingTop: 40, paddingBottom: 80 }}>
         <div style={{ maxWidth: 1200, margin: '0 auto', padding: '0 40px' }}>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-20 items-center">
 
@@ -54,9 +54,9 @@ export default async function HomePage() {
               <h1
                 className="serif mb-6"
                 id="hero-title"
-                style={{ fontSize: 'clamp(2rem, 4vw, 3.25rem)', lineHeight: 1.06, fontWeight: 800, letterSpacing: '-0.025em', color: 'var(--ink)' }}
+                style={{ fontSize: 'clamp(2.5rem, 5vw, 4.25rem)', lineHeight: 1.02, fontWeight: 800, letterSpacing: '-0.035em', color: 'var(--ink)' }}
               >
-                Your step-by-step guide to registering and voting in India — <br /> grounded in official Election Commission sources.
+                Empowering your civic duty <br /> with absolute clarity.
               </h1>
 
               <p className="mb-10" style={{ fontSize: '1.0625rem', lineHeight: 1.65, color: 'var(--ink-2)', maxWidth: '36rem' }}>
