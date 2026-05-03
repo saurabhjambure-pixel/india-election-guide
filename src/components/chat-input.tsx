@@ -23,6 +23,7 @@ export default function ChatInput() {
   // Tracks one round of clarification: original message + AI follow-up question
   const [clarificationContext, setClarificationContext] = useState<{ original: string; question: string } | null>(null)
   const inputRef = useRef<HTMLInputElement>(null)
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null)
   const router = useRouter()
 
   // Auto-focus the input when a clarification question appears
@@ -31,6 +32,13 @@ export default function ChatInput() {
       inputRef.current?.focus()
     }
   }, [clarificationContext])
+
+  // Cleanup timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) clearTimeout(timeoutRef.current)
+    }
+  }, [])
 
   async function submitQuery(msg: string, context?: { original: string; question: string }) {
     if (!msg) return
@@ -79,8 +87,6 @@ export default function ChatInput() {
       setLoading(false)
     }
   }
-
-  const timeoutRef = useRef<NodeJS.Timeout | null>(null)
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault()
