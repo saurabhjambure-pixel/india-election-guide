@@ -59,9 +59,9 @@ export default function ChatInput() {
         logCustomEvent('task_selected', { flow_id: data.recommended_flow_id, origin: 'ask-guide', intent: data.intent })
         setClarificationContext(null)
         router.push(`/flow/${data.recommended_flow_id}`)
-      } else if (data.intent === 'out_of_scope') {
+      } else if (data.intent === 'out_of_scope' || data.intent === 'direct_answer') {
         setClarificationContext(null)
-        logCustomEvent('out_of_scope_triggered', { origin: 'ask-guide' })
+        logCustomEvent(data.intent === 'out_of_scope' ? 'out_of_scope_triggered' : 'direct_answer_provided', { origin: 'ask-guide' })
       } else if (data.needs_clarification && data.follow_up_question && !context) {
         // First clarification round — show the question and re-enable input
         logCustomEvent('clarification_shown', { intent: data.intent })
@@ -148,6 +148,23 @@ export default function ChatInput() {
       {error && (
         <div className="mt-8 p-6 rounded-2xl border" style={{ background: 'rgba(225, 29, 72, 0.05)', borderColor: 'rgba(225, 29, 72, 0.2)' }}>
           <p role="alert" className="text-sm font-bold" style={{ color: '#e11d48' }}>⚠ {error}</p>
+        </div>
+      )}
+
+      {result?.intent === 'direct_answer' && result.direct_answer && (
+        <div className="mt-8 p-8 rounded-3xl premium-card" role="status" aria-live="polite">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="w-8 h-8 rounded-full bg-accent/20 flex items-center justify-center">
+              <span className="text-accent text-sm">✦</span>
+            </div>
+            <p className="eyebrow !mb-0">Instant Guide</p>
+          </div>
+          <p className="text-xl leading-relaxed serif" style={{ color: 'var(--ink)' }}>
+            {result.direct_answer}
+          </p>
+          <div className="mt-6 pt-6 border-t border-ink/5">
+            <p className="text-xs opacity-50">Was this helpful? Your feedback helps the guide improve.</p>
+          </div>
         </div>
       )}
 

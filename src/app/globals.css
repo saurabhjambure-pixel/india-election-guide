@@ -799,6 +799,37 @@ body {
   z-index: 50;
 }
 
+/* Premium AI Card */
+.premium-card {
+  background: linear-gradient(135deg, white, var(--accent-soft));
+  border: 1px solid oklch(from var(--accent) l c h / 0.2);
+  box-shadow: 
+    0 20px 48px -12px oklch(from var(--accent) l c h / 0.1),
+    0 0 0 1px oklch(from var(--accent) l c h / 0.05);
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.premium-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 
+    0 24px 56px -12px oklch(from var(--accent) l c h / 0.15),
+    0 0 0 1px oklch(from var(--accent) l c h / 0.1);
+}
+
+.premium-card::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle at center, oklch(from var(--accent) 0.98 0.03 h / 0.4) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+
 @media (max-width: 767px) {
   .mobile-cta {
     display: block;

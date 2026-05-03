@@ -126,6 +126,108 @@ export default function LearnPage() {
 
         <FormsDocumentation />
 
+        <section id="documents" className="my-20">
+          <h2 className="text-3xl font-bold mb-12">Required Documents</h2>
+
+          {/* Form-by-Form Comparison Table */}
+          <div className="mb-16">
+            <h3 className="text-xl font-bold mb-6">Document Requirements by Form</h3>
+            <div className="overflow-x-auto">
+              <table className="w-full border-collapse">
+                <thead>
+                  <tr className="border-b-2" style={{ borderColor: 'var(--accent)' }}>
+                    <th className="text-left py-3 px-4 font-bold" style={{ color: 'var(--ink)' }}>Form</th>
+                    <th className="text-left py-3 px-4 font-bold" style={{ color: 'var(--ink)' }}>Purpose</th>
+                    <th className="text-left py-3 px-4 font-bold" style={{ color: 'var(--ink)' }}>Required Proof</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr style={{ borderColor: 'var(--line)' }} className="border-b">
+                    <td className="py-3 px-4 font-bold" style={{ color: 'var(--ink)' }}>Form 6</td>
+                    <td className="py-3 px-4" style={{ color: 'var(--ink-2)' }}>New Registration</td>
+                    <td className="py-3 px-4" style={{ color: 'var(--ink-2)' }}>Age + Address + Identity (3 documents)</td>
+                  </tr>
+                  <tr style={{ borderColor: 'var(--line)' }} className="border-b">
+                    <td className="py-3 px-4 font-bold" style={{ color: 'var(--ink)' }}>Form 8A</td>
+                    <td className="py-3 px-4" style={{ color: 'var(--ink-2)' }}>Correction of Details</td>
+                    <td className="py-3 px-4" style={{ color: 'var(--ink-2)' }}>Identity + Address (2 documents)</td>
+                  </tr>
+                  <tr style={{ borderColor: 'var(--line)' }} className="border-b">
+                    <td className="py-3 px-4 font-bold" style={{ color: 'var(--ink)' }}>Form 8</td>
+                    <td className="py-3 px-4" style={{ color: 'var(--ink-2)' }}>Updates & Shifting</td>
+                    <td className="py-3 px-4" style={{ color: 'var(--ink-2)' }}>Age + Address + Identity (varies by update type)</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          {/* Document Categories - Card Layout */}
+          <div className="mb-16">
+            <h3 className="text-xl font-bold mb-6">Accepted Documents by Category</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {/* Age Proof Card */}
+              <div className="border-l-4 p-6 rounded-lg" style={{ borderColor: '#a855f7', backgroundColor: '#faf5ff' }}>
+                <h4 className="font-bold text-lg mb-3" style={{ color: '#6b21a8' }}>Proof of Age</h4>
+                <ul className="space-y-2 text-sm">
+                  <li>✓ Birth Certificate</li>
+                  <li>✓ School/College Certificate (Class 10 mark sheet)</li>
+                  <li>✓ Passport</li>
+                  <li>✓ Aadhaar Card</li>
+                  <li>✓ Driving License</li>
+                  <li>✓ PAN Card</li>
+                </ul>
+              </div>
+
+              {/* Address Proof Card */}
+              <div className="border-l-4 p-6 rounded-lg" style={{ borderColor: 'var(--accent)', backgroundColor: 'rgba(59, 130, 246, 0.05)' }}>
+                <h4 className="font-bold text-lg mb-3" style={{ color: '#1e40af' }}>Proof of Address</h4>
+                <ul className="space-y-2 text-sm">
+                  <li>✓ Utility Bill (Electricity, Water, Gas — within 3 months)</li>
+                  <li>✓ Rental Agreement</li>
+                  <li>✓ Aadhaar Card</li>
+                  <li>✓ Passport</li>
+                  <li>✓ Bank Account Statement</li>
+                  <li>✓ Property Tax Receipt</li>
+                </ul>
+              </div>
+
+              {/* Photo ID Card */}
+              <div className="border-l-4 p-6 rounded-lg" style={{ borderColor: '#22c55e', backgroundColor: '#f0fdf4' }}>
+                <h4 className="font-bold text-lg mb-3" style={{ color: '#15803d' }}>Photo ID Documents</h4>
+                <ul className="space-y-2 text-sm">
+                  <li>✓ Passport</li>
+                  <li>✓ Aadhaar Card</li>
+                  <li>✓ Driving License</li>
+                  <li>✓ State ID Card</li>
+                  <li>✓ PAN Card</li>
+                  <li>✓ MGNREGA Job Card</li>
+                </ul>
+              </div>
+
+              {/* Supporting Documents Card */}
+              <div className="border-l-4 p-6 rounded-lg" style={{ borderColor: '#6b7280', backgroundColor: '#f9fafb' }}>
+                <h4 className="font-bold text-lg mb-3" style={{ color: '#374151' }}>Supporting Documents</h4>
+                <ul className="space-y-2 text-sm">
+                  <li>✓ Marriage Certificate (for name changes)</li>
+                  <li>✓ Court Order (for legal corrections)</li>
+                  <li>✓ Affidavit (if original unavailable)</li>
+                  <li>✓ Registered Deed (for address changes)</li>
+                  <li>✓ Government Service ID</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          {/* Important Note */}
+          <div className="p-6 rounded-lg border-l-4" style={{ borderColor: '#eab308', backgroundColor: '#fefce8' }}>
+            <p className="text-sm" style={{ color: '#713f12' }}>
+              <strong>Note:</strong> Original documents or certified copies must be produced at the time of voter registration.
+              Document requirements vary slightly by state. For exact requirements and state-specific acceptance, refer to the specific form and your state&apos;s ECI guidelines.
+            </p>
+          </div>
+        </section>
+
         <section className="grid grid-cols-1 md:grid-cols-2 gap-10 mb-20" aria-label="Interactive guides">
           <div>
             <FormDecisionTree />

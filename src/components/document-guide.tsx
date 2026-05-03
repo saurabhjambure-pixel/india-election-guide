@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import type { DocumentItem } from '@/lib/types/civic'
 
 const CATEGORY_LABELS: Record<DocumentItem['category'], { label: string; color: string }> = {
@@ -9,11 +10,26 @@ const CATEGORY_LABELS: Record<DocumentItem['category'], { label: string; color: 
 
 interface Props {
   documents: DocumentItem[]
+  documentGuideLink?: string
 }
 
-export default function DocumentGuide({ documents }: Props) {
+export default function DocumentGuide({ documents, documentGuideLink }: Props) {
   if (documents.length === 0) return null
 
+  // If documentGuideLink is provided, render as a link instead of collapsible section
+  if (documentGuideLink) {
+    return (
+      <Link href={documentGuideLink} className="mt-8 flex items-center gap-3 text-primary font-bold text-sm hover:underline">
+        <span className="text-lg" aria-hidden="true">📄</span>
+        <span>Document Guide</span>
+        <span className="text-[11px] text-text-light font-medium">
+          — which documents satisfy which requirements ↗
+        </span>
+      </Link>
+    )
+  }
+
+  // Otherwise, render as collapsible details section
   return (
     <details className="group mt-8">
       <summary className="flex items-center justify-between cursor-pointer list-none select-none p-6 bg-gray-50 border border-gray-100 rounded-2xl hover:bg-gray-100/50 transition-colors">

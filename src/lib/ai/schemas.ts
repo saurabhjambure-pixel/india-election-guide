@@ -9,6 +9,7 @@ export const ClassifyResponseSchema = z.object({
   follow_up_question: z.string().nullable(),
   user_friendly_summary: z.string().max(300),
   recommended_flow_id: z.string().nullable(),
+  direct_answer: z.string().nullable().optional(),
 });
 
 export type ClassifyResponse = z.infer<typeof ClassifyResponseSchema>;

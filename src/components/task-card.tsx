@@ -8,12 +8,13 @@ interface TaskCardProps {
   flow: CivicFlow
   icon: string
   description: string
+  href?: string
 }
 
-export default function TaskCard({ flow, icon, description }: TaskCardProps) {
+export default function TaskCard({ flow, icon, description, href }: TaskCardProps) {
   return (
     <Link
-      href={`/flow/${flow.id}`}
+      href={href || `/flow/${flow.id}`}
       onClick={() => logCustomEvent('task_selected', { flow_id: flow.id })}
       className="task-card group"
       aria-label={`${flow.title} — ${description}`}

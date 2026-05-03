@@ -121,6 +121,7 @@ export default async function HomePage() {
                 } as CivicFlow}
                 icon="📅"
                 description="View upcoming election dates and registration deadlines."
+                href="/timeline"
               />
             </div>
           </div>

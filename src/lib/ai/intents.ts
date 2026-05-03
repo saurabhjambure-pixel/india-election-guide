@@ -8,6 +8,7 @@ export const CIVIC_INTENTS = [
   'find_polling_info',
   'show_timeline',
   'learn_process',
+  'direct_answer',
   'out_of_scope',
 ] as const;
 

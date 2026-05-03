@@ -126,7 +126,7 @@ export default async function FlowPage({ params }: Props) {
                   ))}
                 </ul>
                 {flow.documents && flow.documents.length > 0 && (
-                  <DocumentGuide documents={flow.documents} />
+                  <DocumentGuide documents={flow.documents} documentGuideLink="/learn#documents" />
                 )}
               </section>
             )}

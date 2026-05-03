@@ -81,6 +81,15 @@ const nextConfig: NextConfig = {
       },
     ];
   },
+  async redirects() {
+    return [
+      {
+        source: '/flow/timeline',
+        destination: '/timeline',
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default nextConfig;
